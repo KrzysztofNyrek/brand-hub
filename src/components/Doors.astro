@@ -45,9 +45,10 @@ const t = isPl
 ---
 <section id="doors" class="section-pad doors">
   <div class="container">
-    <header class="doors-head">
+    <header class="section-head">
+      <span class="eyebrow eyebrow--tick">{isPl ? 'Jak pomagam' : 'How I can help'}</span>
       <h2 class="h2">{t.heading}</h2>
-      <p class="body-lg" style="color:var(--text-muted); margin:var(--space-sm) 0 0;">{t.intro}</p>
+      <p class="section-lead">{t.intro}</p>
     </header>
 
     <div class="doors-grid">
@@ -91,13 +92,14 @@ const t = isPl
 </section>
 
 <style>
-  .doors-head { max-width: var(--maxw-prose); margin-bottom: var(--space-2xl); }
-  .doors-grid { display: grid; gap: var(--space-lg); }
+  .doors-grid { display: grid; gap: var(--space-lg); align-items: stretch; }
+  /* karty równej wysokości: flex column + CTA/formularz dopchane do dołu (auto) */
+  .door-card { display: flex; flex-direction: column; }
   .door-title { margin: var(--space-sm) 0 var(--space-md); }
   .door-body { margin: 0 0 var(--space-md); color: var(--text-strong); }
-  .door-cta { display: flex; flex-direction: column; gap: var(--space-sm); align-items: flex-start; margin-top: var(--space-lg); }
+  .door-cta { display: flex; flex-direction: column; gap: var(--space-sm); align-items: flex-start; margin-top: auto; padding-top: var(--space-lg); }
   .door-cta-sec { font-weight: 500; }
-  .waitlist { margin-top: var(--space-lg); }
+  .waitlist { margin-top: auto; padding-top: var(--space-lg); }
   .waitlist-row { display: flex; flex-wrap: wrap; gap: var(--space-sm); }
   .waitlist-email {
     flex: 1 1 12rem; min-width: 0;

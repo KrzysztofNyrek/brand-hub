@@ -1,28 +1,48 @@
 ---
-// KONTAKT (spec §4A/§4B sekcja 6). Mail + LinkedIn. Stopka jest w Hub.astro.
+// KONTAKT (spec §4A/§4B sekcja 6). Redesign v2: domknięcie-zaproszenie — panel bone
+// z regułą clay, stempel KN (signature), duży nagłówek + mocne CTA. Stopka jest w Hub.astro.
 import { LINKS } from '../config.mjs';
 const { lang = 'en' } = Astro.props;
 const isPl = lang === 'pl';
 const t = isPl
-  ? { head: 'Pogadajmy', copy: 'Masz proces, który zjada Ci tydzień, albo pytanie o to całe AI? Napisz. Czytam wszystko sam.', li: 'LinkedIn' }
-  : { head: 'Let’s talk', copy: 'Got a process that’s eating your week, or a question about the AI stuff? Write to me. I read everything myself.', li: 'LinkedIn' };
+  ? { eyebrow: 'Kontakt', head: 'Pogadajmy', copy: 'Masz proces, który zjada Ci tydzień, albo pytanie o to całe AI? Napisz. Czytam wszystko sam.', li: 'LinkedIn' }
+  : { eyebrow: 'Contact', head: 'Let’s talk', copy: 'Got a process that’s eating your week, or a question about the AI stuff? Write to me. I read everything myself.', li: 'LinkedIn' };
 ---
 <section id="contact" class="section-pad contact">
-  <div class="container contact-inner">
-    <h2 class="h2">{t.head}</h2>
-    <p class="body-lg contact-copy">{t.copy}</p>
-    <div class="contact-links">
-      <a class="btn-primary" href={`mailto:${LINKS.mail}`}>{LINKS.mail}</a>
-      {LINKS.linkedin
-        ? <a class="link contact-li" href={LINKS.linkedin}>{t.li} →</a>
-        : <a class="link contact-li" href="#" data-todo="linkedin-profile" title={isPl ? 'URL LinkedIn do dostarczenia (P2)' : 'LinkedIn URL — to be supplied (P2)'}>{t.li} →</a>}
+  <div class="container">
+    <div class="contact-panel">
+      <span class="kn-stamp kn-stamp--clay contact-stamp" aria-hidden="true">KN</span>
+      <span class="eyebrow eyebrow--tick contact-eyebrow">{t.eyebrow}</span>
+      <h2 class="h2 contact-head">{t.head}</h2>
+      <p class="body-lg contact-copy">{t.copy}</p>
+      <div class="contact-links">
+        <a class="btn-primary contact-mail" href={`mailto:${LINKS.mail}`}>{LINKS.mail}</a>
+        {LINKS.linkedin
+          ? <a class="link contact-li" href={LINKS.linkedin}>{t.li} →</a>
+          : <a class="link contact-li" href="#" data-todo="linkedin-profile" title={isPl ? 'URL LinkedIn do dostarczenia (P2)' : 'LinkedIn URL to be supplied (P2)'}>{t.li} →</a>}
+      </div>
     </div>
   </div>
 </section>
 
 <style>
-  .contact-inner { max-width: var(--maxw-prose); }
-  .contact-copy { margin: var(--space-md) 0 var(--space-xl); color: var(--text-muted); }
-  .contact-links { display: flex; flex-wrap: wrap; gap: var(--space-lg); align-items: center; }
+  .contact-panel {
+    position: relative; overflow: hidden;
+    background: var(--bg-surface); border: var(--hairline);
+    border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);
+    padding: var(--space-4xl) var(--space-xl);
+    text-align: center;
+  }
+  .contact-panel::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 3px; background: var(--accent-do); }
+  .contact-stamp { position: absolute; top: var(--space-lg); right: var(--space-lg); }
+  .contact-eyebrow { justify-content: center; }
+  .contact-head { margin: var(--space-sm) 0 0; }
+  .contact-copy { max-width: 46ch; margin: var(--space-md) auto var(--space-xl); color: var(--text-strong); }
+  .contact-links { display: flex; flex-wrap: wrap; gap: var(--space-md) var(--space-lg); align-items: center; justify-content: center; }
+  .contact-mail { padding: 1rem 2rem; font-size: var(--fs-body); }
   .contact-li { font-weight: 600; }
+  @media (max-width: 560px) {
+    .contact-panel { padding: var(--space-3xl) var(--space-lg); }
+    .contact-stamp { display: none; }
+  }
 </style>

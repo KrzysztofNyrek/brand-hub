@@ -14,7 +14,7 @@ export const LINKS = {
   mail:   'contact@krzysztofnyrek.eu',           // mailto (real)
 
   // --- PLACEHOLDERY (P2 — do dostarczenia przez K PRZED T7). null = render href="#" data-todo ---
-  amazonProjectCoffee: null,   // link do książki „Project Coffee" na Amazon
+  amazonProjectCoffee: 'https://www.amazon.com/Project-Coffee-Keeping-business-afloat/dp/8397189017',   // książka „Project Coffee" (Amazon)
   linkedin:            null,   // profil LinkedIn Krzysztofa
   leadMagnetFirst5:    null,   // „First 5 PM Days" lead magnet / MailerLite delivery
   aboutPl:             null,   // pełne „o mnie" PL (interim WP nie istnieje w PL; docelowo Faza 4)

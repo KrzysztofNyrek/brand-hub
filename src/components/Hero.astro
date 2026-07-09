@@ -4,14 +4,12 @@ const { lang = 'en' } = Astro.props;
 const isPl = lang === 'pl';
 const c = isPl
   ? {
-      eyebrow: 'Praktyk PM + AI',
       ctaA: 'Zautomatyzuj mój biznes',
       ctaB: 'Naucz mnie AI w pracy',
       who: 'Od dekady prowadzę projekty, na co dzień mapuję procesy i wdrażam automatyzacje. Nie jestem guru i nie sprzedaję marzeń.',
       tag: 'Nie sprzedaję marzeń. Sprzedaję nudną, techniczną automatyzację, która działa.',
     }
   : {
-      eyebrow: 'Practitioner · PM + AI',
       ctaA: 'Get it built for you',
       ctaB: 'Learn to build it yourself',
       who: 'A decade of running projects, author of Project Coffee, Prince2 and AgilePM certified.',
@@ -21,11 +19,10 @@ const c = isPl
 <section id="hero" class="section-pad hero">
   <div class="container hero-grid">
     <div class="hero-copy">
-      <span class="eyebrow">{c.eyebrow}</span>
       {isPl ? (
-        <h1 class="h-hero">Automatyzuję to, co w Twojej firmie robi się ręcznie co tydzień — i mówię wprost, gdzie AI pomaga, a gdzie <span class="accent-italic">tylko udaje</span>.</h1>
+        <h1 class="h-hero">Automatyzuję to, co w Twojej firmie robi się ręcznie co tydzień, i mówię wprost gdzie AI pomaga, a gdzie <span class="accent-italic">tylko udaje</span>.</h1>
       ) : (
-        <h1 class="h-hero">I'm a project manager who <span class="accent-italic">runs on AI</span> — and I'll tell you straight where it works and where it falls flat.</h1>
+        <h1 class="h-hero">I'm a project manager who <span class="accent-italic">runs on AI</span>, and I'll tell you straight where it works and where it falls flat.</h1>
       )}
       <p class="body-lg hero-who">
         <strong style="font-weight:600;">Krzysztof Nyrek.</strong> {c.who}
@@ -50,20 +47,37 @@ const c = isPl
   .hero { padding-top: var(--space-2xl); }
   .hero-grid { display: grid; gap: var(--space-2xl); align-items: center; }
   .hero-copy { min-width: 0; }
-  .hero-copy .eyebrow { margin-bottom: var(--space-md); }
   .h-hero { margin-bottom: var(--space-lg); text-wrap: balance; }
   .hero-who { color: var(--text-muted); max-width: 46ch; margin: 0 0 var(--space-xl); }
   .hero-cta { display: flex; flex-wrap: wrap; gap: var(--space-md); }
-  .hero-figure { position: relative; margin: 0 auto; justify-self: center; max-width: 340px; width: 100%; }
+
+  .hero-figure {
+    position: relative; isolation: isolate;
+    margin: 0 auto; justify-self: center; max-width: 340px; width: 100%;
+  }
+  /* signature: faint „coffee-ring" za portretem (Practitioner's Desk) */
+  .hero-figure::before {
+    content: ""; position: absolute; z-index: 0;
+    inset: auto -9% -11% auto;      /* wychodzi zza prawego-dolnego rogu */
+    width: 58%; aspect-ratio: 1; border-radius: 50%;
+    border: 9px solid var(--color-clay); opacity: 0.16;
+    pointer-events: none;
+  }
+  .hero-figure picture { position: relative; z-index: 1; display: block; }
   .hero-figure img {
     width: 100%; border-radius: var(--radius-lg);
     border: 6px solid var(--color-bone);
     box-shadow: var(--shadow-lg);
     transform: rotate(-1.5deg);
   }
-  .hero-tag { position: absolute; left: var(--space-md); bottom: calc(-1 * var(--space-md)); max-width: 20ch; }
+  .hero-tag { position: absolute; z-index: 2; left: var(--space-md); bottom: calc(-1 * var(--space-md)); max-width: 20ch; }
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-figure img { transition: transform var(--dur) var(--ease); }
+    .hero-figure:hover img { transform: rotate(0deg); }
+  }
   @media (min-width: 880px) {
     .hero-grid { grid-template-columns: 1.15fr 0.85fr; gap: var(--space-4xl); }
     .hero-figure { justify-self: end; max-width: 460px; }
+    .hero-figure::before { border-width: 12px; }
   }
 </style>

@@ -116,11 +116,11 @@
   --lh-h1:        1.08;
   --wght-h1:      560;
   --ls-h1:        -0.015em;
-  /* h2 — 32px */
-  --fs-h2:        2rem;
-  --lh-h2:        1.15;
-  --wght-h2:      540;
-  --ls-h2:        -0.01em;
+  /* h2 — nagłówki sekcji, fluid 32→44px (mają „bić", rytm sekcji) */
+  --fs-h2:        clamp(2rem, 1.4rem + 1.9vw, 2.75rem);
+  --lh-h2:        1.1;
+  --wght-h2:      560;
+  --ls-h2:        -0.015em;
   /* h3 — 22px */
   --fs-h3:        1.375rem;
   --lh-h3:        1.25;
@@ -189,6 +189,9 @@
   --maxw-content: 72rem;   /* 1152px */
   --maxw-prose:   40rem;   /* 640px — kolumna czytania */
   --nav-h:        4.5rem;  /* 72px */
+  /* gutter responsywny: 20px (mobile) → 40px (desktop). Wspólny margines boczny
+     dla .container, NAV i stopki — wszystkie kolumny treści równają do tej samej osi. */
+  --gutter:       clamp(1.25rem, 0.6rem + 2.4vw, 2.5rem);
 }
 
 /* =============================================================================
@@ -199,6 +202,25 @@ html { -webkit-text-size-adjust: 100%; }
 body { margin: 0; }
 img { max-width: 100%; height: auto; display: block; }
 a { color: inherit; }
+
+/* =============================================================================
+   LAYOUT UTILITIES (GLOBAL — MUSZĄ być tu, nie w scoped <style> layoutu)
+   Powód: `.container` / `.section-pad` noszą elementy w komponentach-dzieciach
+   (Hero/Doors/Authority/...). Astro scope'uje <style> do własnego szablonu
+   komponentu — te same klasy w Hub.astro NIE trafiały na dzieci → treść klejona
+   do lewej, brak max-width, brak rytmu pionowego. Global = działa wszędzie.
+============================================================================= */
+.container {
+  width: 100%;
+  /* max-width = kolumna treści + gutter po obu stronach; gutter to minimalny
+     margines na wąskich ekranach, a na szerokich treść centruje się z oddechem. */
+  max-width: calc(var(--maxw-content) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+.section-pad { padding-block: var(--space-4xl); }
+@media (max-width: 640px) { .section-pad { padding-block: var(--space-3xl); } }
+:where(section[id], .hub-section) { scroll-margin-top: calc(var(--nav-h) + var(--space-md)); }
 
 /* =============================================================================
    ELEMENTY BAZOWE
@@ -253,6 +275,23 @@ body {
 }
 .eyebrow--learn { color: var(--accent-learn); }
 .eyebrow--muted { color: var(--text-muted); }
+/* tick edytorski przed eyebrow — buduje rytm nagłówków sekcji (kreska w kolorze akcentu) */
+.eyebrow--tick { display: inline-flex; align-items: center; gap: 0.6rem; }
+.eyebrow--tick::before {
+  content: ""; width: 1.75rem; height: 2px; flex: 0 0 auto;
+  background: currentColor; border-radius: 2px;
+}
+
+/* =============================================================================
+   SECTION HEAD — wspólny rytm nagłówka sekcji (eyebrow + h2 + lead).
+   GLOBAL: używany w Doors/Authority/About/Blog/Contact (elementy w dzieciach).
+============================================================================= */
+.section-head { max-width: 46rem; margin-bottom: var(--space-2xl); }
+.section-head .eyebrow { margin-bottom: var(--space-md); }
+.section-head .section-lead {
+  font-size: var(--fs-body-lg); line-height: var(--lh-body-lg);
+  color: var(--text-muted); margin: var(--space-md) 0 0; max-width: 34rem;
+}
 
 .body-lg { font-size: var(--fs-body-lg); line-height: var(--lh-body-lg); font-weight: var(--wght-body-lg); }
 .small   { font-size: var(--fs-small);   line-height: var(--lh-small);   font-weight: var(--wght-small); }
@@ -351,7 +390,9 @@ body {
   align-items: center;
   gap: var(--space-lg);
   height: var(--nav-h);
-  padding: 0 var(--space-lg);
+  /* pasek pełnej szerokości (blur+hairline span 100%), ale zawartość równa do
+     osi .container: gutter na wąskich, centrowanie do maxw na szerokich. */
+  padding-inline: max(var(--gutter), calc((100% - var(--maxw-content)) / 2));
   background: color-mix(in srgb, var(--color-oat) 88%, transparent);
   backdrop-filter: blur(8px);
   border-bottom: var(--hairline);

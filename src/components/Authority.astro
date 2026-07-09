@@ -1,76 +1,181 @@
 ---
-// PASEK AUTORYTETU (EN, spec §4A sekcja 3) / DOWODY (PL, spec §4B sekcja 3).
-// Autorytet = paliwo, nie headline. Placeholdery (Amazon, lead magnet) = href="#" data-todo (P2).
+// DOWODY / PROOF (EN spec §4A sekcja 3 / PL §4B sekcja 3).
+// Autorytet = paliwo, nie headline. Redesign v2: metryka-hero (case 1M PLN),
+// trójka statystyk z ikonami SVG inline, karta-książka (Project Coffee, link Amazon
+// z target/rel) + druga karta (EN: lead magnet / PL: dla kogo). Placeholder lead
+// magnet = href="#" data-todo (P2). Ta sama struktura dla obu języków (parytet).
 import { LINKS } from '../config.mjs';
 const { lang = 'en' } = Astro.props;
 const isPl = lang === 'pl';
+
+const t = isPl
+  ? {
+      eyebrow: 'Dowody',
+      heading: 'Dlaczego ja',
+      metricNum: '1 mln PLN',
+      metricCap: 'jedna agencja, jeden rok',
+      metricBody: 'Od wąskich gardeł do miliona rocznie na systemach, które zbudowałem. ROI na każdym projekcie, wycięte nierentowne działania, przebudowany customer service.',
+      stats: [
+        { icon: 'clock', val: '10 lat', label: 'prowadzenia realnych projektów' },
+        { icon: 'team',  val: '23',     label: 'największy zespół, jaki prowadziłem' },
+        { icon: 'seal',  val: 'Prince2 · AgilePM', label: 'certyfikaty, nie deklaracje', small: true },
+      ],
+      bookTitle: 'Project Coffee',
+      bookBody: 'Napisałem o tym książkę. O prowadzeniu projektów po ludzku, nie po Gantcie.',
+      bookCta: 'Zobacz na Amazonie',
+      secondTitle: 'Dla kogo to jest',
+      secondBody: 'Dla właściciela małej firmy, który co tydzień robi to samo ręcznie i wie, że traci na tym godziny. Nie dla korporacji z działem IT.',
+    }
+  : {
+      eyebrow: 'Proof',
+      heading: 'Why listen to me',
+      metricNum: '1M PLN',
+      metricCap: 'one agency, one year',
+      metricBody: 'From bottlenecked to a million a year on the systems I built. ROI on every project, unprofitable work cut, customer service rebuilt.',
+      stats: [
+        { icon: 'clock', val: '10 yrs', label: 'running real projects' },
+        { icon: 'team',  val: '23',     label: 'biggest team I have led' },
+        { icon: 'seal',  val: 'Prince2 · AgilePM', label: 'certified, not self-declared', small: true },
+      ],
+      bookTitle: 'Project Coffee',
+      bookBody: 'My book on running projects like a human, not a Gantt chart.',
+      bookCta: 'Read it on Amazon',
+      secondTitle: 'First 5 PM Days',
+      secondBody: 'A free playbook: exactly what to do in your first five days on a new project.',
+      secondCta: 'Get it free',
+    };
+
+const amazon = LINKS.amazonProjectCoffee;
 ---
 <section id="authority" class="section-pad authority">
   <div class="container">
-    <span class="eyebrow eyebrow--muted">{isPl ? 'Dlaczego ja' : 'Why listen to me'}</span>
-    <div class="auth-grid">
-      {isPl ? (
-        <>
+    <header class="section-head">
+      <span class="eyebrow eyebrow--tick">{t.eyebrow}</span>
+      <h2 class="h2">{t.heading}</h2>
+    </header>
+
+    <div class="auth-layout">
+      <!-- metryka-hero: case study jako liczba -->
+      <article class="auth-metric">
+        <span class="auth-metric-num">{t.metricNum}</span>
+        <span class="auth-metric-cap">{t.metricCap}</span>
+        <p class="auth-metric-body">{t.metricBody}</p>
+      </article>
+
+      <!-- trójka statystyk z ikonami -->
+      <ul class="auth-stats">
+        {t.stats.map((s) => (
+          <li class="auth-stat">
+            <span class="auth-stat-ic" aria-hidden="true">
+              {s.icon === 'clock' && (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.2V12l3.1 1.9"/></svg>
+              )}
+              {s.icon === 'team' && (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="8.5" cy="8" r="3.2"/><path d="M2.8 19.2c0-3.1 2.6-5 5.7-5s5.7 1.9 5.7 5"/><path d="M15.6 5.6a3 3 0 0 1 0 6"/><path d="M16.4 14.4c2.7.2 4.8 1.9 4.8 4.8"/></svg>
+              )}
+              {s.icon === 'seal' && (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9.5" r="5.6"/><path d="M9.2 14.2 8 21l4-2.1L16 21l-1.2-6.8"/><path d="m10 9.4 1.4 1.4 2.8-2.8"/></svg>
+              )}
+            </span>
+            <span class={`auth-stat-val${s.small ? ' auth-stat-val--sm' : ''}`}>{s.val}</span>
+            <span class="auth-stat-label">{s.label}</span>
+          </li>
+        ))}
+      </ul>
+
+      <!-- karty: książka (Project Coffee) + druga (EN lead magnet / PL dla kogo) -->
+      <div class="auth-features">
+        <article class="auth-card auth-card--book">
+          <span class="auth-book-ic" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.2C10.5 5 8.6 4.4 6.2 4.4c-.9 0-1.7.1-2.2.3v13c.5-.2 1.3-.3 2.2-.3 2.4 0 4.3.6 5.8 1.8"/><path d="M12 6.2c1.5-1.2 3.4-1.8 5.8-1.8.9 0 1.7.1 2.2.3v13c-.5-.2-1.3-.3-2.2-.3-2.4 0-4.3.6-5.8 1.8z"/></svg>
+          </span>
+          <h3 class="h3"><em class="accent-italic">{t.bookTitle}</em></h3>
+          <p class="auth-card-body">{t.bookBody}</p>
+          <a class="link auth-card-cta" href={amazon} target="_blank" rel="noopener">{t.bookCta} →</a>
+        </article>
+
+        {isPl ? (
           <article class="auth-card">
-            <h3 class="h3">Konkretny efekt</h3>
-            <p class="auth-body">Jedna agencja: od wąskich gardeł do 1 mln PLN rocznie. ROI na każdym projekcie, wycięte nierentowne działania, przebudowany customer service.</p>
+            <h3 class="h3">{t.secondTitle}</h3>
+            <p class="auth-card-body">{t.secondBody}</p>
           </article>
+        ) : (
           <article class="auth-card">
-            <h3 class="h3">Dla kogo to jest</h3>
-            <p class="auth-body">Dla właściciela małej firmy, który robi to samo co tydzień ręcznie i wie, że traci na tym godziny. Nie dla korporacji z działem IT.</p>
-          </article>
-          <article class="auth-card">
-            <h3 class="h3">Praktyka, nie dyplomy</h3>
-            <p class="auth-body">Od dekady prowadzę projekty, zespoły do 23 osób, Prince2 i AgilePM. Ale liczy się to, co realnie wdrożyłem, nie certyfikat na ścianie.</p>
-          </article>
-          <article class="auth-card auth-card--accent">
-            <h3 class="h3"><em class="accent-italic">Project Coffee</em></h3>
-            <p class="auth-body">Napisałem o tym książkę. Jest na Amazonie.</p>
-            {LINKS.amazonProjectCoffee
-              ? <a class="link" href={LINKS.amazonProjectCoffee}>Zobacz książkę →</a>
-              : <a class="link" href="#" data-todo="amazon-project-coffee" title="URL Amazon do dostarczenia (P2)">Zobacz książkę →</a>}
-          </article>
-        </>
-      ) : (
-        <>
-          <article class="auth-card auth-card--accent">
-            <h3 class="h3"><em class="accent-italic">Project Coffee</em></h3>
-            <p class="auth-body">My book on running projects like a human, not a Gantt chart. On Amazon.</p>
-            {LINKS.amazonProjectCoffee
-              ? <a class="link" href={LINKS.amazonProjectCoffee}>Read <em>Project Coffee</em> →</a>
-              : <a class="link" href="#" data-todo="amazon-project-coffee" title="Amazon URL — to be supplied (P2)">Read Project Coffee →</a>}
-          </article>
-          <article class="auth-card">
-            <h3 class="h3">First 5 PM Days</h3>
-            <p class="auth-body">A free playbook: exactly what to do in your first five days on a new project.</p>
+            <h3 class="h3">{t.secondTitle}</h3>
+            <p class="auth-card-body">{t.secondBody}</p>
             {LINKS.leadMagnetFirst5
-              ? <a class="link" href={LINKS.leadMagnetFirst5}>Get it free →</a>
-              : <a class="link" href="#" data-todo="lead-magnet-first5" title="Lead magnet URL — to be supplied (P2)">Get it free →</a>}
+              ? <a class="link auth-card-cta" href={LINKS.leadMagnetFirst5}>{t.secondCta} →</a>
+              : <a class="link auth-card-cta" href="#" data-todo="lead-magnet-first5" title="Lead magnet URL to be supplied (P2)">{t.secondCta} →</a>}
           </article>
-          <article class="auth-card">
-            <h3 class="h3">The receipts</h3>
-            <p class="auth-body">One agency, from bottlenecked to 1M PLN a year. ROI on every project, unprofitable work cut, customer service rebuilt.</p>
-          </article>
-          <article class="auth-card">
-            <h3 class="h3">Credentials</h3>
-            <p class="auth-body">A decade running projects · teams up to 23 people · Prince2 · AgilePM.</p>
-          </article>
-        </>
-      )}
+        )}
+      </div>
     </div>
   </div>
 </section>
 
 <style>
-  .authority .eyebrow { margin-bottom: var(--space-lg); }
-  .auth-grid { display: grid; gap: var(--space-md); }
-  .auth-card {
+  .auth-layout { display: grid; gap: var(--space-lg); }
+
+  /* metryka-hero — case study jako duża liczba (jeden akcent clay) */
+  .auth-metric {
+    position: relative; overflow: hidden;
+    background: var(--bg-surface); border: var(--hairline);
+    border-radius: var(--radius-lg); padding: var(--space-xl);
+    display: grid; gap: var(--space-xs); align-content: start;
+  }
+  .auth-metric::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 3px; background: var(--accent-do); }
+  .auth-metric-num {
+    font-family: var(--font-display); font-variation-settings: var(--fraunces-hero);
+    font-size: clamp(3.25rem, 2.2rem + 4.4vw, 5rem); line-height: 0.95;
+    font-weight: 560; letter-spacing: -0.02em; color: var(--accent-do);
+  }
+  .auth-metric-cap {
+    font-family: var(--font-utility); text-transform: uppercase;
+    font-size: var(--fs-caption); letter-spacing: 0.12em; font-weight: 600;
+    color: var(--text-muted); margin-bottom: var(--space-sm);
+  }
+  .auth-metric-body { margin: 0; color: var(--text-strong); max-width: 46ch; }
+
+  /* trójka statystyk */
+  .auth-stats { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-lg); }
+  .auth-stat {
     background: var(--bg-surface); border: var(--hairline);
     border-radius: var(--radius-md); padding: var(--space-lg);
+    display: flex; flex-direction: column; gap: var(--space-2xs);
   }
+  .auth-stat-ic { color: var(--text-strong); margin-bottom: var(--space-xs); }
+  .auth-stat-ic svg { width: 1.75rem; height: 1.75rem; display: block; }
+  .auth-stat-val { font-family: var(--font-display); font-variation-settings: var(--fraunces-soft); font-size: 1.875rem; line-height: 1.05; font-weight: 560; letter-spacing: -0.01em; color: var(--text-strong); }
+  .auth-stat-val--sm { font-size: 1.15rem; letter-spacing: 0.005em; }
+  .auth-stat-label { color: var(--text-muted); font-size: var(--fs-small); }
+
+  /* karty książka + druga */
+  .auth-features { display: grid; gap: var(--space-lg); }
+  .auth-card {
+    position: relative; background: var(--bg-surface); border: var(--hairline);
+    border-radius: var(--radius-md); padding: var(--space-lg);
+    transition: box-shadow var(--dur) var(--ease), transform var(--dur) var(--ease);
+  }
+  .auth-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
   .auth-card h3 { margin-bottom: var(--space-xs); }
-  .auth-body { margin: 0 0 var(--space-sm); color: var(--text-strong); }
-  .auth-card--accent { border-color: var(--hairline-strong); }
-  @media (min-width: 720px) { .auth-grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (min-width: 1040px) { .auth-grid { grid-template-columns: repeat(4, 1fr); } }
+  .auth-card-body { margin: 0 0 var(--space-md); color: var(--text-strong); }
+  .auth-card-cta { display: inline-block; font-weight: 600; }
+  /* karta-książka: „grzbiet" clay po lewej + ikona książki */
+  .auth-card--book { padding-left: calc(var(--space-lg) + 6px); border-color: var(--hairline-strong); }
+  .auth-card--book::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 5px; background: var(--accent-do); border-radius: var(--radius-md) 0 0 var(--radius-md); }
+  .auth-book-ic { color: var(--accent-do); display: block; margin-bottom: var(--space-sm); }
+  .auth-book-ic svg { width: 1.75rem; height: 1.75rem; }
+
+  @media (min-width: 720px) {
+    .auth-stats { grid-template-columns: repeat(3, 1fr); }
+    .auth-features { grid-template-columns: 1fr 1fr; }
+  }
+  @media (min-width: 980px) {
+    /* metryka szeroka po lewej, statystyki w kolumnie po prawej, karty pełną szerokością */
+    .auth-layout { grid-template-columns: 1.15fr 1fr; align-items: start; }
+    .auth-metric { grid-column: 1; }
+    .auth-stats { grid-column: 2; grid-template-columns: 1fr; gap: var(--space-md); }
+    .auth-features { grid-column: 1 / -1; }
+  }
+  @media (prefers-reduced-motion: reduce) { .auth-card:hover { transform: none; } }
 </style>

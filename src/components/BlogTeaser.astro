@@ -4,16 +4,21 @@
 import { LINKS } from '../config.mjs';
 ---
 <section id="blog" class="section-pad blog">
-  <div class="container blog-inner">
-    <span class="eyebrow eyebrow--muted">Notes from the desk</span>
-    <p class="body-lg blog-intro">Where I put AI to work, and where I caught it lying. New posts on running projects in the age of AI.</p>
-    <a class="link blog-cta" href={LINKS.blogEn}>Read the blog →</a>
+  <div class="container">
+    <div class="blog-inner">
+      <header class="section-head">
+        <span class="eyebrow eyebrow--tick">Blog</span>
+        <h2 class="h2">Notes from the desk</h2>
+      </header>
+      <p class="body-lg blog-intro">Where I put AI to work, and where I caught it lying. New posts on running projects in the age of AI.</p>
+      <a class="link blog-cta" href={LINKS.blogEn}>Read the blog →</a>
+    </div>
   </div>
 </section>
 
 <style>
   .blog-inner { max-width: var(--maxw-prose); }
-  .blog .eyebrow { margin-bottom: var(--space-md); }
+  .blog .section-head { margin-bottom: var(--space-lg); }
   .blog-intro { margin: 0 0 var(--space-md); color: var(--text-muted); }
   .blog-cta { display: inline-block; font-weight: 600; }
 </style>

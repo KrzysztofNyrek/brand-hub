@@ -20,18 +20,22 @@ const ctaHref = isPl ? LINKS.aboutPl : LINKS.aboutEn;
 const ctaTodo = isPl ? 'about-pl' : null;
 ---
 <section id="about" class="section-pad about">
-  <div class="container about-inner">
-    <span class="eyebrow eyebrow--muted">{heading}</span>
-    {paras.map((p) => <p class="body-lg about-p">{p}</p>)}
-    {ctaHref
-      ? <a class="link about-cta" href={ctaHref}>{ctaLabel} →</a>
-      : <a class="link about-cta" href="#" data-todo={ctaTodo} title="URL do dostarczenia (P2)">{ctaLabel} →</a>}
+  <div class="container">
+    <div class="about-inner">
+      <header class="section-head">
+        <span class="eyebrow eyebrow--tick">{isPl ? 'O mnie' : 'About me'}</span>
+        <h2 class="h2">{heading}</h2>
+      </header>
+      {paras.map((p) => <p class="body-lg about-p">{p}</p>)}
+      {ctaHref
+        ? <a class="link about-cta" href={ctaHref}>{ctaLabel} →</a>
+        : <a class="link about-cta" href="#" data-todo={ctaTodo} title="URL do dostarczenia (P2)">{ctaLabel} →</a>}
+    </div>
   </div>
 </section>
 
 <style>
   .about-inner { max-width: var(--maxw-prose); }
-  .about .eyebrow { margin-bottom: var(--space-lg); }
   .about-p { margin: 0 0 var(--space-lg); }
   .about-cta { display: inline-block; font-weight: 600; margin-top: var(--space-xs); }
 </style>
