@@ -1,0 +1,76 @@
+---
+// PASEK AUTORYTETU (EN, spec §4A sekcja 3) / DOWODY (PL, spec §4B sekcja 3).
+// Autorytet = paliwo, nie headline. Placeholdery (Amazon, lead magnet) = href="#" data-todo (P2).
+import { LINKS } from '../config.mjs';
+const { lang = 'en' } = Astro.props;
+const isPl = lang === 'pl';
+---
+<section id="authority" class="section-pad authority">
+  <div class="container">
+    <span class="eyebrow eyebrow--muted">{isPl ? 'Dlaczego ja' : 'Why listen to me'}</span>
+    <div class="auth-grid">
+      {isPl ? (
+        <>
+          <article class="auth-card">
+            <h3 class="h3">Konkretny efekt</h3>
+            <p class="auth-body">Jedna agencja: od wąskich gardeł do 1 mln PLN rocznie. ROI na każdym projekcie, wycięte nierentowne działania, przebudowany customer service.</p>
+          </article>
+          <article class="auth-card">
+            <h3 class="h3">Dla kogo to jest</h3>
+            <p class="auth-body">Dla właściciela małej firmy, który robi to samo co tydzień ręcznie i wie, że traci na tym godziny. Nie dla korporacji z działem IT.</p>
+          </article>
+          <article class="auth-card">
+            <h3 class="h3">Praktyka, nie dyplomy</h3>
+            <p class="auth-body">Od dekady prowadzę projekty, zespoły do 23 osób, Prince2 i AgilePM. Ale liczy się to, co realnie wdrożyłem, nie certyfikat na ścianie.</p>
+          </article>
+          <article class="auth-card auth-card--accent">
+            <h3 class="h3"><em class="accent-italic">Project Coffee</em></h3>
+            <p class="auth-body">Napisałem o tym książkę. Jest na Amazonie.</p>
+            {LINKS.amazonProjectCoffee
+              ? <a class="link" href={LINKS.amazonProjectCoffee}>Zobacz książkę →</a>
+              : <a class="link" href="#" data-todo="amazon-project-coffee" title="URL Amazon do dostarczenia (P2)">Zobacz książkę →</a>}
+          </article>
+        </>
+      ) : (
+        <>
+          <article class="auth-card auth-card--accent">
+            <h3 class="h3"><em class="accent-italic">Project Coffee</em></h3>
+            <p class="auth-body">My book on running projects like a human, not a Gantt chart. On Amazon.</p>
+            {LINKS.amazonProjectCoffee
+              ? <a class="link" href={LINKS.amazonProjectCoffee}>Read <em>Project Coffee</em> →</a>
+              : <a class="link" href="#" data-todo="amazon-project-coffee" title="Amazon URL — to be supplied (P2)">Read Project Coffee →</a>}
+          </article>
+          <article class="auth-card">
+            <h3 class="h3">First 5 PM Days</h3>
+            <p class="auth-body">A free playbook: exactly what to do in your first five days on a new project.</p>
+            {LINKS.leadMagnetFirst5
+              ? <a class="link" href={LINKS.leadMagnetFirst5}>Get it free →</a>
+              : <a class="link" href="#" data-todo="lead-magnet-first5" title="Lead magnet URL — to be supplied (P2)">Get it free →</a>}
+          </article>
+          <article class="auth-card">
+            <h3 class="h3">The receipts</h3>
+            <p class="auth-body">One agency, from bottlenecked to 1M PLN a year. ROI on every project, unprofitable work cut, customer service rebuilt.</p>
+          </article>
+          <article class="auth-card">
+            <h3 class="h3">Credentials</h3>
+            <p class="auth-body">A decade running projects · teams up to 23 people · Prince2 · AgilePM.</p>
+          </article>
+        </>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .authority .eyebrow { margin-bottom: var(--space-lg); }
+  .auth-grid { display: grid; gap: var(--space-md); }
+  .auth-card {
+    background: var(--bg-surface); border: var(--hairline);
+    border-radius: var(--radius-md); padding: var(--space-lg);
+  }
+  .auth-card h3 { margin-bottom: var(--space-xs); }
+  .auth-body { margin: 0 0 var(--space-sm); color: var(--text-strong); }
+  .auth-card--accent { border-color: var(--hairline-strong); }
+  @media (min-width: 720px) { .auth-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1040px) { .auth-grid { grid-template-columns: repeat(4, 1fr); } }
+</style>

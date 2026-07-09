@@ -1,0 +1,461 @@
+/* =============================================================================
+   Brand Hub — Design Tokens · Kierunek 1 „The Practitioner's Desk"
+   Marka osobista „Krzysztof Nyrek" (NIE brandbook AIBiznesLab).
+   Owner: @cmo (+ frontend-design skill) · T1 Step 3 (D71) · handoff @cto T5/T6.
+   ZERO zewnętrznego CDN (CSP/perf) — fonty self-host z /fonts/.
+   ---------------------------------------------------------------------------
+   FONTY (T5/T6, @cto — 09.07.2026):
+   Self-host WOFF2 z Google Fonts (SIL OFL 1.1), subset latin + latin-ext
+   (hub PL wymaga ą ć ę ł ń ó ś ź ż). Każda rodzina/styl = 2 pliki (latin,
+   latin-ext) z osobnym unicode-range — Fraunces italic to PRAWDZIWY plik
+   (fraunces-italic-*), nośnik akcentu „signature". `font-synthesis: none`
+   niżej = twardy fail zamiast fałszywej kursywy.
+   Pliki wariant. zawierają oś opsz+wght (300–900). Osie SOFT/WONK z Google
+   Fonts mogą być przypięte do wartości domyślnej — font-variation-settings
+   poniżej stosuje co dostępne (opsz działa), reszta degraduje bez błędu.
+============================================================================= */
+
+/* ---- @font-face (self-host, latin + latin-ext) --------------------------- */
+/* Fraunces roman */
+@font-face {
+  font-family: "Fraunces";
+  src: url("/fonts/fraunces-latin.woff2") format("woff2");
+  font-weight: 300 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Fraunces";
+  src: url("/fonts/fraunces-latinext.woff2") format("woff2");
+  font-weight: 300 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* Fraunces italic — prawdziwa kursywa (akcent „signature"), NIE syntezowana */
+@font-face {
+  font-family: "Fraunces";
+  src: url("/fonts/fraunces-italic-latin.woff2") format("woff2");
+  font-weight: 300 900;
+  font-style: italic;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Fraunces";
+  src: url("/fonts/fraunces-italic-latinext.woff2") format("woff2");
+  font-weight: 300 900;
+  font-style: italic;
+  font-display: swap;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* Work Sans roman */
+@font-face {
+  font-family: "Work Sans";
+  src: url("/fonts/worksans-latin.woff2") format("woff2");
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Work Sans";
+  src: url("/fonts/worksans-latinext.woff2") format("woff2");
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+:root {
+  /* ---- KOLOR: role palety (Practitioner's Desk) -------------------------- */
+  --color-oat:       #EBE4D5;  /* tło strony (papier, głębszy niż AI-cream) */
+  --color-bone:      #F4EFE4;  /* karty / powierzchnie podniesione */
+  --color-espresso:  #2A2320;  /* ink — tekst główny, nagłówki, stopka-tło */
+  --color-clay:      #A24E2C;  /* akcent #1 „done-for-you" (automatyzacja) */
+  --color-clay-deep: #8F4426;  /* clay hover/active (przyciemniony) */
+  --color-sage:      #5E6B4E;  /* akcent #2 „learn" / linki / druga ziemia */
+  --color-sage-deep: #4E5A40;  /* sage hover/active */
+  --color-walnut:    #4B4038;  /* hairline + tekst muted/meta */
+  --color-white:     #FFFFFF;
+
+  /* aliasy semantyczne (używaj TYCH w komponentach) */
+  --bg-page:         var(--color-oat);
+  --bg-surface:      var(--color-bone);
+  --bg-inverse:      var(--color-espresso);   /* stopka */
+  --text-strong:     var(--color-espresso);
+  --text-muted:      var(--color-walnut);
+  --text-on-accent:  var(--color-white);      /* na clay/sage: AA (5.73 / 5.69) */
+  --text-on-inverse: var(--color-oat);        /* oat na espresso: 12.20 AAA */
+  --accent-do:       var(--color-clay);
+  --accent-learn:    var(--color-sage);
+  --link:            var(--color-clay);        /* clay-on-oat 4.53 AA; podkreślony */
+  --hairline-color:  rgba(75, 64, 56, 0.22);   /* walnut @ 22% */
+  --hairline-strong: rgba(75, 64, 56, 0.40);
+  --focus-ring:      var(--color-clay);
+
+  /* ---- TYPOGRAFIA: rodziny ---------------------------------------------- */
+  --font-display: "Fraunces", "Iowan Old Style", Georgia, "Times New Roman", serif;
+  --font-body:    "Work Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  /* eyebrow/utility = Work Sans faux-smallcaps (uppercase + tracking) — bez osobnego pliku */
+  --font-utility: var(--font-body);
+
+  /* oś zmienności Fraunces — „Soft old-style" z identity_direction.md */
+  --fraunces-soft: "opsz" 40, "SOFT" 60, "WONK" 0;
+  --fraunces-hero: "opsz" 120, "SOFT" 60, "WONK" 0;
+
+  /* ---- TYPOGRAFIA: skala (font-size / line-height / weight / spacing) ---- */
+  /* hero — Fraunces, fluid clamp 44→72px */
+  --fs-hero:      clamp(2.75rem, 1.6rem + 4.8vw, 4.5rem);
+  --lh-hero:      1.03;
+  --wght-hero:    560;
+  --ls-hero:      -0.02em;
+  /* h1 — 48px */
+  --fs-h1:        3rem;
+  --lh-h1:        1.08;
+  --wght-h1:      560;
+  --ls-h1:        -0.015em;
+  /* h2 — 32px */
+  --fs-h2:        2rem;
+  --lh-h2:        1.15;
+  --wght-h2:      540;
+  --ls-h2:        -0.01em;
+  /* h3 — 22px */
+  --fs-h3:        1.375rem;
+  --lh-h3:        1.25;
+  --wght-h3:      560;
+  --ls-h3:        -0.005em;
+  /* eyebrow — 13px Work Sans faux-smallcaps */
+  --fs-eyebrow:   0.8125rem;
+  --lh-eyebrow:   1;
+  --wght-eyebrow: 600;
+  --ls-eyebrow:   0.14em;
+  /* body-lg — lede/intro 20px */
+  --fs-body-lg:   1.25rem;
+  --lh-body-lg:   1.55;
+  --wght-body-lg: 400;
+  --ls-body-lg:   0;
+  /* body — 17px, komfort long-form */
+  --fs-body:      1.0625rem;
+  --lh-body:      1.62;
+  --wght-body:    400;
+  --ls-body:      0;
+  /* small — UI/nav/meta 15px */
+  --fs-small:     0.9375rem;
+  --lh-small:     1.5;
+  --wght-small:   500;
+  --ls-small:     0;
+  /* caption — 13px, daty/podpisy */
+  --fs-caption:   0.8125rem;
+  --lh-caption:   1.4;
+  --wght-caption: 400;
+  --ls-caption:   0.005em;
+
+  /* ---- SPACING (base 4px) ----------------------------------------------- */
+  --space-2xs: 0.25rem;   /*  4 */
+  --space-xs:  0.5rem;    /*  8 */
+  --space-sm:  0.75rem;   /* 12 */
+  --space-md:  1rem;      /* 16 */
+  --space-lg:  1.5rem;    /* 24 */
+  --space-xl:  2rem;      /* 32 */
+  --space-2xl: 3rem;      /* 48 */
+  --space-3xl: 4rem;      /* 64 */
+  --space-4xl: 6rem;      /* 96 */
+  --space-5xl: 8rem;      /* 128 */
+
+  /* ---- RADIUS ----------------------------------------------------------- */
+  --radius-sm:   6px;
+  --radius-md:   12px;
+  --radius-lg:   20px;
+  --radius-pill: 999px;
+
+  /* ---- SHADOW (rzemieślniczy/miękki, cień barwiony espresso — nie czerń) - */
+  --shadow-sm:    0 1px 2px rgba(42, 35, 32, 0.06);
+  --shadow-md:    0 4px 16px -4px rgba(42, 35, 32, 0.12);
+  --shadow-lg:    0 12px 32px -8px rgba(42, 35, 32, 0.16);
+  --shadow-stamp: 2px 2px 0 rgba(42, 35, 32, 0.20);   /* „druk-cień" lockupu KN */
+
+  /* ---- HAIRLINE (walnut) ------------------------------------------------- */
+  --hairline:        1px solid var(--hairline-color);
+  --hairline-2:      2px solid var(--hairline-color);
+
+  /* ---- MOTION ----------------------------------------------------------- */
+  --ease:        cubic-bezier(0.2, 0.6, 0.2, 1);
+  --dur-fast:    120ms;
+  --dur:         200ms;
+
+  /* ---- LAYOUT ----------------------------------------------------------- */
+  --maxw-content: 72rem;   /* 1152px */
+  --maxw-prose:   40rem;   /* 640px — kolumna czytania */
+  --nav-h:        4.5rem;  /* 72px */
+}
+
+/* =============================================================================
+   RESET / BOX-SIZING (mobile-first, brak poziomego scrolla)
+============================================================================= */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; }
+img { max-width: 100%; height: auto; display: block; }
+a { color: inherit; }
+
+/* =============================================================================
+   ELEMENTY BAZOWE
+============================================================================= */
+body {
+  background: var(--bg-page);
+  color: var(--text-strong);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  font-weight: var(--wght-body);
+  letter-spacing: var(--ls-body);
+  font-synthesis: none;              /* nie syntezuj kursywy/pogrubienia (patrz FONTY) */
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.h-hero, .h1, .h2, .h3 {
+  font-family: var(--font-display);
+  color: var(--text-strong);
+  font-variation-settings: var(--fraunces-soft);
+  margin: 0;
+}
+.h-hero {
+  font-size: var(--fs-hero);
+  line-height: var(--lh-hero);
+  font-weight: var(--wght-hero);
+  letter-spacing: var(--ls-hero);
+  font-variation-settings: var(--fraunces-hero);
+}
+.h1 { font-size: var(--fs-h1); line-height: var(--lh-h1); font-weight: var(--wght-h1); letter-spacing: var(--ls-h1); }
+.h2 { font-size: var(--fs-h2); line-height: var(--lh-h2); font-weight: var(--wght-h2); letter-spacing: var(--ls-h2); }
+.h3 { font-size: var(--fs-h3); line-height: var(--lh-h3); font-weight: var(--wght-h3); letter-spacing: var(--ls-h3); }
+
+/* akcent „signature": jedna fraza kursywą Fraunces (hero „run themselves") */
+.accent-italic {
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--accent-do);
+  font-weight: inherit;
+}
+
+.eyebrow {
+  font-family: var(--font-utility);
+  font-size: var(--fs-eyebrow);
+  line-height: var(--lh-eyebrow);
+  font-weight: var(--wght-eyebrow);
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;         /* faux small-caps */
+  color: var(--accent-do);
+  display: inline-block;
+}
+.eyebrow--learn { color: var(--accent-learn); }
+.eyebrow--muted { color: var(--text-muted); }
+
+.body-lg { font-size: var(--fs-body-lg); line-height: var(--lh-body-lg); font-weight: var(--wght-body-lg); }
+.small   { font-size: var(--fs-small);   line-height: var(--lh-small);   font-weight: var(--wght-small); }
+.caption { font-size: var(--fs-caption); line-height: var(--lh-caption); font-weight: var(--wght-caption); letter-spacing: var(--ls-caption); color: var(--text-muted); }
+
+.link {
+  color: var(--link);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--hairline-strong);
+  transition: text-decoration-color var(--dur) var(--ease);
+}
+.link:hover { text-decoration-color: var(--link); }
+
+/* =============================================================================
+   PRZYCISKI
+============================================================================= */
+.btn-primary,
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  padding: 0.8rem 1.5rem;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  text-decoration: none;
+  transition: background var(--dur) var(--ease), transform var(--dur-fast) var(--ease), border-color var(--dur) var(--ease);
+}
+/* PRIMARY — clay, biały tekst (5.73 AA). Linia „done-for-you". */
+.btn-primary {
+  background: var(--accent-do);
+  color: var(--text-on-accent);
+  border: 1.5px solid var(--accent-do);
+  box-shadow: var(--shadow-sm);
+}
+.btn-primary:hover  { background: var(--color-clay-deep); border-color: var(--color-clay-deep); transform: translateY(-1px); }
+.btn-primary:active { transform: translateY(0); }
+
+/* SECONDARY — sage outline, etykieta espresso (12.20 AAA na oat). Linia „learn". */
+.btn-secondary {
+  background: transparent;
+  color: var(--text-strong);
+  border: 1.5px solid var(--accent-learn);
+  box-shadow: none;
+}
+.btn-secondary:hover  { background: var(--accent-learn); color: var(--text-on-accent); transform: translateY(-1px); } /* biały na sage 5.69 AA */
+.btn-secondary:active { transform: translateY(0); }
+
+.btn-primary:focus-visible,
+.btn-secondary:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+/* =============================================================================
+   KARTA „DRZWI" (2 warianty) — sekcja DWOJE DRZWI (spec §4A/§4B)
+============================================================================= */
+.door-card {
+  position: relative;
+  background: var(--bg-surface);
+  border: var(--hairline);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition: box-shadow var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+.door-card::before {                 /* linia „progu" u góry karty */
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: var(--hairline-color);
+}
+.door-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.door-card--do::before    { background: var(--accent-do); }     /* clay = „done-for-you" */
+.door-card--learn::before { background: var(--accent-learn); }  /* sage = „learn" */
+/* akcenty tekstu/eyebrow wewnątrz kart na powierzchni bone: clay 5.00 / sage 4.96 AA */
+.door-card--do    .eyebrow { color: var(--accent-do); }
+.door-card--learn .eyebrow { color: var(--accent-learn); }
+
+/* =============================================================================
+   NAV (sticky) + flaga PL/EN
+============================================================================= */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  height: var(--nav-h);
+  padding: 0 var(--space-lg);
+  background: color-mix(in srgb, var(--color-oat) 88%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: var(--hairline);
+}
+.nav-link {
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  font-weight: 500;
+  color: var(--text-strong);
+  text-decoration: none;
+  padding: var(--space-2xs) 0;
+  border-bottom: 2px solid transparent;
+  transition: border-color var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.nav-link:hover { color: var(--accent-do); border-bottom-color: var(--accent-do); }
+.nav-spacer { margin-left: auto; }   /* wypycha flagę + CTA na prawo */
+.nav-flag {                          /* przełącznik domeny PL↔EN */
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  font-family: var(--font-utility);
+  font-size: var(--fs-caption);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-decoration: none;
+  padding: var(--space-2xs) var(--space-sm);
+  border: var(--hairline);
+  border-radius: var(--radius-pill);
+  transition: border-color var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.nav-flag:hover { color: var(--text-strong); border-color: var(--hairline-strong); }
+.nav-link:focus-visible,
+.nav-flag:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 3px; border-radius: var(--radius-sm); }
+
+/* =============================================================================
+   STOPKA (inwersja: espresso tło, oat tekst — 12.20 AAA)
+============================================================================= */
+.footer {
+  background: var(--bg-inverse);
+  color: var(--text-on-inverse);
+  padding: var(--space-3xl) var(--space-lg) var(--space-xl);
+}
+.footer a {
+  color: var(--text-on-inverse);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+  text-decoration-color: rgba(235, 228, 213, 0.4);
+}
+.footer a:hover { text-decoration-color: var(--text-on-inverse); }
+.footer .caption { color: rgba(235, 228, 213, 0.66); }  /* „stone" na ciemnym */
+.footer a:focus-visible { outline: 2px solid var(--color-oat); outline-offset: 3px; }
+
+/* =============================================================================
+   TAG / KARTECZKA — zielony (sage), Fraunces italic, jak podpisana notka
+   (bone na sage = 4.96 AA)
+============================================================================= */
+.tag-note {
+  display: inline-block;
+  background: var(--accent-learn);
+  color: var(--color-bone);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--fs-small);
+  line-height: 1.3;
+  padding: var(--space-xs) var(--space-md);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-md);
+  transform: rotate(-2deg);
+  transform-origin: left center;
+}
+
+/* =============================================================================
+   LOCKUP „KN" — stempel (−6°, druk-cień). Cytuje monogram z czapki.
+============================================================================= */
+.kn-stamp {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+  color: var(--text-strong);
+  background: var(--bg-surface);
+  border: 2px solid var(--text-strong);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-stamp);
+  transform: rotate(-6deg);
+  user-select: none;
+}
+.kn-stamp--clay {                    /* wariant pełny na akcencie „do" */
+  background: var(--accent-do);
+  color: var(--text-on-accent);
+  border-color: var(--color-clay-deep);
+}
+
+/* =============================================================================
+   DOSTĘPNOŚĆ — reduced motion (quality floor)
+============================================================================= */
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+  .btn-primary:hover, .btn-secondary:hover, .door-card:hover { transform: none; }
+}

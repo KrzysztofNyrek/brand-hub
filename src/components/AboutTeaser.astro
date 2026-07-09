@@ -1,0 +1,37 @@
+---
+// O MNIE (skrót) — spec §4A/§4B sekcja 4. Most PM→AI→2 linie. CTA → pełne /about (interim WP).
+import { LINKS } from '../config.mjs';
+const { lang = 'en' } = Astro.props;
+const isPl = lang === 'pl';
+const paras = isPl
+  ? [
+      'Latami prowadziłem projekty po staremu: mapowałem procesy, odblokowywałem zespoły, kasowałem robotę, która się nie spinała. Potem przyszło AI i zamiast pisać o nim mądre posty, wpiąłem je w to, jak naprawdę pracuję.',
+      'Teraz robię dwie rzeczy. Buduję automatyzacje dla firm, które mają dość klepania tego samego ręcznie. I pokazuję, jak część z AI ogarnąć samemu.',
+      'Nie jestem guru i nie sprzedaję marzeń. Testuję co działa, mówię wprost gdzie się sypie, i oddaję to, co jest gotowe.',
+    ]
+  : [
+      'I spent years running projects the classic way: mapping processes, unblocking teams, killing the work that didn’t pay. Then AI showed up, and instead of writing think-pieces about it, I wired it into how I actually work.',
+      'Now I do two things. I build automation systems for businesses that are tired of doing the same thing by hand. And I show project managers how to do the AI part themselves.',
+      'I’m not a guru and I don’t sell dreams. I test what works, I say out loud where it breaks, and I hand over the parts that are ready.',
+    ];
+const heading = isPl ? 'W skrócie' : 'The short version';
+const ctaLabel = isPl ? 'Więcej o mnie' : 'More about me';
+const ctaHref = isPl ? LINKS.aboutPl : LINKS.aboutEn;
+const ctaTodo = isPl ? 'about-pl' : null;
+---
+<section id="about" class="section-pad about">
+  <div class="container about-inner">
+    <span class="eyebrow eyebrow--muted">{heading}</span>
+    {paras.map((p) => <p class="body-lg about-p">{p}</p>)}
+    {ctaHref
+      ? <a class="link about-cta" href={ctaHref}>{ctaLabel} →</a>
+      : <a class="link about-cta" href="#" data-todo={ctaTodo} title="URL do dostarczenia (P2)">{ctaLabel} →</a>}
+  </div>
+</section>
+
+<style>
+  .about-inner { max-width: var(--maxw-prose); }
+  .about .eyebrow { margin-bottom: var(--space-lg); }
+  .about-p { margin: 0 0 var(--space-lg); }
+  .about-cta { display: inline-block; font-weight: 600; margin-top: var(--space-xs); }
+</style>

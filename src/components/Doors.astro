@@ -1,0 +1,116 @@
+---
+// DWOJE DRZWI (spec §4A/§4B sekcja 2). A = automatyzacja (link out + UTM), B = learn (waitlist).
+import { LINKS, utm } from '../config.mjs';
+const { lang = 'en' } = Astro.props;
+const isPl = lang === 'pl';
+
+const systemUrl = utm(LINKS.system, lang);
+const auditUrl  = utm(LINKS.audit, lang);
+
+const t = isPl
+  ? {
+      heading: 'Dwie drogi. Wybierz swoją.',
+      intro: 'Jedną prowadzę za Ciebie. Drugą oddaję Tobie do ręki.',
+      aEyebrow: 'Dla właścicieli firm',
+      aTitle: 'Ja buduję system, Ty odzyskujesz tydzień',
+      aBody: ['Jeśli jakiś proces w Twojej firmie robisz ręcznie w kółko, prawie na pewno da się go zautomatyzować. Najpierw mapuję proces, dopiero potem automatyzuję. Nie klikam bez myślenia.',
+              'Tak jedna agencja, z którą pracowałem, rozładowała wąskie gardła i doszła do 1 mln PLN rocznie.'],
+      aCta: 'Zobacz jak to robię', aCta2: 'Umów darmowy Mini-Audyt',
+      bEyebrow: 'Dla tych, którzy chcą działać sami',
+      bTitle: 'Naucz się używać AI w swojej robocie',
+      bBody: ['Internet jest zalany listami „20 promptów, które zmienią Twoją pracę". Większość to szum.',
+              'Buduję coś innego: dokładnie to, jak sam pracuję z AI, narzędzia które naprawdę zasłużyły na miejsce, i miejsca gdzie przestałem AI ufać. Gotowe do użycia, bez ściemy.',
+              'Jeszcze tego nie ma. Zapisz się, a wejdziesz pierwszy gdy ruszy.'],
+      emailPh: 'twoj@email.pl', submit: 'Zapisz mnie na early access',
+      micro: 'Zero spamu. Zero codziennych „porad o AI". Tylko sygnał, gdy będzie gotowe.',
+      emailLabel: 'Adres e-mail',
+    }
+  : {
+      heading: 'Two ways I can help. Pick your door.',
+      intro: 'One I run for you. One I hand to you. Same engine, different seat.',
+      aEyebrow: 'For business owners',
+      aTitle: 'I build the system, you get your week back',
+      aBody: ['If a task in your business gets done by hand every week, it can almost certainly run itself. I map the process first, then I automate it. No clicking without thinking.',
+              'That’s how one agency I worked with cleared its bottlenecks and grew to 1M PLN a year.'],
+      aCta: 'See how I do it', aCta2: 'Book a free Mini-Audit',
+      bEyebrow: 'For project managers',
+      bTitle: 'Learn to use AI in your own work',
+      bBody: ['The internet is drowning in “20 AI prompts for PMs.” Most of it is noise.',
+              'I’m building something different: the exact way I run projects with AI, the tools that actually earned their place, and where I stopped trusting it. Ready-to-use artifacts, not hype.',
+              'It’s not live yet. Get on the list and you’re first in when it opens.'],
+      emailPh: 'your@email.com', submit: 'Join the early-access list',
+      micro: 'No spam. No daily “AI tips.” Just the drop when it’s ready.',
+      emailLabel: 'Email address',
+    };
+---
+<section id="doors" class="section-pad doors">
+  <div class="container">
+    <header class="doors-head">
+      <h2 class="h2">{t.heading}</h2>
+      <p class="body-lg" style="color:var(--text-muted); margin:var(--space-sm) 0 0;">{t.intro}</p>
+    </header>
+
+    <div class="doors-grid">
+      <!-- Drzwi A: automatyzacja (link out, UTM) -->
+      <article id="automation" class="door-card door-card--do">
+        <span class="eyebrow">{t.aEyebrow}</span>
+        <h3 class="h3 door-title">{t.aTitle}</h3>
+        {t.aBody.map((p) => <p class="door-body">{p}</p>)}
+        <div class="door-cta">
+          <a class="btn-primary" href={systemUrl}>{t.aCta} →</a>
+          <a class="link door-cta-sec" href={auditUrl}>{t.aCta2} →</a>
+        </div>
+      </article>
+
+      <!-- Drzwi B: learn AI (waitlist → /api/subscribe) -->
+      <article id="learn" class="door-card door-card--learn">
+        <span class="eyebrow">{t.bEyebrow}</span>
+        <h3 class="h3 door-title">{t.bTitle}</h3>
+        {t.bBody.map((p) => <p class="door-body">{p}</p>)}
+
+        <form class="waitlist" action="/api/subscribe" method="POST" data-line="2">
+          <input type="hidden" name="lang" value={lang} />
+          <input type="hidden" name="utm_source" value="hub" />
+          <input type="hidden" name="utm_campaign" value={lang} />
+          <input type="hidden" name="utm_content" value="door-learn" />
+          <!-- honeypot: musi zostać PUSTY. name="firma_www" (core sprawdza to pole) -->
+          <div class="hp" aria-hidden="true">
+            <label>Firma WWW<input type="text" name="firma_www" tabindex="-1" autocomplete="off" /></label>
+          </div>
+          <label class="sr-only" for={`wl-email-${lang}`}>{t.emailLabel}</label>
+          <div class="waitlist-row">
+            <input id={`wl-email-${lang}`} class="waitlist-email" type="email" name="email" required
+                   inputmode="email" autocomplete="email" placeholder={t.emailPh} />
+            <button class="btn-secondary" type="submit">{t.submit}</button>
+          </div>
+          <p class="caption waitlist-micro">{t.micro}</p>
+        </form>
+      </article>
+    </div>
+  </div>
+</section>
+
+<style>
+  .doors-head { max-width: var(--maxw-prose); margin-bottom: var(--space-2xl); }
+  .doors-grid { display: grid; gap: var(--space-lg); }
+  .door-title { margin: var(--space-sm) 0 var(--space-md); }
+  .door-body { margin: 0 0 var(--space-md); color: var(--text-strong); }
+  .door-cta { display: flex; flex-direction: column; gap: var(--space-sm); align-items: flex-start; margin-top: var(--space-lg); }
+  .door-cta-sec { font-weight: 500; }
+  .waitlist { margin-top: var(--space-lg); }
+  .waitlist-row { display: flex; flex-wrap: wrap; gap: var(--space-sm); }
+  .waitlist-email {
+    flex: 1 1 12rem; min-width: 0;
+    font-family: var(--font-body); font-size: var(--fs-small);
+    padding: 0.8rem 1rem; border: var(--hairline); border-radius: var(--radius-pill);
+    background: var(--color-white); color: var(--text-strong);
+  }
+  .waitlist-email:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+  .waitlist .btn-secondary { flex: 0 0 auto; }
+  .waitlist-micro { margin: var(--space-sm) 0 0; }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+  @media (min-width: 800px) {
+    .doors-grid { grid-template-columns: 1fr 1fr; gap: var(--space-xl); align-items: start; }
+  }
+</style>

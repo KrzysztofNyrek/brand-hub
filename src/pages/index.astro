@@ -1,19 +1,8 @@
 ---
-// Brand Hub — EN placeholder (T3). Real hub sections land in T5.
-const title = 'Krzysztof Nyrek — Product Manager + AI';
+// Root strony startowej.
+// Domyślny build (HUB_LANG nieustawiony) → EN na „/" + PL na „/pl/".
+// Build .pl (HUB_LANG=pl) → „/" = PL (deploy do osobnego projektu CF Pages). Patrz README.
+import HubHome from '../components/HubHome.astro';
+const lang = process.env.HUB_LANG === 'pl' ? 'pl' : 'en';
 ---
-
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-	</head>
-	<body>
-		<main>
-			<h1>Hello EN</h1>
-			<p>Brand Hub scaffold is live. Sections coming in T5.</p>
-		</main>
-	</body>
-</html>
+<HubHome lang={lang} />

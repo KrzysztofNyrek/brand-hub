@@ -1,0 +1,32 @@
+---
+// Kompozycja strony startowej — składa sekcje wg języka (spec §4A EN / §4B PL).
+// EN: 6 sekcji (Hero, Doors, Authority, About, Blog, Contact).
+// PL: lżejszy (spec §4B) — bez teasera bloga.
+import Hub from '../layouts/Hub.astro';
+import Hero from './Hero.astro';
+import Doors from './Doors.astro';
+import Authority from './Authority.astro';
+import AboutTeaser from './AboutTeaser.astro';
+import BlogTeaser from './BlogTeaser.astro';
+import Contact from './Contact.astro';
+
+const { lang = 'en' } = Astro.props;
+const isPl = lang === 'pl';
+const meta = isPl
+  ? {
+      title: 'Krzysztof Nyrek — automatyzacja procesów i AI w pracy',
+      description: 'Automatyzuję to, co w Twojej firmie robisz ręcznie co tydzień — i uczę, jak używać AI w pracy. Praktyk PM + AI, nie guru.',
+    }
+  : {
+      title: 'Krzysztof Nyrek — a project manager who runs on AI',
+      description: 'I build automation systems for businesses, and I teach project managers to use AI in their own work. A practitioner, not a guru.',
+    };
+---
+<Hub lang={lang} title={meta.title} description={meta.description}>
+  <Hero lang={lang} />
+  <Doors lang={lang} />
+  <Authority lang={lang} />
+  <AboutTeaser lang={lang} />
+  {!isPl && <BlogTeaser />}
+  <Contact lang={lang} />
+</Hub>

@@ -1,20 +1,31 @@
 ---
-// PL thank-you (waitlist „AI-w-pracy early access"). Docelowy styl w T5/T6.
-const title = 'Zapisano — Krzysztof Nyrek';
+// PL thank-you (waitlist „AI-w-pracy early access"). PRG target z /api/subscribe (lang=pl).
+import '../styles/tokens.css';
+import { HUB_PL } from '../config.mjs';
+const title = 'Jesteś na liście — Krzysztof Nyrek';
 ---
-
+<!doctype html>
 <html lang="pl">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta name="robots" content="noindex" />
-		<title>{title}</title>
-	</head>
-	<body>
-		<main>
-			<h1>Dzięki — jesteś na liście.</h1>
-			<p>Dam znać, gdy „AI w pracy" ruszy. Do zobaczenia.</p>
-			<p><a href="/">← Wróć na stronę główną</a></p>
-		</main>
-	</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>{title}</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <style>
+      body { overflow-x: hidden; min-height: 100dvh; display: grid; place-items: center; padding: var(--space-lg); }
+      .ty { max-width: 34rem; text-align: center; }
+      .ty .kn-stamp { margin: 0 auto var(--space-lg); }
+      .ty h1 { margin-bottom: var(--space-md); }
+      .ty p { color: var(--text-muted); margin: 0 auto var(--space-xl); max-width: 30ch; }
+    </style>
+  </head>
+  <body>
+    <main class="ty">
+      <span class="kn-stamp">KN</span>
+      <h1 class="h1">Jesteś na liście.</h1>
+      <p class="body-lg">Napiszę do Ciebie w dniu startu „AI w pracy”. Bez spamu po drodze.</p>
+      <a class="btn-primary" href={HUB_PL + '/'}>← Wróć na stronę główną</a>
+    </main>
+  </body>
 </html>

@@ -1,0 +1,19 @@
+---
+// TEASER BLOGA (spec §4A sekcja 5) — EN only. Faza 1: fallback statyczny (bez live WP feed,
+// copy_en.md: „Jeśli feed niedostępny w Fazie 1: pokaż samą sekcję intro + CTA do bloga").
+import { LINKS } from '../config.mjs';
+---
+<section id="blog" class="section-pad blog">
+  <div class="container blog-inner">
+    <span class="eyebrow eyebrow--muted">Notes from the desk</span>
+    <p class="body-lg blog-intro">Where I put AI to work, and where I caught it lying. New posts on running projects in the age of AI.</p>
+    <a class="link blog-cta" href={LINKS.blogEn}>Read the blog →</a>
+  </div>
+</section>
+
+<style>
+  .blog-inner { max-width: var(--maxw-prose); }
+  .blog .eyebrow { margin-bottom: var(--space-md); }
+  .blog-intro { margin: 0 0 var(--space-md); color: var(--text-muted); }
+  .blog-cta { display: inline-block; font-weight: 600; }
+</style>

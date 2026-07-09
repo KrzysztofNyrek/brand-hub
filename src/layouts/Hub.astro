@@ -1,0 +1,122 @@
+---
+// Brand Hub — shared layout (T5/T6). Sticky NAV + flaga PL/EN + stopka + hreflang.
+// Prop `lang` ('en'|'pl') steruje nawigacją, flagą i copy stopki. Ta sama identity
+// (tokens.css) dla obu; różni się układ/treść sekcji (spec §4A/§4B).
+import '../styles/tokens.css';
+import { HUB_EN, HUB_PL } from '../config.mjs';
+
+const { lang = 'en', title, description } = Astro.props;
+const isPl = lang === 'pl';
+const canonical = isPl ? HUB_PL + '/' : HUB_EN + '/';
+
+const nav = isPl
+  ? {
+      links: [
+        { href: '#automation', label: 'Automatyzacja' },
+        { href: '#learn', label: 'Naucz się AI' },
+        { href: '#about', label: 'O mnie' },
+      ],
+      flagHref: HUB_EN, flag: '🇬🇧', flagLabel: 'EN',
+      cta: { href: '#contact', label: 'Kontakt' },
+    }
+  : {
+      links: [
+        { href: '#automation', label: 'Automation' },
+        { href: '#learn', label: 'Learn AI' },
+        { href: '#blog', label: 'Blog' },
+        { href: '#about', label: 'About' },
+      ],
+      flagHref: HUB_PL, flag: '🇵🇱', flagLabel: 'PL',
+      cta: { href: '#contact', label: 'Contact' },
+    };
+
+const footer = isPl
+  ? {
+      tagline: 'Krzysztof Nyrek · Automatyzacja procesów, oparta na praktyce.',
+      altHref: HUB_EN, altLabel: 'English',
+      home: 'Wróć na górę',
+    }
+  : {
+      tagline: 'Krzysztof Nyrek · Project management, run on AI.',
+      altHref: HUB_PL, altLabel: 'Polski',
+      home: 'Back to top',
+    };
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+    <link rel="canonical" href={canonical} />
+    <!-- hreflang: para hub EN ↔ hub PL (spec §3), x-default = EN. Absolutne domeny produkcyjne. -->
+    <link rel="alternate" hreflang="en" href={HUB_EN + '/'} />
+    <link rel="alternate" hreflang="pl" href={HUB_PL + '/'} />
+    <link rel="alternate" hreflang="x-default" href={HUB_EN + '/'} />
+    <!-- fonty self-host: preload wariantów latin above-the-fold -->
+    <link rel="preload" href="/fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/worksans-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#EBE4D5" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    {description && <meta property="og:description" content={description} />}
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={isPl ? 'pl_PL' : 'en_US'} />
+    <style>
+      html { scroll-behavior: smooth; scroll-padding-top: var(--nav-h); }
+      body { overflow-x: hidden; }
+      .container { width: 100%; max-width: var(--maxw-content); margin-inline: auto; padding-inline: var(--space-lg); }
+      section[id], .hub-section { scroll-margin-top: calc(var(--nav-h) + var(--space-md)); }
+      .section-pad { padding-block: var(--space-4xl); }
+      @media (max-width: 640px) { .section-pad { padding-block: var(--space-3xl); } }
+      .skip-link {
+        position: absolute; left: -999px; top: 0; z-index: 100;
+        background: var(--color-espresso); color: var(--color-oat);
+        padding: var(--space-sm) var(--space-md); border-radius: var(--radius-sm);
+      }
+      .skip-link:focus { left: var(--space-md); top: var(--space-md); }
+      .nav-links { display: flex; gap: var(--space-md); flex-wrap: wrap; }
+      .nav-cta { font-size: var(--fs-small); }
+      /* Mobile nav: sekcje osiągalne scrollem/CTA hero — chowamy listę kotwic, zostaje KN + flaga + CTA */
+      @media (max-width: 720px) {
+        .nav { gap: var(--space-sm); padding-inline: var(--space-md); }
+        .nav-links { display: none; }
+        .nav-cta { padding: 0.7rem 1.1rem; }
+      }
+      .footer-inner { max-width: var(--maxw-content); margin-inline: auto; display: flex; flex-wrap: wrap; gap: var(--space-md) var(--space-lg); align-items: baseline; justify-content: space-between; }
+      .footer-meta { display: flex; flex-wrap: wrap; gap: var(--space-xs) var(--space-md); align-items: baseline; }
+    </style>
+  </head>
+  <body>
+    <a href="#hero" class="skip-link">{isPl ? 'Przejdź do treści' : 'Skip to content'}</a>
+    <nav class="nav" aria-label={isPl ? 'Główna nawigacja' : 'Main navigation'}>
+      <a href="#hero" class="kn-stamp" aria-label="Krzysztof Nyrek">KN</a>
+      <div class="nav-links">
+        {nav.links.map((l) => <a class="nav-link" href={l.href}>{l.label}</a>)}
+      </div>
+      <span class="nav-spacer"></span>
+      <a class="nav-flag" href={nav.flagHref} aria-label={isPl ? 'English version' : 'Wersja polska'}>
+        <span aria-hidden="true">{nav.flag}</span> {nav.flagLabel}
+      </a>
+      <a class="btn-primary nav-cta" href={nav.cta.href}>{nav.cta.label}</a>
+    </nav>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <p class="small" style="margin:0; max-width:38ch;">{footer.tagline}</p>
+        <div class="footer-meta">
+          <span class="caption">© 2026 Krzysztof Nyrek</span>
+          <a class="small" href={footer.altHref}>{footer.altLabel}</a>
+          <a class="small" href="#hero">{footer.home}</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
