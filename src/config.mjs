@@ -15,8 +15,8 @@ export const LINKS = {
 
   // --- PLACEHOLDERY (P2 — do dostarczenia przez K PRZED T7). null = render href="#" data-todo ---
   amazonProjectCoffee: 'https://www.amazon.com/Project-Coffee-Keeping-business-afloat/dp/8397189017',   // książka „Project Coffee" (Amazon)
-  linkedin:            null,   // profil LinkedIn Krzysztofa
-  leadMagnetFirst5:    null,   // „First 5 PM Days" lead magnet / MailerLite delivery
+  linkedin:            'https://www.linkedin.com/in/krzysztof-nyrek/',   // profil LinkedIn Krzysztofa
+  leadMagnetFirst5:    'https://krzysztofnyrek.eu/newsletter/',   // „First 5 PM Days" (INTERIM — K: newsletter do przebudowy, podmienić po rebuildzie)
   aboutPl:             null,   // pełne „o mnie" PL (interim WP nie istnieje w PL; docelowo Faza 4)
 };
 
