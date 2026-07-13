@@ -11,6 +11,7 @@ const t = isPl
   ? {
       heading: 'Dwie drogi. Wybierz swoją.',
       intro: 'Jedną prowadzę za Ciebie. Drugą oddaję Tobie do ręki.',
+      aId: 'zrobione-za-Ciebie', bId: 'zrób-to-sam',
       aEyebrow: 'Dla właścicieli firm',
       aTitle: 'Ja buduję system, Ty odzyskujesz tydzień',
       aBody: ['Jeśli jakiś proces w Twojej firmie robisz ręcznie w kółko, prawie na pewno da się go zautomatyzować. Najpierw mapuję proces, dopiero potem automatyzuję. Nie klikam bez myślenia.',
@@ -28,6 +29,7 @@ const t = isPl
   : {
       heading: 'Two ways I can help. Pick your door.',
       intro: 'One I run for you. One I hand to you. Same engine, different seat.',
+      aId: 'done-for-you', bId: 'do-it-yourself',
       aEyebrow: 'For business owners',
       aTitle: 'I build the system, you get your week back',
       aBody: ['If a task in your business gets done by hand every week, it can almost certainly run itself. I map the process first, then I automate it. No clicking without thinking.',
@@ -46,15 +48,16 @@ const t = isPl
 <section id="doors" class="section-pad doors">
   <div class="container">
     <header class="section-head">
-      <span class="eyebrow eyebrow--tick">{isPl ? 'Jak pomagam' : 'How I can help'}</span>
+      <span class="eyebrow"><span class="eyebrow-fig">FIG.02</span>{isPl ? 'Jak pomagam' : 'How I can help'}</span>
       <h2 class="h2">{t.heading}</h2>
       <p class="section-lead">{t.intro}</p>
     </header>
 
     <div class="doors-grid">
-      <!-- Drzwi A: automatyzacja (link out, UTM) -->
+      <!-- Drzwi A: automatyzacja (link out, UTM) — MODULE A / ink -->
       <article id="automation" class="door-card door-card--do">
-        <span class="eyebrow">{t.aEyebrow}</span>
+        <div class="module-id"><span class="tag">MODULE A</span>{t.aId}</div>
+        <span class="eyebrow eyebrow--muted">{t.aEyebrow}</span>
         <h3 class="h3 door-title">{t.aTitle}</h3>
         {t.aBody.map((p) => <p class="door-body">{p}</p>)}
         <div class="door-cta">
@@ -63,9 +66,10 @@ const t = isPl
         </div>
       </article>
 
-      <!-- Drzwi B: learn AI (waitlist → /api/subscribe) -->
+      <!-- Drzwi B: learn AI (waitlist → /api/subscribe) — MODULE B / cobalt -->
       <article id="learn" class="door-card door-card--learn">
-        <span class="eyebrow">{t.bEyebrow}</span>
+        <div class="module-id"><span class="tag">MODULE B</span>{t.bId}</div>
+        <span class="eyebrow eyebrow--muted">{t.bEyebrow}</span>
         <h3 class="h3 door-title">{t.bTitle}</h3>
         {t.bBody.map((p) => <p class="door-body">{p}</p>)}
 

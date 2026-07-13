@@ -11,18 +11,20 @@ const canonical = isPl ? HUB_PL + '/' : HUB_EN + '/';
 
 const nav = isPl
   ? {
+      role: 'kierownik-projektu.class / automatyzacja.build',
       links: [
         { href: '#automation', label: 'Automatyzacja' },
-        { href: '#learn', label: 'Naucz się AI' },
-        { href: '#about', label: 'O mnie' },
+        { href: '#learn', label: 'Naucz_się_AI' },
+        { href: '#about', label: 'O_mnie' },
       ],
       flagHref: HUB_EN, flag: '🇬🇧', flagLabel: 'EN',
       cta: { href: '#contact', label: 'Kontakt' },
     }
   : {
+      role: 'project-manager.class / automation.build',
       links: [
         { href: '#automation', label: 'Automation' },
-        { href: '#learn', label: 'Learn AI' },
+        { href: '#learn', label: 'Learn_AI' },
         { href: '#blog', label: 'Blog' },
         { href: '#about', label: 'About' },
       ],
@@ -55,11 +57,12 @@ const footer = isPl
     <link rel="alternate" hreflang="en" href={HUB_EN + '/'} />
     <link rel="alternate" hreflang="pl" href={HUB_PL + '/'} />
     <link rel="alternate" hreflang="x-default" href={HUB_EN + '/'} />
-    <!-- fonty self-host: preload wariantów latin above-the-fold -->
-    <link rel="preload" href="/fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/worksans-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <!-- fonty self-host: preload wariantów latin above-the-fold (Spec Sheet) -->
+    <link rel="preload" href="/fonts/spacegrotesk-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/plexsans-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/plexmono-400-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <meta name="theme-color" content="#EBE4D5" />
+    <meta name="theme-color" content="#F4F5F3" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     {description && <meta property="og:description" content={description} />}
@@ -72,17 +75,22 @@ const footer = isPl
          (patrz komentarz tam) — tu były scoped i nie trafiały na komponenty. */
       .skip-link {
         position: absolute; left: -999px; top: 0; z-index: 100;
-        background: var(--color-espresso); color: var(--color-oat);
+        background: var(--color-ink); color: var(--color-paper);
         padding: var(--space-sm) var(--space-md); border-radius: var(--radius-sm);
       }
       .skip-link:focus { left: var(--space-md); top: var(--space-md); }
-      .nav-links { display: flex; gap: var(--space-md); flex-wrap: wrap; }
+      /* brand: [KN] tag + nazwa (Space Grotesk) + rola (mono) */
+      .nav-brand { display: flex; align-items: center; gap: 0.8rem; text-decoration: none; }
+      .nav-brand-txt { display: flex; flex-direction: column; line-height: 1.15; }
+      .nav-brand-name { font-family: var(--font-display); font-weight: 600; font-size: 1rem; letter-spacing: -0.01em; color: var(--text-strong); }
+      .nav-brand-role { font-family: var(--font-mono); font-size: 0.6875rem; color: var(--text-muted); letter-spacing: 0.01em; }
+      .nav-links { display: flex; gap: var(--space-lg); flex-wrap: wrap; }
       .nav-cta { font-size: var(--fs-small); }
-      /* Mobile nav: sekcje osiągalne scrollem/CTA hero — chowamy listę kotwic, zostaje KN + flaga + CTA */
-      @media (max-width: 720px) {
+      /* Mobile nav: sekcje osiągalne scrollem/CTA hero — chowamy listę kotwic + rolę, zostaje [KN] + flaga + CTA */
+      @media (max-width: 760px) {
         .nav { gap: var(--space-sm); padding-inline: var(--space-md); }
-        .nav-links { display: none; }
-        .nav-cta { padding: 0.7rem 1.1rem; }
+        .nav-links, .nav-brand-role { display: none; }
+        .nav-cta { padding: 0.65rem 1rem; }
       }
       .footer { padding-inline: var(--gutter); }
       .footer-inner { max-width: var(--maxw-content); margin-inline: auto; display: flex; flex-wrap: wrap; gap: var(--space-md) var(--space-lg); align-items: baseline; justify-content: space-between; }
@@ -91,14 +99,21 @@ const footer = isPl
   </head>
   <body>
     <a href="#hero" class="skip-link">{isPl ? 'Przejdź do treści' : 'Skip to content'}</a>
+    <div class="sheet">
     <nav class="nav" aria-label={isPl ? 'Główna nawigacja' : 'Main navigation'}>
-      <a href="#hero" class="kn-stamp" aria-label="Krzysztof Nyrek">KN</a>
+      <a href="#hero" class="nav-brand" aria-label="Krzysztof Nyrek">
+        <span class="kn-tag" aria-hidden="true">[KN]</span>
+        <span class="nav-brand-txt">
+          <span class="nav-brand-name">Krzysztof Nyrek</span>
+          <span class="nav-brand-role">{nav.role}</span>
+        </span>
+      </a>
+      <span class="nav-spacer"></span>
       <div class="nav-links">
         {nav.links.map((l) => <a class="nav-link" href={l.href}>{l.label}</a>)}
       </div>
-      <span class="nav-spacer"></span>
       <a class="nav-flag" href={nav.flagHref} aria-label={isPl ? 'English version' : 'Wersja polska'}>
-        <span aria-hidden="true">{nav.flag}</span> {nav.flagLabel}
+        <span aria-hidden="true">⇄</span> {nav.flagLabel}
       </a>
       <a class="btn-primary nav-cta" href={nav.cta.href}>{nav.cta.label}</a>
     </nav>
@@ -109,7 +124,7 @@ const footer = isPl
 
     <footer class="footer">
       <div class="footer-inner">
-        <p class="small" style="margin:0; max-width:38ch;">{footer.tagline}</p>
+        <p class="small" style="margin:0; max-width:40ch;">{footer.tagline}</p>
         <div class="footer-meta">
           <span class="caption">© 2026 Krzysztof Nyrek</span>
           <a class="small" href={footer.altHref}>{footer.altLabel}</a>
@@ -117,5 +132,6 @@ const footer = isPl
         </div>
       </div>
     </footer>
+    </div>
   </body>
 </html>
