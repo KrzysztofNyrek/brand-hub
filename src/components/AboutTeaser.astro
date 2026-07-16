@@ -16,8 +16,9 @@ const paras = isPl
     ];
 const heading = isPl ? 'W skrócie' : 'The short version';
 const ctaLabel = isPl ? 'Więcej o mnie' : 'More about me';
-const ctaHref = isPl ? LINKS.aboutPl : LINKS.aboutEn;
-const ctaTodo = isPl ? 'about-pl' : null;
+// PL: brak strony „o mnie" w PL (aboutPl=null; Faza 4) → CTA kieruje na profil LinkedIn (decyzja K, opcja c).
+const ctaHref = isPl ? LINKS.linkedin : LINKS.aboutEn;
+const ctaTodo = null;
 ---
 <section id="about" class="section-pad about">
   <div class="container">
