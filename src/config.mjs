@@ -7,7 +7,7 @@ export const HUB_PL = 'https://krzysztofnyrek.pl';
 
 export const LINKS = {
   // --- ZNANE / potwierdzone ---
-  system: 'https://system.krzysztofnyrek.eu',   // linia #1 ZTO (interim; po Fazie 3 → .pl)
+  system: 'https://oferta.krzysztofnyrek.pl/onboarding',   // System Onboardingu — produkt w katalogu (D79 F4: retire system.eu)
   audit:  'https://audyt-procesow.pl',           // linia #1 Mini-Audyt (domena standalone)
   blogEn: 'https://krzysztofnyrek.eu/blog',      // interim: obecny WP na apex .eu (Faza 1)
   aboutEn:'https://krzysztofnyrek.eu/about',     // interim: obecny WP na apex .eu (Faza 1)
