@@ -16,15 +16,18 @@ const t = isPl
       metricCap: 'proces, pomiar, skala',
       metricBody: 'Firma usługowa, projekty szyte pod klienta. Niby się kręciło, ale nikt nie wiedział, które projekty realnie zarabiają. Zbudowałem proces obsługi klienta i opomiarowałem rentowność projektów. Rentowne dało się powtórzyć i wyskalować. Stąd milion przychodu.',
       stats: [
-        { icon: 'clock', val: '10 lat', label: 'prowadzenia realnych projektów' },
+        { icon: 'clock', val: 'ponad 20 lat', label: 'prowadzenia realnych projektów', small: true },
         { icon: 'team',  val: '23',     label: 'największy zespół, jaki prowadziłem' },
-        { icon: 'seal',  val: 'Prince2 · AgilePM', label: 'certyfikaty, nie deklaracje', small: true },
+        { icon: 'seal',  val: 'Prince2 · AgilePM · Facilitation · IT Project Management', label: 'certyfikaty, nie deklaracje', small: true },
       ],
       bookTitle: 'Project Coffee',
-      bookBody: 'Napisałem o tym książkę. O prowadzeniu projektów po ludzku, nie po Gantcie.',
+      bookBody: 'Ciekawi Cię, jak wygląda prowadzenie realnych projektów od środka? Napisałem o tym książkę.',
       bookCta: 'Zobacz na Amazonie',
       secondTitle: 'Dla kogo to jest',
       secondBody: 'Dla właściciela małej firmy, który co tydzień robi to samo ręcznie i wie, że traci na tym godziny. Nie dla korporacji z działem IT.',
+      agEyebrow: 'Automatyzacja w praktyce',
+      agTitle: 'System, który sam obsługuje nowych klientów',
+      agBody: 'Dla agencji zbudowałem system, który każdego nowego klienta i przychodzące zapytania prowadzi przez proces automatycznie: zbiera dane, wzbogaca je i porządkuje, bez ręcznego przepisywania.',
     }
   : {
       eyebrow: 'Proof',
@@ -33,16 +36,19 @@ const t = isPl
       metricCap: 'process, measured, scaled',
       metricBody: 'A service company running bespoke projects. It looked healthy, but nobody knew which projects actually made money. I built the client-service process and metered the profitability of each one. The profitable ones we could repeat and scale. That is where the million came from.',
       stats: [
-        { icon: 'clock', val: '10 yrs', label: 'running real projects' },
+        { icon: 'clock', val: '20+ yrs', label: 'running real projects' },
         { icon: 'team',  val: '23',     label: 'biggest team I have led' },
-        { icon: 'seal',  val: 'Prince2 · AgilePM', label: 'certified, not self-declared', small: true },
+        { icon: 'seal',  val: 'Prince2 · AgilePM · Facilitation · IT Project Management', label: 'certified, not self-declared', small: true },
       ],
       bookTitle: 'Project Coffee',
-      bookBody: 'My book on running projects like a human, not a Gantt chart.',
+      bookBody: 'Curious how running real projects actually looks from the inside? I wrote a book about it.',
       bookCta: 'Read it on Amazon',
       secondTitle: 'First 5 PM Days',
       secondBody: 'A free playbook: exactly what to do in your first five days on a new project.',
       secondCta: 'Get it free',
+      agEyebrow: 'Automation in practice',
+      agTitle: 'A system that onboards new clients on its own',
+      agBody: 'For an agency I built a system that runs every new client and incoming enquiry through the pipeline automatically: it collects the data, enriches it and files it, with no manual re-typing.',
     };
 
 const amazon = LINKS.amazonProjectCoffee;
@@ -50,7 +56,7 @@ const amazon = LINKS.amazonProjectCoffee;
 <section id="authority" class="section-pad authority">
   <div class="container">
     <header class="section-head">
-      <span class="eyebrow"><span class="eyebrow-fig">FIG.03</span>{t.eyebrow}</span>
+      <span class="eyebrow">{t.eyebrow}</span>
       <h2 class="h2">{t.heading}</h2>
     </header>
 
@@ -82,6 +88,13 @@ const amazon = LINKS.amazonProjectCoffee;
           </li>
         ))}
       </ul>
+
+      <!-- drugi dowód: automatyzacja AG (system onboardingu, live na produkcji) -->
+      <article class="auth-ag">
+        <span class="eyebrow eyebrow--muted">{t.agEyebrow}</span>
+        <h3 class="h3 auth-ag-title">{t.agTitle}</h3>
+        <p class="auth-ag-body">{t.agBody}</p>
+      </article>
 
       <!-- karty: książka (Project Coffee) + druga (EN lead magnet / PL dla kogo) -->
       <div class="auth-features">
@@ -135,6 +148,18 @@ const amazon = LINKS.amazonProjectCoffee;
     color: var(--color-signal); margin-bottom: var(--space-sm);
   }
   .auth-metric-body { margin: 0; color: var(--text-strong); max-width: 46ch; }
+
+  /* drugi dowód: automatyzacja AG — karta z navy grzbietem (spójna z metryką) */
+  .auth-ag {
+    position: relative; grid-column: 1 / -1;
+    background: var(--bg-surface); border: var(--hairline);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl); padding-left: calc(var(--space-xl) + 6px);
+  }
+  .auth-ag::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 5px; background: var(--color-signal); border-radius: var(--radius-lg) 0 0 var(--radius-lg); }
+  .auth-ag .eyebrow { margin-bottom: var(--space-sm); }
+  .auth-ag-title { margin: 0 0 var(--space-sm); }
+  .auth-ag-body { margin: 0; color: var(--text-strong); max-width: 62ch; }
 
   /* trójka statystyk */
   .auth-stats { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-lg); }

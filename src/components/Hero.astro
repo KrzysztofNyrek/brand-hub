@@ -1,40 +1,34 @@
 ---
-// HERO (spec §4A/§4B sekcja 1) — Kierunek 2 „Spec Sheet".
-// Obietnica pomostowa + kim jest + 2 CTA + portret w ramce współrzędnych (reticle).
-// Sygnatura: REV-strip (FIG.00 / REV 2026.1), crosshair-plate, mono-notacja (język-neutralna).
-// Copy (h1, who, tag, CTA) — verbatim; zmienia się TYLKO warstwa wizualna.
+// HERO — Design System KN (D79). Obietnica pomostowa + kim jest + 2 CTA + portret.
+// Copy (h1, who, tag, CTA) — VERBATIM; zmienia się TYLKO warstwa wizualna (re-skin).
 const { lang = 'en' } = Astro.props;
 const isPl = lang === 'pl';
 const c = isPl
   ? {
       ctaA: 'Zautomatyzuj mój biznes',
       ctaB: 'Naucz mnie AI w pracy',
-      who: 'Od dekady prowadzę projekty, na co dzień mapuję procesy i wdrażam automatyzacje. Nie jestem guru i nie sprzedaję marzeń.',
+      who: 'Od ponad dwóch dekad prowadzę projekty, na co dzień mapuję procesy i wdrażam automatyzacje. Nie jestem guru i nie sprzedaję marzeń.',
       tag: 'Nie sprzedaję marzeń. Sprzedaję nudną, techniczną automatyzację, która działa.',
     }
   : {
       ctaA: 'Get it built for you',
       ctaB: 'Learn to build it yourself',
-      who: 'A decade of running projects, author of Project Coffee, Prince2 and AgilePM certified.',
+      who: 'Two decades of running projects, author of Project Coffee, Prince2 and AgilePM certified.',
       tag: 'No guru. Just a practitioner who tests this stuff and shows you the receipts.',
     };
 ---
 <section id="hero" class="section-pad hero">
   <div class="container hero-grid">
     <div class="hero-copy">
-      <div class="rev" aria-hidden="true">
-        <span class="rev-fig">FIG.00</span>
-        <span class="rev-stamp">REV 2026.1</span>
-      </div>
       {isPl ? (
-        <h1 class="h-hero">Automatyzuję to, co w Twojej firmie robi się ręcznie co tydzień, i mówię wprost gdzie AI pomaga, a gdzie <span class="accent-italic">tylko udaje</span>.</h1>
+        <h1 class="h-hero">Automatyzuję to, co w Twojej firmie robi się ręcznie co tydzień i mówię wprost, gdzie AI pomaga, a gdzie <span class="accent-italic">tylko udaje</span>.</h1>
       ) : (
         <h1 class="h-hero">I'm a project manager who <span class="accent-italic">runs on AI</span>, and I'll tell you straight where it works and where it falls flat.</h1>
       )}
       <p class="body-lg hero-who">
         <strong style="font-weight:600;">Krzysztof Nyrek.</strong> {c.who}
       </p>
-      <p class="spec-note hero-tag">{c.tag}</p>
+      <p class="hero-tag">{c.tag}</p>
       <div class="hero-cta">
         <a class="btn-primary" href="#automation">{c.ctaA}</a>
         <a class="btn-secondary" href="#learn">{c.ctaB}</a>
@@ -42,71 +36,46 @@ const c = isPl
     </div>
 
     <figure class="hero-figure">
-      <div class="plate">
-        <div class="imgwrap">
-          <picture>
-            <source srcset="/portrait-krzysztof.webp" type="image/webp" />
-            <img src="/portrait-krzysztof.jpg" width="1200" height="1589" alt="Krzysztof Nyrek" fetchpriority="high" decoding="async" />
-          </picture>
-          <span class="reticle" aria-hidden="true">
-            <span class="cross c1"></span><span class="cross c2"></span><span class="cross c3"></span><span class="cross c4"></span>
-            <span class="plate-corner">FIG.01 — OPERATOR</span>
-            <span class="plate-coord">x:0640 y:0400 · KN</span>
-          </span>
-        </div>
-        <figcaption class="plate-cap" aria-hidden="true">
-          <span>SUBJECT: <b>K. NYREK</b></span><span>SCALE 1:1</span>
-        </figcaption>
+      <div class="portrait-card">
+        <picture>
+          <source srcset="/portrait-krzysztof.webp" type="image/webp" />
+          <img src="/portrait-krzysztof.jpg" width="1200" height="1589" alt="Krzysztof Nyrek" fetchpriority="high" decoding="async" />
+        </picture>
       </div>
     </figure>
   </div>
 </section>
 
 <style>
-  .hero { padding-top: var(--space-2xl); }
+  .hero { padding-top: var(--space-3xl); }
   .hero-grid { display: grid; gap: var(--space-2xl); align-items: center; }
   .hero-copy { min-width: 0; }
 
-  /* REV-strip — sygnatura arkusza (mono, cobalt REV) */
-  .rev {
-    display: flex; justify-content: space-between; align-items: baseline;
-    font-family: var(--font-mono); font-size: var(--fs-caption);
-    letter-spacing: 0.04em; color: var(--text-muted);
-    padding-bottom: var(--space-md); margin-bottom: var(--space-lg);
-    border-bottom: var(--hairline);
-  }
-  .rev-fig { font-weight: 600; color: var(--text-strong); }
-  .rev-stamp { font-weight: 600; color: var(--color-signal); }
-
-  .h-hero { margin-bottom: var(--space-lg); text-wrap: balance; }
+  .h-hero { margin-bottom: var(--space-lg); }
   .hero-who { color: var(--text-muted); max-width: 46ch; margin: 0 0 var(--space-md); }
-  .hero-tag { max-width: 44ch; margin: 0 0 var(--space-xl); }
+  /* tagline edytorski — muted, lewy navy akcent (bez mono `//`) */
+  .hero-tag {
+    max-width: 44ch; margin: 0 0 var(--space-xl);
+    color: var(--text-muted); font-size: var(--fs-body);
+    padding-left: var(--space-md); border-left: 2px solid var(--navy-200);
+  }
   .hero-cta { display: flex; flex-wrap: wrap; gap: var(--space-md); }
 
-  /* PLATE — panel arkusza z portretem grayscale + ramka współrzędnych (reticle) */
-  .hero-figure { margin: 0; justify-self: center; max-width: 372px; width: 100%; }
-  .plate { position: relative; background: var(--color-panel); border: 1px solid var(--hairline-ink); padding: 12px; }
-  .imgwrap { position: relative; }
-  .plate img {
+  /* PORTRET — czysta karta DS: white, hairline navy, radius-lg, miękka chłodna desaturacja */
+  .hero-figure { margin: 0; justify-self: center; max-width: 380px; width: 100%; }
+  .portrait-card {
+    background: var(--color-panel);
+    border: 1px solid var(--navy-200);
+    border-radius: var(--radius-lg);
+    padding: 10px;
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+  }
+  .portrait-card img {
     width: 100%; display: block;
-    filter: grayscale(1) contrast(1.06) brightness(1.03);
+    border-radius: calc(var(--radius-lg) - 4px);
+    filter: saturate(0.6) contrast(1.02) brightness(1.02);
   }
-  .plate-corner {
-    position: absolute; top: 12px; right: 14px;
-    font-family: var(--font-mono); font-size: 0.65625rem; color: var(--text-muted);
-    letter-spacing: 0.03em;
-  }
-  .plate-coord {
-    position: absolute; bottom: 14px; left: 14px;
-    font-family: var(--font-mono); font-size: 0.625rem; color: var(--color-signal);
-    background: rgba(244, 245, 243, 0.85); padding: 2px 6px; letter-spacing: 0.02em;
-  }
-  .plate-cap {
-    display: flex; justify-content: space-between;
-    font-family: var(--font-mono); font-size: 0.6875rem; color: var(--text-muted);
-    letter-spacing: 0.02em; padding-top: 10px;
-  }
-  .plate-cap b { color: var(--text-strong); font-weight: 600; }
 
   @media (min-width: 880px) {
     .hero-grid { grid-template-columns: 1.12fr 0.88fr; gap: var(--space-4xl); }

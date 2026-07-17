@@ -1,7 +1,7 @@
 ---
-// Brand Hub — shared layout (T5/T6). Sticky NAV + flaga PL/EN + stopka + hreflang.
+// Brand Hub — shared layout. Sticky NAV + flaga PL/EN + stopka + hreflang.
 // Prop `lang` ('en'|'pl') steruje nawigacją, flagą i copy stopki. Ta sama identity
-// (tokens.css) dla obu; różni się układ/treść sekcji (spec §4A/§4B).
+// (tokens.css — Design System KN, D79) dla obu; różni się układ/treść sekcji.
 import '../styles/tokens.css';
 import { HUB_EN, HUB_PL } from '../config.mjs';
 
@@ -11,24 +11,22 @@ const canonical = isPl ? HUB_PL + '/' : HUB_EN + '/';
 
 const nav = isPl
   ? {
-      role: 'kierownik-projektu.class / automatyzacja.build',
       links: [
         { href: '#automation', label: 'Automatyzacja' },
         { href: '#learn', label: 'Naucz się AI' },
         { href: '#about', label: 'O mnie' },
       ],
-      flagHref: HUB_EN, flag: '🇬🇧', flagLabel: 'EN',
+      flagHref: HUB_EN, flagLabel: 'EN',
       cta: { href: '#contact', label: 'Kontakt' },
     }
   : {
-      role: 'project-manager.class / automation.build',
       links: [
         { href: '#automation', label: 'Automation' },
         { href: '#learn', label: 'Learn AI' },
         { href: '#blog', label: 'Blog' },
         { href: '#about', label: 'About' },
       ],
-      flagHref: HUB_PL, flag: '🇵🇱', flagLabel: 'PL',
+      flagHref: HUB_PL, flagLabel: 'PL',
       cta: { href: '#contact', label: 'Contact' },
     };
 
@@ -53,16 +51,15 @@ const footer = isPl
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
     <link rel="canonical" href={canonical} />
-    <!-- hreflang: para hub EN ↔ hub PL (spec §3), x-default = EN. Absolutne domeny produkcyjne. -->
+    <!-- hreflang: para hub EN ↔ hub PL, x-default = EN. Absolutne domeny produkcyjne. -->
     <link rel="alternate" hreflang="en" href={HUB_EN + '/'} />
     <link rel="alternate" hreflang="pl" href={HUB_PL + '/'} />
     <link rel="alternate" hreflang="x-default" href={HUB_EN + '/'} />
-    <!-- fonty self-host: preload wariantów latin above-the-fold (Spec Sheet) -->
-    <link rel="preload" href="/fonts/spacegrotesk-latin.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/plexsans-latin.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/plexmono-400-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <!-- fonty: Google Fonts (Cormorant Garamond + Montserrat) — @import w tokens.css (D79) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <meta name="theme-color" content="#F4F5F3" />
+    <meta name="theme-color" content="#EBF3F9" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     {description && <meta property="og:description" content={description} />}
@@ -71,49 +68,39 @@ const footer = isPl
     <style>
       html { scroll-behavior: smooth; scroll-padding-top: var(--nav-h); }
       body { overflow-x: hidden; }
-      /* .container / .section-pad / scroll-margin są GLOBALNE w tokens.css
-         (patrz komentarz tam) — tu były scoped i nie trafiały na komponenty. */
+      /* .container / .section-pad / scroll-margin są GLOBALNE w tokens.css. */
       .skip-link {
         position: absolute; left: -999px; top: 0; z-index: 100;
-        background: var(--color-ink); color: var(--color-paper);
+        background: var(--navy-600); color: var(--color-white);
         padding: var(--space-sm) var(--space-md); border-radius: var(--radius-sm);
       }
       .skip-link:focus { left: var(--space-md); top: var(--space-md); }
-      /* brand: [KN] tag + nazwa (Space Grotesk) + rola (mono) */
-      .nav-brand { display: flex; align-items: center; gap: 0.8rem; text-decoration: none; }
-      .nav-brand-txt { display: flex; flex-direction: column; line-height: 1.15; }
-      .nav-brand-name { font-family: var(--font-display); font-weight: 600; font-size: 1rem; letter-spacing: -0.01em; color: var(--text-strong); }
-      .nav-brand-role { font-family: var(--font-mono); font-size: 0.6875rem; color: var(--text-muted); letter-spacing: 0.01em; }
       .nav-links { display: flex; gap: var(--space-lg); flex-wrap: wrap; }
       .nav-cta { font-size: var(--fs-small); }
-      /* Mobile nav: sekcje osiągalne scrollem/CTA hero — chowamy listę kotwic + rolę, zostaje [KN] + flaga + CTA */
+      /* Mobile nav: sekcje osiągalne scrollem/CTA — chowamy listę kotwic, zostaje logo + flaga + CTA */
       @media (max-width: 760px) {
         .nav { gap: var(--space-sm); padding-inline: var(--space-md); }
-        .nav-links, .nav-brand-role { display: none; }
+        .nav-links { display: none; }
         .nav-cta { padding: 0.65rem 1rem; }
+        .nav-logo img { height: 3.5rem; }
       }
       .footer { padding-inline: var(--gutter); }
-      .footer-inner { max-width: var(--maxw-content); margin-inline: auto; display: flex; flex-wrap: wrap; gap: var(--space-md) var(--space-lg); align-items: baseline; justify-content: space-between; }
+      .footer-inner { max-width: var(--maxw-content); margin-inline: auto; display: flex; flex-wrap: wrap; gap: var(--space-lg); align-items: center; justify-content: space-between; }
       .footer-meta { display: flex; flex-wrap: wrap; gap: var(--space-xs) var(--space-md); align-items: baseline; }
     </style>
   </head>
   <body>
     <a href="#hero" class="skip-link">{isPl ? 'Przejdź do treści' : 'Skip to content'}</a>
-    <div class="sheet">
     <nav class="nav" aria-label={isPl ? 'Główna nawigacja' : 'Main navigation'}>
-      <a href="#hero" class="nav-brand" aria-label="Krzysztof Nyrek">
-        <span class="kn-tag" aria-hidden="true">[KN]</span>
-        <span class="nav-brand-txt">
-          <span class="nav-brand-name">Krzysztof Nyrek</span>
-          <span class="nav-brand-role">{nav.role}</span>
-        </span>
+      <a href="#hero" class="nav-logo" aria-label="Krzysztof Nyrek">
+        <img src="/logo-kn.svg" alt="Krzysztof Nyrek" height="28" />
       </a>
       <span class="nav-spacer"></span>
       <div class="nav-links">
         {nav.links.map((l) => <a class="nav-link" href={l.href}>{l.label}</a>)}
       </div>
       <a class="nav-flag" href={nav.flagHref} aria-label={isPl ? 'English version' : 'Wersja polska'}>
-        <span aria-hidden="true">⇄</span> {nav.flagLabel}
+        {nav.flagLabel}
       </a>
       <a class="btn-primary nav-cta" href={nav.cta.href}>{nav.cta.label}</a>
     </nav>
@@ -124,6 +111,9 @@ const footer = isPl
 
     <footer class="footer">
       <div class="footer-inner">
+        <a href="#hero" class="footer-logo" aria-label="Krzysztof Nyrek">
+          <img src="/logo-kn-navy-bg.svg" alt="Krzysztof Nyrek" height="28" />
+        </a>
         <p class="small" style="margin:0; max-width:40ch;">{footer.tagline}</p>
         <div class="footer-meta">
           <span class="caption">© 2026 Krzysztof Nyrek</span>
@@ -132,6 +122,5 @@ const footer = isPl
         </div>
       </div>
     </footer>
-    </div>
   </body>
 </html>

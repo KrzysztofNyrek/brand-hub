@@ -6,12 +6,12 @@ const isPl = lang === 'pl';
 const paras = isPl
   ? [
       'Latami prowadziłem projekty po staremu: mapowałem procesy, odblokowywałem zespoły, kasowałem robotę, która się nie spinała. Potem przyszło AI i zamiast pisać o nim mądre posty, wpiąłem je w to, jak naprawdę pracuję.',
-      'Teraz robię dwie rzeczy. Buduję automatyzacje dla firm, które mają dość klepania tego samego ręcznie. I pokazuję, jak część z AI ogarnąć samemu.',
-      'Nie jestem guru i nie sprzedaję marzeń. Testuję co działa, mówię wprost gdzie się sypie, i oddaję to, co jest gotowe.',
+      'Teraz robię dwie rzeczy. Buduję automatyzacje dla firm, które mają dość klepania tego samego ręcznie i pokazuję, jak część z AI ogarnąć samemu.',
+      'Nie jestem guru i nie sprzedaję marzeń. Testuję, co działa, mówię wprost, gdzie się sypie, i oddaję to, co jest gotowe.',
     ]
   : [
       'I spent years running projects the classic way: mapping processes, unblocking teams, killing the work that didn’t pay. Then AI showed up, and instead of writing think-pieces about it, I wired it into how I actually work.',
-      'Now I do two things. I build automation systems for businesses that are tired of doing the same thing by hand. And I show project managers how to do the AI part themselves.',
+      'Now I do two things. I build automation systems for businesses that are tired of doing the same thing by hand, and I show project managers how to do the AI part themselves.',
       'I’m not a guru and I don’t sell dreams. I test what works, I say out loud where it breaks, and I hand over the parts that are ready.',
     ];
 const heading = isPl ? 'W skrócie' : 'The short version';
@@ -24,7 +24,7 @@ const ctaTodo = null;
   <div class="container">
     <div class="about-inner">
       <header class="section-head">
-        <span class="eyebrow"><span class="eyebrow-fig">FIG.04</span>{isPl ? 'O mnie' : 'About me'}</span>
+        <span class="eyebrow">{isPl ? 'O mnie' : 'About me'}</span>
         <h2 class="h2">{heading}</h2>
       </header>
       {paras.map((p) => <p class="body-lg about-p">{p}</p>)}

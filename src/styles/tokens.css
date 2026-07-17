@@ -1,200 +1,151 @@
 /* =============================================================================
-   Brand Hub — Design Tokens · Kierunek 2 „Spec Sheet"
-   Marka osobista „Krzysztof Nyrek" (NIE brandbook AIBiznesLab).
-   Owner: @cmo + @cto (+ frontend-design skill) · pivot 13.07.2026 (K: Kier.1 → Kier.2).
-   Nastrój: chłodny, precyzyjny, siatka współrzędnych, arkusz specyfikacji. Światło,
-   NIE dark terminal. Jeden kolor sygnału (electric cobalt) + near-black. Zero dekoracji.
-   ZERO zewnętrznego CDN (CSP/perf) — fonty self-host z /fonts/.
-   ---------------------------------------------------------------------------
-   FONTY (Spec Sheet, SIL OFL 1.1, subset latin + latin-ext — hub PL: ą ć ę ł ń ó ś ź ż):
-   - Space Grotesk  → display/nagłówki (variable 300–700, jeden plik/subset)
-   - IBM Plex Sans  → tekst/body (variable 400–600, jeden plik/subset)
-   - IBM Plex Mono  → etykiety/dane/eyebrow/REV (statyczny 400 + 600, osobne pliki)
-   K2 NIE ma kursywy nigdzie → brak plików italic (upraszcza subset). `font-synthesis`
-   niżej pozwala tylko na wagę (Plex Mono ma realne 400/600; Space Grotesk/Plex Sans
-   variable), nigdy na fałszywą kursywę.
+   Brand Hub — Design Tokens · Design System KN (D79, 17.07.2026)
+   Marka osobista „Krzysztof Nyrek" — JEDEN design system na cały ekosystem.
+   Źródło prawdy: Brandbook/design-system/project/ (tokens + readme).
+   Nastrój: cichy, edytorski — navy #225378 na pale blue #EBF3F9, jeden akcent
+   mosiądz (rzadko), dużo światła, hairline ramki. „Papeternia, nie tech startup".
+   Fonty: Cormorant Garamond (serif display) + Montserrat (sans) — Google Fonts (D79).
+   Zmiana z „Spec Sheet" (Space Grotesk/kobalt/arkusz) → re-skin D79, nazwy vars zachowane.
 ============================================================================= */
 
-/* ---- @font-face (self-host, latin + latin-ext) --------------------------- */
-/* Space Grotesk — display (variable 300–700) */
-@font-face {
-  font-family: "Space Grotesk";
-  src: url("/fonts/spacegrotesk-latin.woff2") format("woff2");
-  font-weight: 300 700; font-style: normal; font-display: swap;
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face {
-  font-family: "Space Grotesk";
-  src: url("/fonts/spacegrotesk-latinext.woff2") format("woff2");
-  font-weight: 300 700; font-style: normal; font-display: swap;
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* IBM Plex Sans — body (variable 400–600) */
-@font-face {
-  font-family: "IBM Plex Sans";
-  src: url("/fonts/plexsans-latin.woff2") format("woff2");
-  font-weight: 400 600; font-style: normal; font-display: swap;
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face {
-  font-family: "IBM Plex Sans";
-  src: url("/fonts/plexsans-latinext.woff2") format("woff2");
-  font-weight: 400 600; font-style: normal; font-display: swap;
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* IBM Plex Mono — etykiety/dane 400 */
-@font-face {
-  font-family: "IBM Plex Mono";
-  src: url("/fonts/plexmono-400-latin.woff2") format("woff2");
-  font-weight: 400; font-style: normal; font-display: swap;
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face {
-  font-family: "IBM Plex Mono";
-  src: url("/fonts/plexmono-400-latinext.woff2") format("woff2");
-  font-weight: 400; font-style: normal; font-display: swap;
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* IBM Plex Mono — etykiety/dane 600 (pogrubione: MODULE, INPUT, wartości) */
-@font-face {
-  font-family: "IBM Plex Mono";
-  src: url("/fonts/plexmono-600-latin.woff2") format("woff2");
-  font-weight: 600; font-style: normal; font-display: swap;
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face {
-  font-family: "IBM Plex Mono";
-  src: url("/fonts/plexmono-600-latinext.woff2") format("woff2");
-  font-weight: 600; font-style: normal; font-display: swap;
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
+/* ---- FONTY (Google Fonts, wg design-system/project/tokens/fonts.css) ------ */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Montserrat:wght@400;500;600;700&display=swap');
 
 :root {
-  /* ---- KOLOR: role palety (Spec Sheet) ---------------------------------- */
-  --color-paper:       #F4F5F3;  /* tło strony (papier chłodny) */
-  --color-panel:       #FFFFFF;  /* panel / powierzchnie podniesione */
-  --color-ink:         #16181A;  /* near-black — tekst, nagłówki, obrys plate, stopka */
-  --color-signal:      #1F4BE0;  /* electric cobalt — JEDYNY kolor sygnału (interakcja) */
-  --color-signal-deep: #163BB8;  /* cobalt hover/active */
-  --color-muted:       #6B7075;  /* slate — meta/caption (4.57 AA na papierze) */
-  --color-grid:        #D7DBD9;  /* siatka / hairline (dekoracja, nie nosi tekstu) */
+  /* ---- KOLOR: rampa navy (źródło prawdy DS) ----------------------------- */
+  --navy-900: #0F2A40;
+  --navy-800: #163A56;
+  --navy-600: #225378;   /* PRIMARY — logo navy */
+  --navy-400: #5A87A8;
+  --navy-200: #BFD5E5;
+  --navy-050: #EBF3F9;   /* pale — tło strony */
+  --brass-600: #A67A38;  /* akcent ciepły — RZADKO (słowo-emfaza, ornament) */
+
+  /* ---- KOLOR: role palety (nazwy zachowane z brand-hub) ----------------- */
+  --color-paper:       #EBF3F9;  /* tło strony — pale blue (sygnatura DS) */
+  --color-panel:       #FFFFFF;  /* panel / powierzchnie */
+  --color-ink:         #14212B;  /* ink-900 — tekst, nagłówki */
+  --color-signal:      #225378;  /* navy — JEDYNY kolor interakcji (link/focus/btn) */
+  --color-signal-deep: #163A56;  /* navy-800 hover/active */
+  --color-muted:       #556673;  /* ink-600 — meta/caption */
+  --color-grid:        #DEE6EE;  /* ink-200 — hairline */
+  --color-brass:       #A67A38;  /* mosiądz — słowo-akcent kursywa (rzadko) */
   --color-white:       #FFFFFF;
 
   /* aliasy semantyczne (używaj TYCH w komponentach) */
   --bg-page:         var(--color-paper);
   --bg-surface:      var(--color-panel);
-  --bg-inverse:      var(--color-ink);        /* stopka */
+  --bg-inverse:      var(--navy-800);         /* stopka — navy inverse */
   --text-strong:     var(--color-ink);
-  --text-muted:      var(--color-muted);      /* 4.57 (paper) / 5.00 (panel) AA */
-  --text-on-accent:  var(--color-white);      /* biały na cobalt 6.69 AA / na ink 17.8 AAA */
-  --text-on-inverse: var(--color-paper);      /* paper na ink: 16.28 AAA */
-  /* dwoje „drzwi": różnicujemy STRUKTURALNIE, nie drugim kolorem —
-     A „done-for-you" = wypełnienie ink (neutralne), B „learn" = obrys cobalt (sygnał). */
-  --accent-do:       var(--color-ink);        /* MODULE A — pełny ink */
-  --accent-learn:    var(--color-signal);     /* MODULE B — cobalt outline */
-  --link:            var(--color-signal);     /* cobalt-on-paper 6.11 AA */
+  --text-muted:      var(--color-muted);
+  --text-on-accent:  var(--color-white);      /* biały na navy */
+  --text-on-inverse: var(--navy-050);         /* pale na navy */
+  /* dwoje „drzwi": A „done-for-you" = panel navy (brand), B „learn" = biała + navy outline */
+  --accent-do:       var(--color-signal);     /* MODULE A — navy */
+  --accent-learn:    var(--color-signal);     /* MODULE B — navy outline */
+  --link:            var(--color-signal);
   --hairline-color:  var(--color-grid);
-  --hairline-ink:    var(--color-ink);        /* mocny obrys: plate portretu, panel kontakt */
-  --focus-ring:      var(--color-signal);
+  --hairline-ink:    var(--navy-600);         /* mocny obrys: panel kontakt */
+  --hairline-strong: var(--navy-600);         /* fix: był niezdefiniowany (Authority) */
+  --focus-ring:      color-mix(in srgb, var(--navy-600) 45%, transparent);
 
-  /* ---- TYPOGRAFIA: rodziny ---------------------------------------------- */
-  --font-display: "Space Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-body:    "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-mono:    "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, "Courier New", monospace;
-  --font-utility: var(--font-mono);           /* eyebrow/etykiety/dane = mono */
+  /* ---- TYPOGRAFIA: rodziny (DS) ----------------------------------------- */
+  --font-display: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-body:    "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-utility: var(--font-body);           /* eyebrow/etykiety = Montserrat tracked */
 
-  /* ---- TYPOGRAFIA: skala (font-size / line-height / weight / spacing) ---- */
-  /* hero — Space Grotesk, fluid clamp 34→58px (wg dir2.tpl.html) */
-  --fs-hero:      clamp(2.125rem, 1.28rem + 3.6vw, 3.625rem);
-  --lh-hero:      1.03;
+  /* ---- TYPOGRAFIA: skala ------------------------------------------------ */
+  /* hero — Cormorant serif, fluid clamp (bump wagi: serif lżejszy niż Space Grotesk) */
+  --fs-hero:      clamp(2.5rem, 1.5rem + 4.2vw, 4.25rem);
+  --lh-hero:      1.05;
   --wght-hero:    600;
-  --ls-hero:      -0.015em;
-  /* h1 — podstrony/thank-you 30→44px */
-  --fs-h1:        clamp(1.875rem, 1.4rem + 2vw, 2.75rem);
-  --lh-h1:        1.06;
+  --ls-hero:      -0.01em;
+  /* h1 — podstrony/thank-you */
+  --fs-h1:        clamp(2.125rem, 1.5rem + 2.6vw, 3.25rem);
+  --lh-h1:        1.08;
   --wght-h1:      600;
-  --ls-h1:        -0.015em;
-  /* h2 — nagłówki sekcji 28→38px */
-  --fs-h2:        clamp(1.75rem, 1.35rem + 1.6vw, 2.375rem);
+  --ls-h1:        -0.01em;
+  /* h2 — nagłówki sekcji */
+  --fs-h2:        clamp(1.875rem, 1.4rem + 1.9vw, 2.75rem);
   --lh-h2:        1.1;
   --wght-h2:      600;
-  --ls-h2:        -0.015em;
-  /* h3 — tytuł modułu/karty 19px */
-  --fs-h3:        1.1875rem;
+  --ls-h2:        -0.01em;
+  /* h3 — tytuł modułu/karty */
+  --fs-h3:        1.375rem;
   --lh-h3:        1.25;
   --wght-h3:      600;
-  --ls-h3:        -0.01em;
-  /* eyebrow — mono 12.5px, tracking */
-  --fs-eyebrow:   0.78125rem;
+  --ls-h3:        0;
+  /* eyebrow — Montserrat tracked upper (DS: 0.16em) */
+  --fs-eyebrow:   0.75rem;
   --lh-eyebrow:   1.1;
   --wght-eyebrow: 600;
-  --ls-eyebrow:   0.06em;
-  /* body-lg — lede/intro 17px */
+  --ls-eyebrow:   0.16em;
+  /* body-lg — lede/intro */
   --fs-body-lg:   1.0625rem;
-  --lh-body-lg:   1.55;
+  --lh-body-lg:   1.7;
   --wght-body-lg: 400;
   --ls-body-lg:   0;
-  /* body — 16px */
+  /* body */
   --fs-body:      1rem;
-  --lh-body:      1.6;
+  --lh-body:      1.7;
   --wght-body:    400;
   --ls-body:      0;
-  /* small — UI/nav 14px */
+  /* small — UI/nav */
   --fs-small:     0.875rem;
-  --lh-small:     1.45;
-  --wght-small:   400;
+  --lh-small:     1.5;
+  --wght-small:   500;
   --ls-small:     0;
-  /* caption/mono-label — 11.5px, dane/współrzędne/REV */
-  --fs-caption:   0.71875rem;
-  --lh-caption:   1.4;
-  --wght-caption: 400;
-  --ls-caption:   0.02em;
+  /* caption/label */
+  --fs-caption:   0.75rem;
+  --lh-caption:   1.5;
+  --wght-caption: 500;
+  --ls-caption:   0.04em;
 
   /* ---- SPACING (base 4px) ----------------------------------------------- */
-  --space-2xs: 0.25rem;   /*  4 */
-  --space-xs:  0.5rem;    /*  8 */
-  --space-sm:  0.75rem;   /* 12 */
-  --space-md:  1rem;      /* 16 */
-  --space-lg:  1.5rem;    /* 24 */
-  --space-xl:  2rem;      /* 32 */
-  --space-2xl: 3rem;      /* 48 */
-  --space-3xl: 4rem;      /* 64 */
-  --space-4xl: 6rem;      /* 96 */
-  --space-5xl: 8rem;      /* 128 */
+  --space-2xs: 0.25rem;
+  --space-xs:  0.5rem;
+  --space-sm:  0.75rem;
+  --space-md:  1rem;
+  --space-lg:  1.5rem;
+  --space-xl:  2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+  --space-4xl: 6rem;
+  --space-5xl: 8rem;
 
-  /* ---- RADIUS (Spec Sheet — ostre, 4–6px, ZERO pill) -------------------- */
-  --radius-sm:   4px;
-  --radius-md:   5px;
-  --radius-lg:   6px;
-  --radius-pill: 5px;     /* legacy alias → w K2 też ostry (bez zaokrągleń pigułki) */
+  /* ---- RADIUS (DS — nearly square fields, softer cards) ----------------- */
+  --radius-sm:   3px;
+  --radius-md:   6px;
+  --radius-lg:   10px;
+  --radius-pill: 999px;
 
-  /* ---- SHADOW (minimalna — głębokość niesie siatka/obrys, nie cień) ----- */
-  --shadow-sm:    none;
-  --shadow-md:    0 1px 3px rgba(22, 24, 26, 0.06);
-  --shadow-lg:    0 2px 10px -4px rgba(22, 24, 26, 0.10);
+  /* ---- SHADOW (navy-tinted, miękkie — DS) ------------------------------- */
+  --shadow-sm:    0 1px 2px rgba(15, 42, 64, 0.05);
+  --shadow-md:    0 3px 12px -2px rgba(15, 42, 64, 0.10);
+  --shadow-lg:    0 14px 34px -10px rgba(15, 42, 64, 0.16);
+  --shadow-brand: 0 14px 34px rgba(34, 83, 120, 0.24);
 
-  /* ---- HAIRLINE / SIATKA ------------------------------------------------- */
+  /* ---- HAIRLINE --------------------------------------------------------- */
   --hairline:        1px solid var(--color-grid);
-  --hairline-2:      1px solid var(--color-ink);
-  --grid-step:       88px;   /* rytm poziomej siatki arkusza (wg dir2.tpl.html) */
+  --hairline-2:      1px solid var(--navy-200);
 
-  /* ---- MOTION ----------------------------------------------------------- */
-  --ease:        cubic-bezier(0.2, 0.6, 0.2, 1);
+  /* ---- MOTION (DS — spokojne, ease in/out) ------------------------------ */
+  --ease:        cubic-bezier(0.4, 0, 0.2, 1);
   --dur-fast:    120ms;
-  --dur:         160ms;      /* K2: krótsze, „mechaniczne" */
+  --dur:         200ms;
 
   /* ---- LAYOUT ----------------------------------------------------------- */
-  --maxw-content: 72rem;   /* 1152px */
-  --maxw-prose:   40rem;   /* 640px */
-  --nav-h:        4.5rem;  /* 72px */
-  --gutter:       clamp(1.25rem, 0.6rem + 2.4vw, 2.125rem);  /* 20→34px (wg mockup) */
+  --maxw-content: 67.5rem;  /* 1080px (DS container cap) */
+  --maxw-prose:   35rem;    /* 560px (DS text measure) */
+  --nav-h:        4.5rem;
+  --gutter:       clamp(1.25rem, 0.6rem + 2.4vw, 2.125rem);
 }
 
 /* =============================================================================
    RESET / BOX-SIZING (mobile-first, brak poziomego scrolla)
 ============================================================================= */
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
 body { margin: 0; }
 img { max-width: 100%; height: auto; display: block; }
 a { color: inherit; }
@@ -202,8 +153,7 @@ a { color: inherit; }
 /* =============================================================================
    LAYOUT UTILITIES (GLOBAL — MUSZĄ być tu, nie w scoped <style> layoutu)
    Powód (incydent 09.07): Astro scope'uje <style> do własnego szablonu; te same
-   klasy nośne w Hub.astro NIE trafiały na dzieci (Hero/Doors/...) → płaskość.
-   Global = działa wszędzie.
+   klasy nośne w Hub.astro NIE trafiały na dzieci → płaskość. Global = działa wszędzie.
 ============================================================================= */
 .container {
   width: 100%;
@@ -216,22 +166,6 @@ a { color: inherit; }
 :where(section[id], .hub-section) { scroll-margin-top: calc(var(--nav-h) + var(--space-md)); }
 
 /* =============================================================================
-   ARKUSZ (signature Spec Sheet) — pionowe linijki boczne + subtelna pozioma siatka.
-   GLOBAL: opakowuje nav+main+footer (Hub.astro). Głębokość niesie siatka, nie cień.
-   Poziome linie są bardzo subtelne (grid @ ~1.3:1 do papieru) → tekstura, nie szum.
-============================================================================= */
-.sheet {
-  position: relative;
-  max-width: calc(var(--maxw-content) + 2 * var(--gutter));
-  margin-inline: auto;
-  min-height: 100vh;
-  background:
-    linear-gradient(var(--color-grid) 1px, transparent 1px) 0 0 / 100% var(--grid-step),
-    var(--color-paper);
-  border-inline: 1px solid var(--color-grid);
-}
-
-/* =============================================================================
    ELEMENTY BAZOWE
 ============================================================================= */
 body {
@@ -242,7 +176,6 @@ body {
   line-height: var(--lh-body);
   font-weight: var(--wght-body);
   letter-spacing: var(--ls-body);
-  font-synthesis: weight;            /* wagę wolno syntezować; kursywy K2 nie ma */
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -251,21 +184,22 @@ body {
   font-family: var(--font-display);
   color: var(--text-strong);
   margin: 0;
+  text-wrap: balance;
 }
 .h-hero { font-size: var(--fs-hero); line-height: var(--lh-hero); font-weight: var(--wght-hero); letter-spacing: var(--ls-hero); }
 .h1 { font-size: var(--fs-h1); line-height: var(--lh-h1); font-weight: var(--wght-h1); letter-spacing: var(--ls-h1); }
 .h2 { font-size: var(--fs-h2); line-height: var(--lh-h2); font-weight: var(--wght-h2); letter-spacing: var(--ls-h2); }
 .h3 { font-size: var(--fs-h3); line-height: var(--lh-h3); font-weight: var(--wght-h3); letter-spacing: var(--ls-h3); }
 
-/* akcent „signature": jedna fraza w kolorze sygnału (cobalt), BEZ kursywy (K2). */
+/* akcent „signature" DS: jedna fraza — serif KURSYWA w mosiądzu (rzadko). */
 .accent-italic {
   font-family: var(--font-display);
-  font-style: normal;
-  color: var(--color-signal);
+  font-style: italic;
+  color: var(--color-brass);
   font-weight: inherit;
 }
 
-/* ---- EYEBROW / etykieta mono ------------------------------------------- */
+/* ---- EYEBROW / etykieta (Montserrat tracked upper + krótka linijka DS) --- */
 .eyebrow {
   font-family: var(--font-utility);
   font-size: var(--fs-eyebrow);
@@ -273,22 +207,22 @@ body {
   font-weight: var(--wght-eyebrow);
   letter-spacing: var(--ls-eyebrow);
   text-transform: uppercase;
-  color: var(--text-strong);
+  color: var(--color-signal);
   display: inline-flex;
-  align-items: baseline;
+  align-items: center;
   gap: 0.6rem;
 }
-.eyebrow--muted { color: var(--text-muted); }
-/* numer figury (mono, cobalt) — koduje realną kolejność sekcji arkusza (FIG.00→FIG.06) */
-.eyebrow-fig {
-  font-family: var(--font-mono);
-  font-weight: 600;
-  color: var(--color-signal);
-  letter-spacing: 0.02em;
+/* krótka linijka wiodąca (DS Eyebrow signature device) */
+.eyebrow::before {
+  content: "";
+  width: 1.5rem; height: 1px;
+  background: currentColor;
+  display: inline-block;
 }
+.eyebrow--muted { color: var(--text-muted); }
 
 /* =============================================================================
-   SECTION HEAD — wspólny rytm nagłówka sekcji (eyebrow + h2 + lead). GLOBAL.
+   SECTION HEAD — wspólny rytm nagłówka sekcji. GLOBAL.
 ============================================================================= */
 .section-head { max-width: 46rem; margin-bottom: var(--space-2xl); }
 .section-head .eyebrow { margin-bottom: var(--space-md); }
@@ -299,9 +233,9 @@ body {
 
 .body-lg { font-size: var(--fs-body-lg); line-height: var(--lh-body-lg); font-weight: var(--wght-body-lg); }
 .small   { font-size: var(--fs-small);   line-height: var(--lh-small);   font-weight: var(--wght-small); }
-.mono    { font-family: var(--font-mono); }
+.mono    { font-family: var(--font-utility); }
 .caption {
-  font-family: var(--font-mono);
+  font-family: var(--font-utility);
   font-size: var(--fs-caption); line-height: var(--lh-caption);
   font-weight: var(--wght-caption); letter-spacing: var(--ls-caption);
   color: var(--text-muted);
@@ -312,13 +246,13 @@ body {
   text-decoration: underline;
   text-underline-offset: 0.18em;
   text-decoration-thickness: 1px;
-  text-decoration-color: color-mix(in srgb, var(--color-signal) 45%, transparent);
-  transition: text-decoration-color var(--dur) var(--ease);
+  text-decoration-color: var(--navy-200);
+  transition: text-decoration-color var(--dur) var(--ease), color var(--dur) var(--ease);
 }
-.link:hover { text-decoration-color: var(--link); }
+.link:hover { text-decoration-color: var(--link); color: var(--color-signal-deep); }
 
 /* =============================================================================
-   PRZYCISKI (ostre, 5px; A = pełny ink, B = obrys cobalt — jeden sygnał)
+   PRZYCISKI (DS — primary navy solid + brand shadow, secondary navy outline)
 ============================================================================= */
 .btn-primary,
 .btn-secondary {
@@ -328,40 +262,38 @@ body {
   font-family: var(--font-body);
   font-size: var(--fs-small);
   font-weight: 600;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   line-height: 1;
-  padding: 0.72rem 1.25rem;
-  border-radius: var(--radius-md);
+  padding: 0.85rem 1.4rem;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   text-decoration: none;
-  transition: background var(--dur) var(--ease), color var(--dur) var(--ease), border-color var(--dur) var(--ease), transform var(--dur-fast) var(--ease);
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease), border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
 }
-/* PRIMARY — pełny ink, biały tekst (17.8 AAA). „done-for-you". */
+/* PRIMARY — navy solid, biały tekst, brand glow. „done-for-you". */
 .btn-primary {
-  background: var(--color-ink);
+  background: var(--navy-600);
   color: var(--text-on-accent);
-  border: 1.5px solid var(--color-ink);
+  border: 1.5px solid var(--navy-600);
 }
-.btn-primary:hover  { background: #000; border-color: #000; transform: translateY(-1px); }
-.btn-primary:active { transform: translateY(0); }
-/* SECONDARY — obrys cobalt, etykieta cobalt (6.11 AA na papierze). „learn". */
+.btn-primary:hover  { background: var(--navy-800); border-color: var(--navy-800); box-shadow: var(--shadow-brand); }
+/* SECONDARY — navy outline. „learn". */
 .btn-secondary {
   background: transparent;
   color: var(--color-signal);
-  border: 1.5px solid var(--color-signal);
+  border: 1.5px solid var(--navy-600);
 }
-.btn-secondary:hover  { background: var(--color-signal); color: var(--text-on-accent); transform: translateY(-1px); } /* biały na cobalt 6.69 AA */
-.btn-secondary:active { transform: translateY(0); }
+.btn-secondary:hover  { background: var(--navy-050); }
 
 .btn-primary:focus-visible,
 .btn-secondary:focus-visible {
-  outline: 2px solid var(--focus-ring);
+  outline: 3px solid var(--focus-ring);
   outline-offset: 3px;
 }
 
 /* =============================================================================
-   KARTA „DRZWI" / MODUŁ — panel arkusza z etykietą MODULE A/B (spec §4A/§4B)
-   Różnica A↔B = struktura (ink vs cobalt), nie drugi kolor.
+   KARTA „DRZWI" / MODUŁ (DS — A = panel navy brand, B = biała karta)
 ============================================================================= */
 .door-card {
   position: relative;
@@ -370,49 +302,40 @@ body {
   border-radius: var(--radius-lg);
   padding: var(--space-xl);
   box-shadow: var(--shadow-sm);
-  overflow: hidden;
-  transition: box-shadow var(--dur) var(--ease), border-color var(--dur) var(--ease);
+  transition: box-shadow var(--dur) var(--ease), transform var(--dur) var(--ease), border-color var(--dur) var(--ease);
 }
-/* pasek modułu u góry: A = ink, B = cobalt (2px, ostry) */
-.door-card::before {
-  content: "";
-  position: absolute; inset: 0 0 auto 0; height: 2px;
-  background: var(--color-grid);
+.door-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+/* A „done-for-you" = panel navy brand (tekst pale) */
+.door-card--do {
+  background: var(--navy-600);
+  border-color: var(--navy-600);
+  color: var(--text-on-inverse);
+  box-shadow: var(--shadow-brand);
 }
-.door-card--do::before    { background: var(--accent-do); }     /* ink */
-.door-card--learn::before { background: var(--accent-learn); }  /* cobalt */
-.door-card:hover { border-color: color-mix(in srgb, var(--color-ink) 30%, var(--color-grid)); box-shadow: var(--shadow-md); }
-
-/* nagłówek modułu: [MODULE A] · id (mono) */
-.module-id {
-  display: flex; align-items: baseline; gap: 0.6rem; flex-wrap: wrap;
-  font-family: var(--font-mono); font-size: var(--fs-caption);
-  letter-spacing: 0.04em; color: var(--text-muted);
-  margin-bottom: var(--space-md);
-}
-.module-id .tag {
-  font-weight: 600; text-transform: uppercase;
-  padding: 2px 7px; border-radius: var(--radius-sm); letter-spacing: 0.06em;
-}
-.door-card--do    .module-id .tag { background: var(--color-ink);    color: var(--color-white); }
-.door-card--learn .module-id .tag { background: var(--color-signal); color: var(--color-white); }
+.door-card--do :where(.h3, .h2) { color: var(--color-white); }
+.door-card--do:hover { box-shadow: var(--shadow-lg); }
+/* B „learn" = biała karta, navy hairline */
+.door-card--learn { border-color: var(--navy-200); }
 
 /* =============================================================================
-   NAV (sticky) — [KN] tag + nazwa/rola mono + linki mono + flaga + Contact (ink)
+   NAV (sticky, blur — DS: rgba pale + blur)
 ============================================================================= */
 .nav {
   position: sticky; top: 0; z-index: 50;
   display: flex; align-items: center; gap: var(--space-lg);
   height: var(--nav-h);
   padding-inline: var(--gutter);
-  background: color-mix(in srgb, var(--color-paper) 90%, transparent);
-  backdrop-filter: blur(8px);
+  background: rgba(235, 243, 249, 0.82);
+  backdrop-filter: blur(10px);
   border-bottom: var(--hairline);
 }
+.nav-logo { display: inline-flex; align-items: center; }
+.nav-logo img { height: 4.5rem; width: auto; }
 .nav-link {
-  font-family: var(--font-mono);
+  font-family: var(--font-utility);
   font-size: var(--fs-small);
-  font-weight: 400;
+  font-weight: 500;
+  letter-spacing: 0.04em;
   color: var(--text-muted);
   text-decoration: none;
   padding: var(--space-2xs) 0;
@@ -423,9 +346,9 @@ body {
 .nav-spacer { margin-left: auto; }
 .nav-flag {
   display: inline-flex; align-items: center; gap: var(--space-2xs);
-  font-family: var(--font-mono);
+  font-family: var(--font-utility);
   font-size: var(--fs-caption); font-weight: 600;
-  letter-spacing: 0.08em; text-transform: uppercase;
+  letter-spacing: 0.1em; text-transform: uppercase;
   color: var(--text-strong); text-decoration: none;
   padding: var(--space-2xs) var(--space-sm);
   border: var(--hairline); border-radius: var(--radius-sm);
@@ -433,68 +356,41 @@ body {
 }
 .nav-flag:hover { color: var(--color-signal); border-color: var(--color-signal); }
 .nav-link:focus-visible,
-.nav-flag:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 3px; border-radius: var(--radius-sm); }
+.nav-flag:focus-visible { outline: 3px solid var(--focus-ring); outline-offset: 3px; border-radius: var(--radius-sm); }
 
 /* =============================================================================
-   STOPKA (inwersja: ink tło, paper tekst — 16.28 AAA)
+   STOPKA (inwersja: navy tło, pale tekst)
 ============================================================================= */
 .footer {
   background: var(--bg-inverse);
   color: var(--text-on-inverse);
   padding: var(--space-3xl) var(--space-lg) var(--space-xl);
 }
+.footer-logo img { height: 2.25rem; width: auto; margin-bottom: var(--space-md); }
 .footer a {
   color: var(--text-on-inverse);
   text-decoration: underline;
   text-underline-offset: 0.18em;
-  text-decoration-color: rgba(244, 245, 243, 0.4);
+  text-decoration-color: rgba(235, 243, 249, 0.4);
 }
 .footer a:hover { text-decoration-color: var(--text-on-inverse); }
-.footer .caption { color: rgba(244, 245, 243, 0.66); }
-.footer a:focus-visible { outline: 2px solid var(--color-paper); outline-offset: 3px; }
+.footer .caption { color: rgba(235, 243, 249, 0.66); }
+.footer a:focus-visible { outline: 2px solid var(--navy-050); outline-offset: 3px; }
 
 /* =============================================================================
-   SPEC-NOTE — komentarz kodowy (mono, „//") — nośnik hero-taglinu (dawny tag-note)
+   DIVIDER — mosiężny diament (DS signature ornament)
 ============================================================================= */
-.spec-note {
-  font-family: var(--font-mono);
-  font-size: var(--fs-caption);
-  line-height: 1.5;
-  color: var(--text-muted);
-  letter-spacing: 0.01em;
+.divider-diamond {
+  display: flex; align-items: center; justify-content: center;
+  gap: var(--space-md);
+  color: var(--color-grid);
 }
-.spec-note::before { content: "// "; color: var(--color-signal); }
-
-/* =============================================================================
-   LOCKUP „[KN]" — współrzędna/oznaczenie części (mono, cienka ramka, ZERO rotacji)
-============================================================================= */
-.kn-tag {
-  display: inline-flex; align-items: center; justify-content: center;
-  font-family: var(--font-mono);
-  font-weight: 600; font-size: 0.9375rem;
-  letter-spacing: 0.02em;
-  color: var(--text-strong);
-  background: transparent;
-  border: 1.5px solid var(--color-ink);
-  border-radius: var(--radius-sm);
-  padding: 5px 9px;
-  user-select: none;
+.divider-diamond::before,
+.divider-diamond::after { content: ""; flex: 1; height: 1px; background: currentColor; }
+.divider-diamond > span {
+  width: 6px; height: 6px; transform: rotate(45deg);
+  background: var(--color-brass); flex: 0 0 auto;
 }
-.kn-tag--signal { color: var(--color-white); background: var(--color-signal); border-color: var(--color-signal); }
-
-/* =============================================================================
-   RETICLE — ramka współrzędnych (crosshair w rogach) wokół portretu/panelu (signature)
-============================================================================= */
-.reticle { position: absolute; inset: 0; pointer-events: none; }
-.reticle .cross { position: absolute; width: 16px; height: 16px; }
-.reticle .cross::before,
-.reticle .cross::after { content: ""; position: absolute; background: var(--color-signal); }
-.reticle .cross::before { left: 7px; top: 0; width: 2px; height: 16px; }
-.reticle .cross::after  { top: 7px; left: 0; height: 2px; width: 16px; }
-.reticle .c1 { top: -2px; left: -2px; }
-.reticle .c2 { top: -2px; right: -2px; }
-.reticle .c3 { bottom: -2px; left: -2px; }
-.reticle .c4 { bottom: -2px; right: -2px; }
 
 /* =============================================================================
    DOSTĘPNOŚĆ — reduced motion (quality floor)

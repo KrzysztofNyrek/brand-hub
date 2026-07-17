@@ -15,14 +15,14 @@ const title = 'Jesteś na liście · Krzysztof Nyrek';
     <style>
       body { overflow-x: hidden; min-height: 100dvh; display: grid; place-items: center; padding: var(--space-lg); }
       .ty { max-width: 34rem; text-align: center; }
-      .ty .kn-tag { margin: 0 auto var(--space-lg); }
+      .ty-logo { display: block; height: 8.5rem; width: auto; margin: 0 auto var(--space-lg); border-radius: var(--radius-md); }
       .ty h1 { margin-bottom: var(--space-md); }
       .ty p { color: var(--text-muted); margin: 0 auto var(--space-xl); max-width: 30ch; }
     </style>
   </head>
   <body>
     <main class="ty">
-      <span class="kn-tag">[KN]</span>
+      <img class="ty-logo" src="/logo-kn.svg" alt="Krzysztof Nyrek" height="32" />
       <h1 class="h1">Jesteś na liście.</h1>
       <p class="body-lg">Napiszę do Ciebie w dniu startu „AI w pracy”. Bez spamu po drodze.</p>
       <a class="btn-primary" href={HUB_PL + '/'}>← Wróć na stronę główną</a>

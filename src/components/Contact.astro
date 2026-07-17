@@ -11,9 +11,7 @@ const t = isPl
 <section id="contact" class="section-pad contact">
   <div class="container">
     <div class="contact-panel">
-      <span class="reticle" aria-hidden="true"><span class="cross c1"></span><span class="cross c2"></span><span class="cross c3"></span><span class="cross c4"></span></span>
-      <span class="kn-tag kn-tag--signal contact-stamp" aria-hidden="true">[KN]</span>
-      <span class="eyebrow contact-eyebrow"><span class="eyebrow-fig">FIG.06</span>{t.eyebrow}</span>
+      <span class="eyebrow contact-eyebrow">{t.eyebrow}</span>
       <h2 class="h2 contact-head">{t.head}</h2>
       <p class="body-lg contact-copy">{t.copy}</p>
       <div class="contact-links">
@@ -34,7 +32,6 @@ const t = isPl
     padding: var(--space-4xl) var(--space-xl);
     text-align: center;
   }
-  .contact-stamp { position: absolute; top: var(--space-lg); right: var(--space-lg); }
   .contact-eyebrow { justify-content: center; }
   .contact-head { margin: var(--space-sm) 0 0; }
   .contact-copy { max-width: 46ch; margin: var(--space-md) auto var(--space-xl); color: var(--text-strong); }
@@ -43,6 +40,5 @@ const t = isPl
   .contact-li { font-weight: 600; }
   @media (max-width: 560px) {
     .contact-panel { padding: var(--space-3xl) var(--space-lg); }
-    .contact-stamp { display: none; }
   }
 </style>
