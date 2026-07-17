@@ -1,0 +1,57 @@
+---
+// /blog — listing artykułów (D79 FAZA 3). Dane: src/data/blog/*.json (migracja z system.eu).
+import Hub from '../../layouts/Hub.astro';
+
+const mods = import.meta.glob('../../data/blog/*.json', { eager: true });
+const posts = Object.values(mods)
+  .map((m: any) => m.default)
+  .sort((a: any, b: any) => (a.date < b.date ? 1 : -1));
+
+const MIES = ['stycznia','lutego','marca','kwietnia','maja','czerwca','lipca','sierpnia','września','października','listopada','grudnia'];
+function fmtDate(d: string) {
+  if (!d) return '';
+  const [y, m, day] = d.split('-');
+  return `${parseInt(day, 10)} ${MIES[parseInt(m, 10) - 1]} ${y}`;
+}
+
+const title = 'Blog · Krzysztof Nyrek';
+const description = 'Notatki o automatyzacji, AI i prowadzeniu projektów w agencjach. Gdzie AI realnie pomaga, a gdzie tylko udaje.';
+---
+<Hub lang="pl" title={title} description={description}>
+  <section class="section-pad">
+    <div class="container">
+      <header class="section-head">
+        <span class="eyebrow">Blog</span>
+        <h1 class="h1">Notatki z biurka</h1>
+        <p class="section-lead">Gdzie AI realnie pomaga, a gdzie tylko udaje. O automatyzacji i prowadzeniu projektów w agencjach.</p>
+      </header>
+
+      <div class="blog-grid">
+        {posts.map((p: any) => (
+          <a class="card blog-card" href={`/blog/${p.slug}`}>
+            {p.image && (
+              <img class="blog-card-img" src={`/blog/img/${p.image}`} alt={p.title} loading="lazy" width="480" height="270" />
+            )}
+            <div class="blog-card-body">
+              <span class="caption">{fmtDate(p.date)}</span>
+              <h2 class="h3 blog-card-title">{p.title}</h2>
+              <p class="blog-card-sub muted small">{p.subtitle}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Hub>
+
+<style>
+  .blog-grid { display: grid; gap: var(--space-lg); grid-template-columns: 1fr; }
+  .blog-card { display: flex; flex-direction: column; padding: 0; overflow: hidden; text-decoration: none; color: inherit; }
+  .blog-card-img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block; border-bottom: 1px solid var(--color-grid); }
+  .blog-card-body { padding: var(--space-lg); display: flex; flex-direction: column; gap: var(--space-xs); }
+  .blog-card-title { margin: 0; }
+  .blog-card:hover .blog-card-title { color: var(--color-signal); }
+  .blog-card-sub { margin: 0; }
+  @media (min-width: 640px) { .blog-grid { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 980px) { .blog-grid { grid-template-columns: 1fr 1fr 1fr; } }
+</style>

@@ -5,29 +5,30 @@
 import '../styles/tokens.css';
 import { HUB_EN, HUB_PL } from '../config.mjs';
 
-const { lang = 'en', title, description } = Astro.props;
+const { lang = 'en', title, description, canonical: canonicalProp, ogType = 'website', ogImage, noHreflang = false } = Astro.props;
 const isPl = lang === 'pl';
-const canonical = isPl ? HUB_PL + '/' : HUB_EN + '/';
+const canonical = canonicalProp || (isPl ? HUB_PL + '/' : HUB_EN + '/');
 
 const nav = isPl
   ? {
       links: [
-        { href: '#automation', label: 'Automatyzacja' },
-        { href: '#learn', label: 'Naucz się AI' },
-        { href: '#about', label: 'O mnie' },
+        { href: '/#automation', label: 'Automatyzacja' },
+        { href: '/#learn', label: 'Naucz się AI' },
+        { href: '/blog', label: 'Blog' },
+        { href: '/#about', label: 'O mnie' },
       ],
       flagHref: HUB_EN, flagLabel: 'EN',
-      cta: { href: '#contact', label: 'Kontakt' },
+      cta: { href: '/#contact', label: 'Kontakt' },
     }
   : {
       links: [
-        { href: '#automation', label: 'Automation' },
-        { href: '#learn', label: 'Learn AI' },
-        { href: '#blog', label: 'Blog' },
-        { href: '#about', label: 'About' },
+        { href: '/#automation', label: 'Automation' },
+        { href: '/#learn', label: 'Learn AI' },
+        { href: '/blog', label: 'Blog' },
+        { href: '/#about', label: 'About' },
       ],
       flagHref: HUB_PL, flagLabel: 'PL',
-      cta: { href: '#contact', label: 'Contact' },
+      cta: { href: '/#contact', label: 'Contact' },
     };
 
 const footer = isPl
@@ -51,20 +52,26 @@ const footer = isPl
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
     <link rel="canonical" href={canonical} />
-    <!-- hreflang: para hub EN ↔ hub PL, x-default = EN. Absolutne domeny produkcyjne. -->
-    <link rel="alternate" hreflang="en" href={HUB_EN + '/'} />
-    <link rel="alternate" hreflang="pl" href={HUB_PL + '/'} />
-    <link rel="alternate" hreflang="x-default" href={HUB_EN + '/'} />
+    {!noHreflang && (
+      <Fragment>
+        <!-- hreflang: para hub EN ↔ hub PL, x-default = EN. Absolutne domeny produkcyjne. -->
+        <link rel="alternate" hreflang="en" href={HUB_EN + '/'} />
+        <link rel="alternate" hreflang="pl" href={HUB_PL + '/'} />
+        <link rel="alternate" hreflang="x-default" href={HUB_EN + '/'} />
+      </Fragment>
+    )}
     <!-- fonty: Google Fonts (Cormorant Garamond + Montserrat) — @import w tokens.css (D79) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta name="theme-color" content="#EBF3F9" />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:title" content={title} />
     {description && <meta property="og:description" content={description} />}
+    {ogImage && <meta property="og:image" content={ogImage} />}
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content={isPl ? 'pl_PL' : 'en_US'} />
+    <slot name="head" />
     <style>
       html { scroll-behavior: smooth; scroll-padding-top: var(--nav-h); }
       body { overflow-x: hidden; }
@@ -92,7 +99,7 @@ const footer = isPl
   <body>
     <a href="#hero" class="skip-link">{isPl ? 'Przejdź do treści' : 'Skip to content'}</a>
     <nav class="nav" aria-label={isPl ? 'Główna nawigacja' : 'Main navigation'}>
-      <a href="#hero" class="nav-logo" aria-label="Krzysztof Nyrek">
+      <a href="/" class="nav-logo" aria-label="Krzysztof Nyrek">
         <img src="/logo-kn.svg" alt="Krzysztof Nyrek" height="28" />
       </a>
       <span class="nav-spacer"></span>

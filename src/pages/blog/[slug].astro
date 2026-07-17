@@ -1,0 +1,107 @@
+---
+// /blog/[slug] — artykuł (D79 FAZA 3). Dane migrowane z system.eu/blog. DS + SEO na .pl.
+import Hub from '../../layouts/Hub.astro';
+import { HUB_PL } from '../../config.mjs';
+
+export function getStaticPaths() {
+  const mods = import.meta.glob('../../data/blog/*.json', { eager: true });
+  return Object.values(mods).map((m: any) => {
+    const p = m.default;
+    return { params: { slug: p.slug }, props: { post: p } };
+  });
+}
+
+const { post } = Astro.props as { post: any };
+const url = `${HUB_PL}/blog/${post.slug}`;
+const ogImage = post.image ? `${HUB_PL}/blog/img/${post.image}` : undefined;
+
+const MIES = ['stycznia','lutego','marca','kwietnia','maja','czerwca','lipca','sierpnia','września','października','listopada','grudnia'];
+function fmtDate(d: string) {
+  if (!d) return '';
+  const [y, m, day] = d.split('-');
+  return `${parseInt(day, 10)} ${MIES[parseInt(m, 10) - 1]} ${y}`;
+}
+
+const jsonld = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: post.title,
+  description: post.description,
+  image: ogImage,
+  author: { '@type': 'Person', name: 'Krzysztof Nyrek', url: HUB_PL },
+  publisher: { '@type': 'Person', name: 'Krzysztof Nyrek', url: HUB_PL },
+  datePublished: post.date,
+  dateModified: post.date,
+  mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+};
+---
+<Hub
+  lang="pl"
+  title={`${post.title} · Krzysztof Nyrek`}
+  description={post.description}
+  canonical={url}
+  ogType="article"
+  ogImage={ogImage}
+  noHreflang={true}
+>
+  <Fragment slot="head">
+    <meta property="article:published_time" content={post.date} />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonld)} />
+  </Fragment>
+
+  <article class="section-pad">
+    <div class="container article-wrap">
+      <nav class="breadcrumbs" aria-label="Ścieżka">
+        <a class="link" href="/blog">Blog</a>
+        <span aria-hidden="true">/</span>
+        <span class="muted">{post.title}</span>
+      </nav>
+
+      <header class="article-head">
+        <h1 class="h1">{post.title}</h1>
+        {post.subtitle && <p class="body-lg muted article-sub">{post.subtitle}</p>}
+        <span class="caption">Opublikowano: {fmtDate(post.date)}</span>
+      </header>
+
+      {post.image && (
+        <img class="article-hero" src={`/blog/img/${post.image}`} alt={post.title} fetchpriority="high" width="1200" height="675" />
+      )}
+
+      <div class="article-body" set:html={post.bodyHtml} />
+
+      <aside class="newsletter">
+        <h3 class="h3">Agencja na Autopilocie — 1 trik automatyzacji tygodniowo</h3>
+        <p class="muted small">Newsletter dla właścicieli agencji 5–15 osób. Bez lania wody. Bonus: checklista 7 automatyzacji w pierwszym mailu.</p>
+        <form action="https://assets.mailerlite.com/jsonp/953911/forms/185269506350777723/subscribe" method="post" target="_blank" class="newsletter-form">
+          <input type="email" name="fields[email]" placeholder="Twój adres email" autocomplete="email" required aria-label="email" />
+          <input type="hidden" name="ml-submit" value="1" />
+          <input type="hidden" name="anticsrf" value="true" />
+          <button type="submit" class="btn-primary">Zapisuję się →</button>
+        </form>
+      </aside>
+    </div>
+  </article>
+</Hub>
+
+<style>
+  .article-wrap { max-width: 44rem; margin-inline: auto; }
+  .breadcrumbs { display: flex; gap: .5rem; font-size: var(--fs-small); color: var(--text-muted); margin-bottom: var(--space-lg); flex-wrap: wrap; }
+  .article-head { margin-bottom: var(--space-lg); }
+  .article-sub { margin: var(--space-md) 0 var(--space-sm); }
+  .article-hero { width: 100%; border-radius: var(--radius-lg); border: 1px solid var(--navy-200); margin-bottom: var(--space-xl); }
+  .article-body { font-size: var(--fs-body-lg); line-height: 1.75; }
+  .article-body :global(h2) { font-family: var(--font-display); font-size: var(--fs-h2); font-weight: 600; color: var(--text-strong); margin: var(--space-xl) 0 var(--space-sm); letter-spacing: -.01em; }
+  .article-body :global(h3) { font-family: var(--font-display); font-size: var(--fs-h3); font-weight: 600; margin: var(--space-lg) 0 var(--space-xs); }
+  .article-body :global(p) { margin: 0 0 var(--space-md); }
+  .article-body :global(hr) { border: 0; border-top: 1px solid var(--color-grid); margin: var(--space-xl) 0; }
+  .article-body :global(a) { color: var(--color-signal); text-decoration: underline; text-underline-offset: .18em; }
+  .article-body :global(ul), .article-body :global(ol) { margin: 0 0 var(--space-md); padding-left: 1.5rem; }
+  .article-body :global(li) { margin-bottom: .4rem; }
+  .article-body :global(img) { max-width: 100%; height: auto; border-radius: var(--radius-md); margin: var(--space-md) 0; }
+  .article-body :global(strong) { font-weight: 600; color: var(--text-strong); }
+  .newsletter { margin-top: var(--space-3xl); padding: var(--space-xl); background: var(--navy-050); border: 1px solid var(--navy-200); border-radius: var(--radius-lg); }
+  .newsletter h3 { margin: 0 0 var(--space-xs); }
+  .newsletter-form { display: flex; flex-wrap: wrap; gap: var(--space-sm); margin-top: var(--space-md); }
+  .newsletter-form input[type=email] { flex: 1 1 14rem; min-width: 0; padding: .8rem 1rem; border: 1.5px solid var(--navy-200); border-radius: var(--radius-sm); font: inherit; background: var(--white); }
+  .newsletter-form input:focus-visible { outline: 3px solid var(--focus-ring); outline-offset: 2px; }
+</style>
