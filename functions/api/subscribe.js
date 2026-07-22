@@ -7,7 +7,8 @@
 //
 // WYMAGANE (CF Pages -> Settings -> Environment variables):
 //   env MAILERLITE_API_KEY              - token API MailerLite (Integrations -> API). Sekret.
-//   env MAILERLITE_WAITLIST_GROUP_ID    - ID grupy „AI-w-pracy early access".
+//   env MAILERLITE_WAITLIST_GROUP_ID    - ID grupy „AI-w-pracy early access" (domyslna).
+//   env MAILERLITE_PM_GROUP_ID          - ID grupy „PM - First 5 Days" (gdy form wysyla list=pm).
 import { validateSubscription } from './_subscribe_core.mjs';
 const ML_URL = 'https://connect.mailerlite.com/api/subscribers';
 const bad = (s, m) => new Response(m, { status: s, headers: { 'content-type': 'text/plain; charset=utf-8' } });
@@ -24,7 +25,12 @@ export async function onRequestPost({ request, env }) {
   if (!v.ok) return bad(v.status, v.status === 403 ? 'Forbidden.' : 'Invalid email.');
 
   const apiKey = env.MAILERLITE_API_KEY || '';
-  const groupId = env.MAILERLITE_WAITLIST_GROUP_ID || '';
+  // Wybor grupy wg pola `list` (server-side mapping, brak otwartego wstrzykiwania ID przez usera):
+  //   list=pm -> grupa PM (MAILERLITE_PM_GROUP_ID); w przeciwnym razie domyslna waitlist.
+  const listKey = String(data.list || '').toLowerCase();
+  const groupId = (listKey === 'pm' && env.MAILERLITE_PM_GROUP_ID)
+    ? env.MAILERLITE_PM_GROUP_ID
+    : (env.MAILERLITE_WAITLIST_GROUP_ID || '');
   const ip = request.headers.get('CF-Connecting-IP') || '';
   if (apiKey && groupId) {
     const body = { email: v.email, fields: v.fields, groups: [groupId] };

@@ -1,0 +1,78 @@
+---
+// Landing magnesu „First 5 PM Days" (lejek PM, D88).
+// Natywny formularz -> /api/subscribe (list=pm -> grupa MAILERLITE_PM_GROUP_ID) -> 302 /zapisano.
+// Po zapisie MailerLite automation wysyla mail z linkiem do PDF + Discord.
+const pdf = 'https://krzysztofnyrek.pl/First_5_PM_Days.pdf';
+---
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>First 5 PM Days — darmowy plan na pierwsze 5 dni w projekcie</title>
+  <meta name="description" content="Darmowy plan dzień po dniu na wejście w nowy projekt. Zostaw maila, wyślę Ci go od razu plus wejście na Discord dla PM." />
+  <meta name="robots" content="noindex" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--navy:#225378;--sky:#EBF3F9;--ink:#1C2B3A;--brass:#A67A38;--gray:#4A5E6D;--line:#D6E1EC}
+    body{font-family:'Montserrat',-apple-system,'Segoe UI',sans-serif;color:var(--ink);background:var(--sky);line-height:1.6;-webkit-font-smoothing:antialiased}
+    .wrap{max-width:640px;margin:0 auto;padding:48px 24px 64px}
+    .card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:40px 36px;box-shadow:0 10px 40px rgba(34,83,120,.08)}
+    .eyebrow{font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--brass)}
+    h1{font-family:'Cormorant Garamond',Georgia,serif;font-size:34px;font-weight:700;color:var(--navy);line-height:1.15;margin:10px 0 14px}
+    .lead{font-size:16px;color:var(--gray);margin-bottom:26px}
+    .what{list-style:none;margin:0 0 28px}
+    .what li{position:relative;padding:7px 0 7px 30px;font-size:15px;border-bottom:1px solid var(--sky)}
+    .what li::before{content:"";position:absolute;left:0;top:14px;width:16px;height:9px;border-left:2px solid var(--brass);border-bottom:2px solid var(--brass);transform:rotate(-45deg)}
+    .what strong{color:var(--navy);font-weight:600}
+    form{display:flex;flex-direction:column;gap:12px}
+    .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+    input[type=email]{width:100%;padding:14px 16px;font-size:16px;font-family:inherit;border:1.5px solid var(--line);border-radius:10px;color:var(--ink)}
+    input[type=email]:focus{outline:none;border-color:var(--navy)}
+    button{width:100%;padding:15px;font-size:16px;font-weight:700;font-family:inherit;color:#fff;background:var(--navy);border:none;border-radius:10px;cursor:pointer;transition:background .15s}
+    button:hover{background:#1a4462}
+    .micro{font-size:12.5px;color:var(--gray);text-align:center;margin-top:4px}
+    .trust{margin-top:26px;padding-top:20px;border-top:1px solid var(--sky);font-size:13px;color:var(--gray);display:flex;align-items:center;gap:12px}
+    .trust strong{color:var(--navy)}
+    .foot{text-align:center;font-size:12px;color:var(--gray);margin-top:24px}
+    .foot a{color:var(--brass);text-decoration:none}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="card">
+      <div class="eyebrow">First 5 PM Days · za darmo</div>
+      <h1>Pierwsze 5 dni w nowym projekcie, dzień po dniu</h1>
+      <p class="lead">Przejmujesz projekt, który już się pali. Poprzedni PM zniknął, dokumentacji brak, a zespół patrzy na Ciebie. Ten plan mówi Ci, co robić każdego z pierwszych pięciu dni. Ten sam, którego sam używam przy każdym wejściu w ogień.</p>
+
+      <ul class="what">
+        <li><strong>Dzień 1</strong> poznaj projekt: sponsor, dokumentacja, team leaderzy</li>
+        <li><strong>Dzień 2</strong> poznaj interesariuszy i ustaw plan komunikacji</li>
+        <li><strong>Dzień 3</strong> wymagania i pierwsze ryzyka</li>
+        <li><strong>Dzień 4</strong> harmonogram i wybór metodyki</li>
+        <li><strong>Dzień 5</strong> kick-off i start projektu</li>
+        <li>Plus trzy zmiany nastawienia, które robią różnicę</li>
+      </ul>
+
+      <form action="/api/subscribe" method="POST">
+        <input type="hidden" name="list" value="pm" />
+        <input type="hidden" name="lang" value="pl" />
+        <input type="hidden" name="utm_source" value="linkedin" />
+        <input type="hidden" name="utm_campaign" value="pm-first5" />
+        <input type="hidden" name="utm_content" value="landing" />
+        <label class="hp" aria-hidden="true">Firma WWW<input type="text" name="firma_www" tabindex="-1" autocomplete="off" /></label>
+        <input type="email" name="email" required placeholder="twoj@email.pl" aria-label="Twój email" />
+        <button type="submit">Wyślij mi plan</button>
+        <p class="micro">Zero spamu. Plan i wejście na darmowego Discorda dla PM lecą od razu na maila.</p>
+      </form>
+
+      <div class="trust">
+        <span><strong>Krzysztof Nyrek</strong> · IT Project Manager (Prince2, AgilePM), 17 lat w projektach.</span>
+      </div>
+    </div>
+    <p class="foot"><a href="https://krzysztofnyrek.pl">krzysztofnyrek.pl</a></p>
+  </main>
+</body>
+</html>
