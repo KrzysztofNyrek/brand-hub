@@ -44,6 +44,8 @@ export async function onRequestPost({ request, env }) {
     } catch (e) { console.error('MailerLite failed', e?.message); }
   } else { console.error('Brak MAILERLITE_API_KEY / WAITLIST_GROUP_ID — pomijam zapis.'); }
 
-  const to = new URL(v.lang === 'en' ? '/subscribed' : '/zapisano', request.url);
+  // PM: dedykowany thank-you (nie waitlista „AI w pracy"). Inaczej: /subscribed (EN) / /zapisano (PL).
+  const dest = listKey === 'pm' ? '/pm-gotowe' : (v.lang === 'en' ? '/subscribed' : '/zapisano');
+  const to = new URL(dest, request.url);
   return Response.redirect(to.toString(), 302);
 }
