@@ -1,0 +1,179 @@
+---
+// PM CRISIS TOOLKIT — sekcja sprzedażowa (marka osobista PM, strona PL).
+// Wzorzec DS mirrorowany z Doors/Authority: eyebrow + section-head, lista wartości
+// toolkitu, dwie karty cenowe (Standard biała / PRO navy „polecana" — kotwica),
+// linia o Discordzie + uczciwa uwaga o slotach 1:1. Renderowana TYLKO na PL
+// (gate w HubHome), stąd copy PL. CTA → Stripe (link out, target/rel jak Amazon).
+const { lang = 'pl' } = Astro.props;
+
+// Linki płatności (Stripe Payment Links — dostarczone przez K).
+const STANDARD_URL = 'https://buy.stripe.com/cNi4gzeE9grE6Gq1iQ97G00';
+const PRO_URL      = 'https://buy.stripe.com/cNi6oHbrXgrE6Gq7He97G01';
+
+// Rdzeń toolkitu — dwanaście gotowców (native jargon PM).
+const items = [
+  'Pierwsze 5 dni w projekcie, dzień po dniu',
+  'Pytania na trudne spotkania',
+  'Szablony maili',
+  'Wiadomości na Slacku',
+  'Jak delegować, żeby robota naprawdę zeszła z Twojej głowy',
+  'Checklista kontroli projektu',
+  'Procedura na pierwszy pożar',
+  'Jak prowadzić daily, żeby nie było statusem dla zasady',
+  'Karta ryzyk',
+  'Szablon decyzji',
+  'Karta projektu',
+  'Prezentacja na kick-off',
+];
+---
+<section id="toolkit" class="section-pad toolkit">
+  <div class="container">
+    <header class="section-head">
+      <span class="eyebrow">PM Crisis Toolkit</span>
+      <h2 class="h2">Zestaw ratunkowy dla PM wrzuconego w projekt w ogniu</h2>
+      <p class="section-lead">Jeśli właśnie przejąłeś projekt, który się pali, nie potrzebujesz kolejnego kursu. Potrzebujesz gotowców, które odpalasz od razu, i to jest dokładnie to, co tu dostajesz.</p>
+    </header>
+
+    <div class="tk-layout">
+      <!-- rdzeń: co jest w toolkicie -->
+      <article class="tk-core">
+        <span class="eyebrow eyebrow--muted">Co jest w środku</span>
+        <p class="tk-core-lead">Dwanaście gotowców, każdy do wyjęcia i użycia w tym samym dniu:</p>
+        <ul class="tk-list">
+          {items.map((it) => (
+            <li class="tk-item">
+              <span class="tk-item-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 6.5"/></svg>
+              </span>
+              <span class="tk-item-txt">{it}</span>
+            </li>
+          ))}
+        </ul>
+      </article>
+
+      <!-- dwie karty cenowe -->
+      <div class="tk-cards">
+        <!-- Standard 39 zł — biała karta -->
+        <article class="door-card door-card--learn tk-plan">
+          <span class="eyebrow eyebrow--muted tk-plan-tier">Standard</span>
+          <div class="tk-price"><span class="tk-price-num">39</span><span class="tk-price-cur">zł</span></div>
+          <p class="tk-plan-sub">Ratunek na teraz, kiedy się pali.</p>
+          <ul class="tk-plan-feats">
+            <li>Cały Toolkit</li>
+            <li>3 Crisis Cards</li>
+            <li>Dostęp do Discorda</li>
+            <li>1 sesja 1:1</li>
+          </ul>
+          <div class="tk-plan-cta">
+            <a class="btn-secondary" href={STANDARD_URL} target="_blank" rel="noopener">Biorę Standard →</a>
+          </div>
+        </article>
+
+        <!-- PRO 99 zł — panel navy, wyróżniony (kotwica) -->
+        <article class="door-card door-card--do tk-plan tk-plan--pro">
+          <span class="tk-badge">Polecane</span>
+          <span class="eyebrow eyebrow--muted tk-plan-tier">PRO</span>
+          <div class="tk-price"><span class="tk-price-num">99</span><span class="tk-price-cur">zł</span></div>
+          <p class="tk-plan-sub">Na dłużej, kiedy chcesz, żeby ktoś patrzył Ci na ręce przez miesiąc.</p>
+          <ul class="tk-plan-feats">
+            <li>Cały Toolkit</li>
+            <li>3 PM Cards</li>
+            <li>Dostęp do Discorda</li>
+            <li>Mentoring przez miesiąc</li>
+          </ul>
+          <div class="tk-plan-cta">
+            <a class="btn-primary" href={PRO_URL} target="_blank" rel="noopener">Biorę PRO →</a>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <!-- Discord + uczciwa uwaga o 1:1 -->
+    <div class="tk-notes">
+      <p class="tk-note">
+        <span class="tk-note-key">Discord:</span> prowadzę darmową społeczność dla PM i wejście jest niezależne od zakupu. Jeśli chcesz dołączyć, odezwij się przez kontakt, a wyślę Ci zaproszenie.
+      </p>
+      <p class="tk-note tk-note--muted">
+        Slotów 1:1 mam kilka w miesiącu, bo to realnie mój czas przy biurku. Bez sztucznej presji: jeśli w danym miesiącu się zapełnią, umawiamy się na kolejny.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .tk-layout { display: grid; gap: var(--space-lg); }
+
+  /* rdzeń: co jest w toolkicie */
+  .tk-core {
+    position: relative;
+    background: var(--bg-surface); border: var(--hairline);
+    border-radius: var(--radius-lg); padding: var(--space-xl);
+  }
+  .tk-core::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 2px; background: var(--color-signal); }
+  .tk-core .eyebrow { margin-bottom: var(--space-sm); }
+  .tk-core-lead { margin: 0 0 var(--space-lg); color: var(--text-strong); max-width: 52ch; }
+  .tk-list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-sm); }
+  .tk-item { display: flex; gap: var(--space-sm); align-items: flex-start; }
+  .tk-item-mark { flex: 0 0 auto; color: var(--color-signal); margin-top: 0.15rem; }
+  .tk-item-mark svg { width: 1.15rem; height: 1.15rem; display: block; }
+  .tk-item-txt { color: var(--text-strong); }
+
+  /* karty cenowe */
+  .tk-cards { display: grid; gap: var(--space-lg); align-items: stretch; }
+  .tk-plan { display: flex; flex-direction: column; }
+  .tk-plan .tk-plan-tier { margin-bottom: var(--space-sm); }
+  .tk-plan--pro { position: relative; }
+
+  .tk-badge {
+    position: absolute; top: var(--space-md); right: var(--space-md);
+    font-family: var(--font-utility);
+    font-size: var(--fs-caption); font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--navy-800); background: var(--color-brass);
+    padding: var(--space-2xs) var(--space-sm); border-radius: var(--radius-pill);
+  }
+
+  .tk-price { display: flex; align-items: baseline; gap: 0.3rem; margin-bottom: var(--space-xs); }
+  .tk-price-num {
+    font-family: var(--font-display); font-size: 3rem; line-height: 1;
+    font-weight: 600; letter-spacing: -0.01em; color: var(--text-strong);
+  }
+  .tk-price-cur {
+    font-family: var(--font-utility); font-size: var(--fs-body-lg);
+    font-weight: 600; letter-spacing: 0.02em; color: var(--text-muted);
+  }
+  .door-card--do .tk-price-num { color: var(--color-white); }
+  .door-card--do .tk-price-cur { color: var(--navy-200); }
+
+  .tk-plan-sub { margin: 0 0 var(--space-md); color: var(--text-strong); font-style: italic; }
+  .door-card--do .tk-plan-sub { color: var(--text-on-inverse); }
+
+  .tk-plan-feats { list-style: none; margin: 0 0 var(--space-lg); padding: 0; display: grid; gap: var(--space-xs); }
+  .tk-plan-feats li { position: relative; padding-left: 1.4rem; color: var(--text-strong); }
+  .tk-plan-feats li::before {
+    content: ""; position: absolute; left: 0; top: 0.62em;
+    width: 0.5rem; height: 0.5rem; transform: translateY(-50%) rotate(45deg);
+    background: var(--color-signal);
+  }
+  .door-card--do .tk-plan-feats li { color: var(--text-on-inverse); }
+  .door-card--do .tk-plan-feats li::before { background: var(--color-brass); }
+
+  .tk-plan-cta { margin-top: auto; padding-top: var(--space-sm); }
+  .tk-plan-cta .btn-primary, .tk-plan-cta .btn-secondary { width: 100%; justify-content: center; }
+  /* PRO na navy: odwrócenie primary (biały przycisk na ciemnym panelu) — spójne z Doors A */
+  .door-card--do .btn-primary { background: var(--color-white); color: var(--navy-800); border-color: var(--color-white); }
+  .door-card--do .btn-primary:hover { background: var(--navy-050); border-color: var(--navy-050); box-shadow: none; }
+
+  /* Discord + 1:1 */
+  .tk-notes { margin-top: var(--space-xl); display: grid; gap: var(--space-sm); max-width: 62ch; }
+  .tk-note { margin: 0; color: var(--text-strong); }
+  .tk-note--muted { color: var(--text-muted); font-size: var(--fs-small); }
+  .tk-note-key { font-weight: 600; color: var(--color-signal); }
+
+  @media (min-width: 720px) {
+    .tk-cards { grid-template-columns: 1fr 1fr; }
+  }
+  @media (min-width: 980px) {
+    .tk-layout { grid-template-columns: 1.05fr 1fr; align-items: start; }
+  }
+</style>

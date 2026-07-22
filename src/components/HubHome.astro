@@ -6,6 +6,7 @@ import Hub from '../layouts/Hub.astro';
 import Hero from './Hero.astro';
 import Doors from './Doors.astro';
 import Authority from './Authority.astro';
+import Toolkit from './Toolkit.astro';
 import AboutTeaser from './AboutTeaser.astro';
 import BlogTeaser from './BlogTeaser.astro';
 import Contact from './Contact.astro';
@@ -26,6 +27,7 @@ const meta = isPl
   <Hero lang={lang} />
   <Doors lang={lang} />
   <Authority lang={lang} />
+  {isPl && <Toolkit lang={lang} />}
   <AboutTeaser lang={lang} />
   {!isPl && <BlogTeaser />}
   <Contact lang={lang} />
