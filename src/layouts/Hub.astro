@@ -54,10 +54,14 @@ const footer = isPl
     <link rel="canonical" href={canonical} />
     {!noHreflang && (
       <Fragment>
-        <!-- hreflang: para hub EN ↔ hub PL, x-default = EN. Absolutne domeny produkcyjne. -->
-        <link rel="alternate" hreflang="en" href={HUB_EN + '/'} />
+        {/* hreflang: DEKLARUJEMY WYŁĄCZNIE PL (03.08.2026).
+            Wcześniej para en↔pl wskazywała `krzysztofnyrek.eu` jako angielski odpowiednik tej strony.
+            To była nieprawda: pod `.eu` stoi osobny serwis WordPress („Content Writer"), a nie tłumaczenie
+            tego huba, więc deklaracja hreflang wprowadzała Google w błąd (a `.eu/about` zwraca 404).
+            Link „EN" w nawigacji zostaje jako zwykłe przejście na `.eu` — bez twierdzenia o tłumaczeniu.
+            Parę en↔pl przywracamy dopiero, gdy angielski hub realnie zamieszka pod `.eu`. */}
         <link rel="alternate" hreflang="pl" href={HUB_PL + '/'} />
-        <link rel="alternate" hreflang="x-default" href={HUB_EN + '/'} />
+        <link rel="alternate" hreflang="x-default" href={HUB_PL + '/'} />
       </Fragment>
     )}
     <!-- fonty: Google Fonts (Cormorant Garamond + Montserrat) — @import w tokens.css (D79) -->

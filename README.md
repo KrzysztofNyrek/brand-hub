@@ -45,29 +45,38 @@ node --test test/subscribe.test.mjs              # unit (4/4)
 
 **Jeden parametryzowany build, przełącznik `HUB_LANG`, dwa projekty CF Pages.**
 
-- **Domyślny build** (`HUB_LANG` nieustawiony): `/` = **EN**, `/pl/` = **PL**. Służy do lokalnej
-  weryfikacji obu wariantów naraz + jest deploy-em dla domeny **`.eu`** (root = EN). ✅
-- **Build dla `.pl`**: `HUB_LANG=pl npm run build` → `/` renderuje **PL** (root domeny `.pl` = PL).
-  Deploy tego `dist/` do **osobnego** projektu CF Pages podpiętego pod `krzysztofnyrek.pl`.
+> 🔴 **ODWRÓCONE 03.08.2026. Domyślny build to teraz PL, nie EN.** Powód nie jest kosmetyczny:
+> deploy produkcyjny poszedł kiedyś bez flagi `HUB_LANG=pl` i **cała domena `krzysztofnyrek.pl`
+> stała po angielsku**, a przełącznik „PL" linkował sam na siebie, więc do polskiej wersji nie dało
+> się dojść z żadnego linku. Flagi nie da się wymusić skryptem npm na Windowsie (cmd.exe nie rozumie
+> `VAR=x` przed komendą), więc zabezpieczeniem nie jest ten akapit, tylko **odwrócona wartość
+> domyślna**: zwykły `npm run build` produkuje wersję, której potrzebuje produkcja.
+
+- **Domyślny build** (`HUB_LANG` nieustawiony): `/` = **PL**. To jest build dla `krzysztofnyrek.pl`.
+  `/pl/` renderuje to samo i jest przekierowane na apex (`public/_redirects`), żeby nie robić duplikatu treści.
+- **Build EN**: `HUB_LANG=en npm run build` → `/` renderuje **EN**. Przypadek szczególny: angielski hub
+  docelowo mieszka pod `.eu` i **nie jest dziś nigdzie wdrożony** (pod `.eu` stoi osobny serwis WordPress).
 
 Root-switch czyta `process.env.HUB_LANG` w `src/pages/index.astro` (build-time; static output bez zmian).
-hreflang w obu wariantach zawsze wskazuje **absolutne domeny produkcyjne** (`.eu`/`.pl`, x-default=en),
-nie preview URL.
+
+**hreflang:** deklarujemy wyłącznie `pl` + `x-default=pl`. Para `en↔pl` została usunięta 03.08, bo
+wskazywała `krzysztofnyrek.eu` jako angielski odpowiednik tego huba, a to nieprawda: pod `.eu` stoi
+osobny WordPress („Content Writer"), którego `/about` zwraca 404. Link „EN" w nawigacji zostaje jako
+zwykłe przejście, bez twierdzenia o tłumaczeniu. Parę przywracamy, gdy angielski hub realnie zamieszka pod `.eu`.
 
 | Domena | Projekt CF Pages | Build | Root serwuje |
 |---|---|---|---|
-| `krzysztofnyrek.eu` | `brand-hub` (EN) | `npm run build` | EN (`/`) |
-| `krzysztofnyrek.pl` | `brand-hub-pl` (PL) | `HUB_LANG=pl npm run build` | PL (`/`) |
+| `krzysztofnyrek.pl` | `brand-hub-pl` | `npm run build` (domyślny) | **PL** (`/`) |
+| `krzysztofnyrek.eu` | brak wdrożenia huba | `HUB_LANG=en npm run build` | EN (`/`) — nieużywane |
 
-## Deploy (CF Pages — Faza 1 = PREVIEW; deploy na prod = osobny gated krok z K)
+## Deploy (CF Pages — deploy na prod = osobny gated krok z K)
 
 ```sh
-# EN
-NODE_OPTIONS=--use-system-ca npm run build
-wrangler pages deploy dist --project-name brand-hub
+# PL, czyli produkcja. Jedna komenda, bez flag, bez okazji do pomyłki.
+NODE_OPTIONS=--use-system-ca npm run deploy
 
-# PL
-HUB_LANG=pl NODE_OPTIONS=--use-system-ca npm run build
+# to samo rozpisane, gdyby trzeba było zatrzymać się między krokami
+NODE_OPTIONS=--use-system-ca npm run build
 wrangler pages deploy dist --project-name brand-hub-pl
 ```
 

@@ -1,8 +1,14 @@
 ---
 // Root strony startowej.
-// Domyślny build (HUB_LANG nieustawiony) → EN na „/" + PL na „/pl/".
-// Build .pl (HUB_LANG=pl) → „/" = PL (deploy do osobnego projektu CF Pages). Patrz README.
+// 🔴 DOMYŚLNY JĘZYK = PL (odwrócone 03.08.2026, decyzja K: krzysztofnyrek.pl w całości po polsku).
+// Wcześniej domyślny build dawał EN na „/", a polską wersję trzeba było wywołać flagą HUB_LANG=pl.
+// Deploy produkcyjny poszedł kiedyś bez tej flagi i cała domena stała po angielsku, a przełącznik
+// „PL" linkował sam na siebie, więc do polskiej wersji nie dało się dojść z żadnego linku.
+// Flagi nie da się wymusić skryptem npm na Windowsie (cmd.exe nie rozumie VAR=x przed komendą),
+// więc zabezpieczeniem nie jest dokumentacja, tylko odwrócona wartość domyślna:
+// zwykły `npm run build` produkuje PL, czyli to, czego potrzebuje ta domena.
+// Angielski hub jest teraz przypadkiem szczególnym (HUB_LANG=en) i docelowo mieszka na .eu.
 import HubHome from '../components/HubHome.astro';
-const lang = process.env.HUB_LANG === 'pl' ? 'pl' : 'en';
+const lang = process.env.HUB_LANG === 'en' ? 'en' : 'pl';
 ---
 <HubHome lang={lang} />

@@ -1,0 +1,7 @@
+# krzysztofnyrek.pl = strona w całości polska (decyzja K 03.08.2026).
+# Build produkcyjny leci z HUB_LANG=pl, więc "/" renderuje polską wersję.
+# "/pl/" zostaje w buildzie jako ten sam widok i byłoby duplikatem treści,
+# dlatego kierujemy go na apex. Angielska wersja huba nie mieszka już na tej
+# domenie: link "EN" w nawigacji prowadzi na krzysztofnyrek.eu.
+/pl              /    301
+/pl/*            /    301
