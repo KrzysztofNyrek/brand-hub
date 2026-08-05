@@ -1,0 +1,108 @@
+---
+// Polityka prywatności huba krzysztofnyrek.pl. Treść zaakceptowana przez K 05.08.2026
+// (materialy/2026-08-04_polityka-prywatnosci-krzysztofnyrek-pl.md, D103).
+// Opisuje stan REALNY: newsletter + magnes przez MailerLite, hosting Cloudflare, zero
+// własnych cookies i zero analityki. W dniu włączenia GA4 sekcja „Cookies i analityka"
+// zostaje zastąpiona blokiem GA4 z tego samego dokumentu — nie wcześniej i nie później.
+import Hub from '../layouts/Hub.astro';
+import { HUB_PL } from '../config.mjs';
+---
+<Hub
+  lang="pl"
+  title="Polityka prywatności · Krzysztof Nyrek"
+  description="Jakie dane zbieramy na krzysztofnyrek.pl, po co, komu je powierzamy i jakie masz prawa (RODO)."
+  canonical={HUB_PL + '/polityka-prywatnosci'}
+  noHreflang={true}
+>
+  <section class="section">
+    <div class="prose-narrow">
+      <h1>Polityka prywatności</h1>
+
+      <h2>Administrator danych</h2>
+      <p>
+        Administratorem Twoich danych osobowych jest Krzysztof Nyrek. Kontakt we wszystkich sprawach
+        dotyczących danych:
+        {/* Cloudflare domyślnie zaciemnia adresy e-mail i podmienia je na link odszyfrowywany
+            JavaScriptem. W polityce prywatności adres kontaktowy musi być czytelny także bez JS,
+            więc wyłączamy obfuskację dla tego fragmentu (znacznik email_off Cloudflare). */}
+        <Fragment set:html={'<!--email_off--><a href="mailto:rodo@krzysztofnyrek.pl">rodo@krzysztofnyrek.pl</a><!--/email_off-->'} />.
+      </p>
+
+      <h2>Jakie dane zbieramy i po co</h2>
+      <p>
+        <strong>Zapis do newslettera i pobranie materiału „First 5 PM Days"</strong> — zbieramy adres
+        e-mail oraz, jeśli go podasz, imię. Cel: wysyłka zamówionego materiału oraz kolejnych
+        wiadomości z serii. Podstawa prawna: Twoja zgoda (art. 6 ust. 1 lit. a RODO). Zgodę możesz
+        cofnąć w każdej chwili, klikając „wypisz się" w stopce dowolnej wiadomości, bez podawania
+        powodu i bez wpływu na zgodność z prawem wcześniejszej wysyłki.
+      </p>
+      <p>
+        <strong>Kontakt bezpośredni</strong> — jeśli napiszesz do nas e-mailem, przetwarzamy dane
+        zawarte w Twojej wiadomości wyłącznie po to, żeby na nią odpowiedzieć. Podstawa: nasz prawnie
+        uzasadniony interes polegający na prowadzeniu korespondencji (art. 6 ust. 1 lit. f RODO).
+      </p>
+      <p>
+        <strong>Logi serwera</strong> — nasz dostawca hostingu automatycznie rejestruje techniczne
+        dane każdego połączenia (adres IP, typ przeglądarki, czas). Służą wyłącznie utrzymaniu
+        serwisu i jego bezpieczeństwu. Podstawa: prawnie uzasadniony interes (art. 6 ust. 1 lit. f RODO).
+      </p>
+
+      <h2>Komu powierzamy dane</h2>
+      <ul>
+        <li><strong>MailerLite</strong> — obsługa newslettera i wysyłka materiału. Przechowuje Twój adres e-mail w naszym imieniu, na podstawie umowy powierzenia.</li>
+        <li><strong>Cloudflare</strong> — hosting serwisu i ochrona przed nadużyciami.</li>
+      </ul>
+      <p>Poza tym nie sprzedajemy, nie wypożyczamy ani nie udostępniamy Twoich danych nikomu.</p>
+
+      <h2>Cookies i analityka</h2>
+      <p>
+        Ten serwis <strong>nie zapisuje własnych plików cookies i nie prowadzi analityki ruchu</strong>.
+        Nie śledzimy Cię między stronami, nie budujemy Twojego profilu i nie wyświetlamy reklam
+        opartych na Twoim zachowaniu. Jeśli to się zmieni, zaktualizujemy tę stronę <strong>zanim</strong>
+        cokolwiek uruchomimy, a na analitykę wykorzystującą cookies poprosimy Cię wcześniej o zgodę.
+      </p>
+
+      <h2>Jak długo trzymamy dane</h2>
+      <p>
+        Adres e-mail w newsletterze — do momentu wypisania się. Korespondencję — przez czas potrzebny
+        do załatwienia sprawy i rozsądny okres po niej. Logi serwera — zgodnie z polityką dostawcy hostingu.
+      </p>
+
+      <h2>Brak profilowania i decyzji automatycznych</h2>
+      <p>
+        Nie podejmujemy wobec Ciebie decyzji opartych wyłącznie na zautomatyzowanym przetwarzaniu,
+        w tym profilowaniu.
+      </p>
+
+      <h2>Twoje prawa</h2>
+      <p>
+        Masz prawo do: dostępu do swoich danych, ich sprostowania, usunięcia, ograniczenia
+        przetwarzania, przeniesienia oraz sprzeciwu wobec przetwarzania opartego na prawnie
+        uzasadnionym interesie. Masz też prawo cofnąć zgodę w dowolnym momencie. Żeby skorzystać
+        z któregokolwiek z tych praw, wystarczy napisać na
+        <Fragment set:html={'<!--email_off--><a href="mailto:rodo@krzysztofnyrek.pl">rodo@krzysztofnyrek.pl</a><!--/email_off-->'} />.
+      </p>
+      <p>
+        Jeśli uznasz, że przetwarzamy Twoje dane niezgodnie z prawem, możesz złożyć skargę do Prezesa
+        Urzędu Ochrony Danych Osobowych (ul. Stawki 2, 00-193 Warszawa).
+      </p>
+
+      <h2>Zmiany</h2>
+      <p>
+        Datę ostatniej aktualizacji podajemy poniżej. Zmiany istotne zapowiadamy na tej stronie
+        z wyprzedzeniem.
+      </p>
+      <p class="small">Ostatnia aktualizacja: 5 sierpnia 2026.</p>
+    </div>
+  </section>
+</Hub>
+
+<style>
+  .section { padding: var(--space-2xl) var(--gutter); }
+  .prose-narrow { max-width: 46rem; margin-inline: auto; }
+  .prose-narrow h1 { margin-bottom: var(--space-lg); }
+  .prose-narrow h2 { margin-top: var(--space-xl); margin-bottom: var(--space-xs); font-size: 1.25rem; }
+  .prose-narrow p, .prose-narrow li { color: var(--text-muted); }
+  .prose-narrow ul { margin: 0 0 var(--space-md) 1.25rem; }
+  .prose-narrow li { margin-bottom: var(--space-xs); }
+</style>

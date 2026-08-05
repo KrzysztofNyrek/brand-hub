@@ -36,11 +36,16 @@ const footer = isPl
       tagline: 'Krzysztof Nyrek · Automatyzacja procesów, oparta na praktyce.',
       altHref: HUB_EN, altLabel: 'English',
       home: 'Wróć na górę',
+      privacy: 'Polityka prywatności',
     }
   : {
       tagline: 'Krzysztof Nyrek · Project management, run on AI.',
       altHref: HUB_PL, altLabel: 'Polski',
       home: 'Back to top',
+      // Dokument jest polski i taki zostaje (RODO wymaga dostępności i zrozumiałości
+      // dla adresata, nie tłumaczenia). Wersja EN dopiero, gdy linia PM na .eu będzie
+      // miała realnych czytelników spoza Polski.
+      privacy: 'Privacy policy',
     };
 ---
 <!doctype html>
@@ -128,6 +133,7 @@ const footer = isPl
         <p class="small" style="margin:0; max-width:40ch;">{footer.tagline}</p>
         <div class="footer-meta">
           <span class="caption">© 2026 Krzysztof Nyrek</span>
+          <a class="small" href="/polityka-prywatnosci">{footer.privacy}</a>
           <a class="small" href={footer.altHref}>{footer.altLabel}</a>
           <a class="small" href="#hero">{footer.home}</a>
         </div>
