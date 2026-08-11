@@ -1,0 +1,83 @@
+name: Build i deploy na Cloudflare Pages
+
+# Decyzja K z 11.08.2026: strona ma wychodzic z gita, nie z laptopa.
+# "Leci push na github, a z github push na strone." Powod: 11.08 artykul zyl na produkcji,
+# a jego zrodlo nie bylo zacommitowane, wiec build z czystego klona by go skasowal.
+#
+# DLACZEGO GITHUB ACTIONS, A NIE NATYWNA INTEGRACJA CLOUDFLARE Z GITEM:
+# projekt brand-hub-pl jest typu Direct Upload, a Cloudflare nie pozwala dolozyc integracji
+# z gitem do istniejacego projektu Pages (potwierdzone w ich dokumentacji). Natywna droga
+# wymagalaby zalozenia NOWEGO projektu i przeniesienia domeny krzysztofnyrek.pl, czyli
+# przelaczenia zywej domeny. Ten przeplyw daje ten sam efekt bez ruszania domeny.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-brand-hub-pl
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          # Musi byc zgodne z "engines" w package.json (>=22.12.0). Node 20 wywali build.
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # Bramka, nie tasmociag: jak testy padna, nic nie wychodzi na produkcje.
+      - name: Testy jednostkowe
+        run: node --test test/subscribe.test.mjs
+
+      - name: Build
+        env:
+          # 🔴 USTAWIONE JAWNIE I NIE WOLNO TEGO USUWAC.
+          # Bez tej flagi build kiedys wyszedl po angielsku i CALA domena krzysztofnyrek.pl
+          # stala po angielsku, a przelacznik "PL" linkowal sam na siebie (opisane w README).
+          # Wartosc domyslna w kodzie jest dzis odwrocona na PL, ale nie opieramy produkcji
+          # na wartosci domyslnej w nowym srodowisku budowania.
+          HUB_LANG: pl
+        run: npm run build
+        # UWAGA: zadnego NODE_OPTIONS=--use-system-ca. To jest obejscie firmowego CA
+        # na laptopie Krzysztofa. Runner GitHuba ma normalny magazyn certyfikatow.
+
+      - name: Sprawdz, czy sekrety Cloudflare sa ustawione
+        id: sekrety
+        env:
+          TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          ACCOUNT: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          if [ -n "$TOKEN" ] && [ -n "$ACCOUNT" ]; then
+            echo "gotowe=tak" >> "$GITHUB_OUTPUT"
+          else
+            echo "gotowe=nie" >> "$GITHUB_OUTPUT"
+            echo "::warning::Brak sekretow CLOUDFLARE_API_TOKEN lub CLOUDFLARE_ACCOUNT_ID. Build przeszedl, deploy pominiety. Kroki dodania sekretow: rekord [MANUAL K] w Sprint DB."
+          fi
+
+      - name: Deploy na Cloudflare Pages
+        if: steps.sekrety.outputs.gotowe == 'tak'
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy dist --project-name=brand-hub-pl --branch=main
+
+      - name: Potwierdz na zywej domenie (tresc, nie kod odpowiedzi)
+        if: steps.sekrety.outputs.gotowe == 'tak'
+        run: |
+          sleep 15
+          # Kod 200 niczego nie dowodzi (soft-404 zdarzal sie nam dwa razy). Patrzymy na tresc.
+          if curl -sfL https://krzysztofnyrek.pl/blog/ | grep -q "krzysztofnyrek"; then
+            echo "Strona odpowiada trescia."
+          else
+            echo "::error::Deploy przeszedl, ale zywa domena nie zwrocila oczekiwanej tresci. Sprawdz recznie."
+            exit 1
+          fi
