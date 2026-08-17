@@ -16,7 +16,7 @@ export const HUB_PL = 'https://krzysztofnyrek.pl';
 //   2. GA4 startuje dopiero PO kliknięciu, nie przed,
 //   3. w banerze jest link do polityki.
 // Polityka opisująca zgodę, której baner nie egzekwuje, jest gorsza niż jej brak.
-export const GA4_ID = null;   // np. 'G-XXXXXXXXXX'
+export const GA4_ID = 'G-DTCRKLPCPP';   // strumień „Hub PL", utworzony przez K 17.08.2026
 
 export const LINKS = {
   // --- ZNANE / potwierdzone ---
