@@ -1,9 +1,22 @@
-// Brand Hub — centralne linki + UTM helper (T5/T6, @cto).
+﻿// Brand Hub — centralne linki + UTM helper (T5/T6, @cto).
 // ZASADA (anty-halucynacja): NIE wymyślamy URL-i. Znane = wpisane; nieznane = null
 // i renderowane jako placeholder href="#" data-todo (patrz components). P2 z planu.
 
 export const HUB_EN = 'https://krzysztofnyrek.eu';
 export const HUB_PL = 'https://krzysztofnyrek.pl';
+
+// --- Analityka (D103) -------------------------------------------------------
+// Identyfikator pomiaru GA4 dla tej domeny. `null` = analityki NIE MA i nie
+// ładuje się ani baner, ani żaden skrypt Google. Tak jest do czasu, aż powstanie
+// strumień danych w panelu GA4 (rekord [MANUAL K]).
+//
+// 🔴 TRZY WARUNKI Z POLITYKI PRYWATNOŚCI, których ten kod musi dotrzymać
+// (materialy/2026-08-04_polityka-prywatnosci-krzysztofnyrek-pl.md, akceptacja K 05.08):
+//   1. baner zgody realnie działa i DOMYŚLNIE BLOKUJE,
+//   2. GA4 startuje dopiero PO kliknięciu, nie przed,
+//   3. w banerze jest link do polityki.
+// Polityka opisująca zgodę, której baner nie egzekwuje, jest gorsza niż jej brak.
+export const GA4_ID = null;   // np. 'G-XXXXXXXXXX'
 
 export const LINKS = {
   // --- ZNANE / potwierdzone ---

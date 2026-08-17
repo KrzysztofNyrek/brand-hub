@@ -1,0 +1,97 @@
+---
+// Baner zgody + ładowanie GA4. Jeden komponent, bo to jeden mechanizm: bez zgody
+// nie ma analityki, bez analityki nie ma po co pytać o zgodę.
+//
+// MODEL: opt-in twardy. Żaden skrypt Google nie jest pobierany, dopóki użytkownik
+// nie kliknie „Akceptuję". Nie używamy wariantu „ładuj gtag z consent=denied", bo
+// przy nim przeglądarka i tak wysyła żądanie do googletagmanager.com przed zgodą,
+// a polityka prywatności obiecuje coś innego: „analityka jest domyślnie wyłączona
+// i uruchamia się dopiero po Twojej zgodzie".
+//
+// Wybór zapisujemy w localStorage (nie w cookie) — dzięki temu samo odwiedzenie
+// strony nie zapisuje niczego, o co trzeba by pytać.
+import { GA4_ID } from '../config.mjs';
+const gaId = GA4_ID;
+---
+{gaId && (
+  <>
+    <div id="consent" class="consent" hidden role="dialog" aria-live="polite" aria-label="Zgoda na analitykę">
+      <div class="consent-inner">
+        <p class="consent-text">
+          Chcę wiedzieć, które teksty są czytane, więc chciałbym włączyć Google Analytics.
+          Bez Twojej zgody nie uruchamiam żadnych skryptów analitycznych.
+          Szczegóły w <a href="/polityka-prywatnosci">polityce prywatności</a>.
+        </p>
+        <div class="consent-actions">
+          <button type="button" id="consent-no" class="btn-secondary">Tylko niezbędne</button>
+          <button type="button" id="consent-yes" class="btn-primary">Akceptuję</button>
+        </div>
+      </div>
+    </div>
+
+    <script is:inline define:vars={{ gaId }}>
+      (function () {
+        var KLUCZ = 'kn-consent';
+        var baner = document.getElementById('consent');
+
+        function wlaczAnalityke() {
+          if (window.__knGaLoaded) return;
+          window.__knGaLoaded = true;
+          var s = document.createElement('script');
+          s.async = true;
+          s.src = 'https://www.googletagmanager.com/gtag/js?id=' + gaId;
+          document.head.appendChild(s);
+          window.dataLayer = window.dataLayer || [];
+          function gtag() { window.dataLayer.push(arguments); }
+          window.gtag = gtag;
+          gtag('js', new Date());
+          // anonymize_ip jest w GA4 domyślne i nieusuwalne, więc go nie ustawiamy.
+          gtag('config', gaId, { send_page_view: true });
+        }
+
+        var wybor = null;
+        try { wybor = localStorage.getItem(KLUCZ); } catch (e) { /* tryb prywatny */ }
+
+        if (wybor === 'granted') {
+          wlaczAnalityke();
+        } else if (wybor !== 'denied' && baner) {
+          baner.hidden = false;
+        }
+
+        function zapisz(wartosc) {
+          try { localStorage.setItem(KLUCZ, wartosc); } catch (e) { /* tryb prywatny */ }
+          if (baner) baner.hidden = true;
+          if (wartosc === 'granted') wlaczAnalityke();
+        }
+
+        var tak = document.getElementById('consent-yes');
+        var nie = document.getElementById('consent-no');
+        if (tak) tak.addEventListener('click', function () { zapisz('granted'); });
+        if (nie) nie.addEventListener('click', function () { zapisz('denied'); });
+      })();
+    </script>
+
+    <style>
+      .consent {
+        position: fixed; inset-inline: 0; bottom: 0; z-index: 90;
+        background: var(--color-white); border-top: var(--hairline);
+        box-shadow: 0 -4px 24px rgba(28, 43, 58, 0.12);
+        padding: var(--space-md) var(--gutter);
+      }
+      .consent[hidden] { display: none; }
+      .consent-inner {
+        max-width: var(--maxw-content); margin-inline: auto;
+        display: flex; flex-wrap: wrap; gap: var(--space-md);
+        align-items: center; justify-content: space-between;
+      }
+      .consent-text { margin: 0; font-size: var(--fs-small); max-width: 62ch; }
+      .consent-actions { display: flex; gap: var(--space-sm); flex-shrink: 0; }
+      .consent-actions button { cursor: pointer; font-size: var(--fs-small); }
+      @media (max-width: 620px) {
+        .consent-inner { flex-direction: column; align-items: stretch; }
+        .consent-actions { justify-content: stretch; }
+        .consent-actions button { flex: 1; }
+      }
+    </style>
+  </>
+)}

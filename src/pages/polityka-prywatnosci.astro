@@ -5,7 +5,12 @@
 // własnych cookies i zero analityki. W dniu włączenia GA4 sekcja „Cookies i analityka"
 // zostaje zastąpiona blokiem GA4 z tego samego dokumentu — nie wcześniej i nie później.
 import Hub from '../layouts/Hub.astro';
-import { HUB_PL } from '../config.mjs';
+import { HUB_PL, GA4_ID } from '../config.mjs';
+// 🔴 Sekcja „Cookies i analityka" jest STEROWANA TYM SAMYM PRZEŁĄCZNIKIEM co baner
+// (`GA4_ID` w config.mjs). Dzięki temu treść polityki nie może rozjechać się z tym, co
+// strona realnie robi: nie da się opublikować obietnicy o zgodzie bez działającego banera
+// ani analityki bez zaktualizowanej polityki. Tekst obu wariantów zaakceptowany przez K
+// 05.08.2026 (materialy/2026-08-04_polityka-prywatnosci-krzysztofnyrek-pl.md).
 ---
 <Hub
   lang="pl"
@@ -55,12 +60,23 @@ import { HUB_PL } from '../config.mjs';
       <p>Poza tym nie sprzedajemy, nie wypożyczamy ani nie udostępniamy Twoich danych nikomu.</p>
 
       <h2>Cookies i analityka</h2>
-      <p>
-        Ten serwis <strong>nie zapisuje własnych plików cookies i nie prowadzi analityki ruchu</strong>.
-        Nie śledzimy Cię między stronami, nie budujemy Twojego profilu i nie wyświetlamy reklam
-        opartych na Twoim zachowaniu. Jeśli to się zmieni, zaktualizujemy tę stronę <strong>zanim</strong>
-        cokolwiek uruchomimy, a na analitykę wykorzystującą cookies poprosimy Cię wcześniej o zgodę.
-      </p>
+      {GA4_ID ? (
+        <p>
+          Używamy Google Analytics 4, żeby wiedzieć, które treści są czytane. Analityka jest
+          <strong> domyślnie wyłączona</strong> i uruchamia się dopiero po Twojej zgodzie w banerze.
+          Możesz wybrać „tylko niezbędne" — wtedy nie ładujemy żadnych skryptów analitycznych.
+          Zgodę możesz wycofać, czyszcząc dane witryny w przeglądarce. Dane trafiają do
+          Google Ireland Limited jako procesora; nie łączymy ich z Twoim adresem e-mail ani
+          z zapisem do newslettera.
+        </p>
+      ) : (
+        <p>
+          Ten serwis <strong>nie zapisuje własnych plików cookies i nie prowadzi analityki ruchu</strong>.
+          Nie śledzimy Cię między stronami, nie budujemy Twojego profilu i nie wyświetlamy reklam
+          opartych na Twoim zachowaniu. Jeśli to się zmieni, zaktualizujemy tę stronę <strong>zanim</strong>
+          cokolwiek uruchomimy, a na analitykę wykorzystującą cookies poprosimy Cię wcześniej o zgodę.
+        </p>
+      )}
 
       <h2>Jak długo trzymamy dane</h2>
       <p>

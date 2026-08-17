@@ -4,6 +4,7 @@
 // (tokens.css — Design System KN, D79) dla obu; różni się układ/treść sekcji.
 import '../styles/tokens.css';
 import { HUB_EN, HUB_PL } from '../config.mjs';
+import Consent from '../components/Consent.astro';
 
 const { lang = 'en', title, description, canonical: canonicalProp, ogType = 'website', ogImage, noHreflang = false } = Astro.props;
 const isPl = lang === 'pl';
@@ -139,5 +140,6 @@ const footer = isPl
         </div>
       </div>
     </footer>
+    <Consent />
   </body>
 </html>
