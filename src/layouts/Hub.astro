@@ -38,6 +38,7 @@ const footer = isPl
       altHref: HUB_EN, altLabel: 'English',
       home: 'Wróć na górę',
       privacy: 'Polityka prywatności',
+      ai: 'Jak powstają te teksty',
     }
   : {
       tagline: 'Krzysztof Nyrek · Project management, run on AI.',
@@ -47,6 +48,9 @@ const footer = isPl
       // dla adresata, nie tłumaczenia). Wersja EN dopiero, gdy linia PM na .eu będzie
       // miała realnych czytelników spoza Polski.
       privacy: 'Privacy policy',
+      // Nota o udziale AI jest polska, tak jak polityka prywatności, i z tego samego powodu:
+      // dokument ma być zrozumiały dla adresata, a adresat jest polski.
+      ai: 'Jak powstają te teksty',
     };
 ---
 <!doctype html>
@@ -135,6 +139,7 @@ const footer = isPl
         <div class="footer-meta">
           <span class="caption">© 2026 Krzysztof Nyrek</span>
           <a class="small" href="/polityka-prywatnosci">{footer.privacy}</a>
+          <a class="small" href="/jak-powstaja-teksty">{footer.ai}</a>
           <a class="small" href={footer.altHref}>{footer.altLabel}</a>
           <a class="small" href="#hero">{footer.home}</a>
         </div>

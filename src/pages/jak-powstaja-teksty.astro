@@ -1,0 +1,55 @@
+---
+// Nota o udziale AI w powstawaniu treści. Treść i ramy od Krzysztofa (17.08.2026).
+//
+// DLACZEGO TA STRONA ISTNIEJE, mimo że nie musi: obowiązku nie ma. Art. 50 ust. 4 AI Act
+// nakłada obowiązek ujawnienia na tekst „publikowany w celu informowania społeczeństwa
+// o sprawach leżących w interesie publicznym", a dodatkowo nie stosuje się, gdy treść
+// przeszła kontrolę redakcyjną i ktoś ponosi za nią odpowiedzialność. Oba warunki działają
+// tu na naszą korzyść. Nota jest dobrowolna i właśnie dlatego coś znaczy.
+// Obowiązek znakowania maszynowego z art. 50 ust. 2 to obowiązek DOSTAWCY modelu, nie nasz.
+import Hub from '../layouts/Hub.astro';
+import { HUB_PL } from '../config.mjs';
+---
+<Hub
+  lang="pl"
+  title="Jak powstają te teksty · Krzysztof Nyrek"
+  description="Piszę z własnego doświadczenia z prowadzenia projektów. Gdzie w tym pomaga mi sztuczna inteligencja i gdzie przebiega granica."
+  canonical={HUB_PL + '/jak-powstaja-teksty'}
+  noHreflang={true}
+>
+  <section class="section">
+    <div class="prose-narrow">
+      <h1>Jak powstają te teksty</h1>
+
+      <p>
+        Piszę z własnego doświadczenia i własnej wiedzy z prowadzenia projektów. Korzystam przy tym
+        ze sztucznej inteligencji: pomaga mi wygładzić styl, sprawdzić pisownię, podrzuca tematy
+        i pierwsze wersje tekstu. <strong>Oceny, wnioski i decyzje w tych materiałach są moje</strong>,
+        tak samo jak odpowiedzialność za nie.
+      </p>
+
+      <h2>Gdzie przebiega granica</h2>
+      <p>
+        Sztuczna inteligencja dostaje u mnie robotę redakcyjną: skracanie, porządkowanie, przepisanie
+        notatek na coś, co da się pokazać innym. Nie dostaje ocen, szacowań ani decyzji o tym, co
+        w projekcie jest ryzykiem. To jest praca, za którą klient płaci człowiekowi, i tak zostaje.
+      </p>
+
+      <h2>Dlaczego o tym piszę, skoro nie muszę</h2>
+      <p>
+        Przepisy nakładają obowiązek oznaczania treści generowanych maszynowo <strong>na dostawców
+        modeli</strong>, a obowiązek informowania czytelnika dotyczy publikacji o sprawach
+        w interesie publicznym, czyli głównie dziennikarstwa. Ta strona nie jest wymagana.
+      </p>
+      <p>
+        Uważam jednak, że skoro korzystam z narzędzia, to lepiej powiedzieć o tym wprost, niż
+        pozwolić, żeby ktoś się domyślał. Wolę, żebyś wiedział, co kupujesz: moją głowę, nie
+        moją składnię.
+      </p>
+
+      <p class="muted">
+        Ostatnia aktualizacja: 17 sierpnia 2026.
+      </p>
+    </div>
+  </section>
+</Hub>
