@@ -12,6 +12,12 @@ export function getStaticPaths() {
 }
 
 const { post } = Astro.props as { post: any };
+// 🔴 PUBLICZNOŚĆ ARTYKUŁU (18.08.2026). Do 18.08 pod KAŻDYM tekstem stał ten sam box z zapisem
+// na newsletter „dla właścicieli firm 5-30 osób", także pod tekstami dla project managerów, czyli
+// pod tymi, na które kierujemy ruch z LinkedIna. Czytelnik dostawał dwa wezwania naraz i drugie
+// było do kogoś innego. Wykrył to K przy wklejaniu linku w pierwszym komentarzu.
+// Artykuły PM mają w JSON-ie `audience: "pm"` (ustawia je narzedzia/generate_blog_pm_json.py).
+const isPm = post.audience === 'pm';
 const url = `${HUB_PL}/blog/${post.slug}`;
 const ogImage = post.image ? `${HUB_PL}/blog/img/${post.image}` : undefined;
 
@@ -69,16 +75,34 @@ const jsonld = {
 
       <div class="article-body" set:html={post.bodyHtml} />
 
-      <aside class="newsletter">
-        <h3 class="h3">System zamiast Ciebie: jedna automatyzacja tygodniowo</h3>
-        <p class="muted small">Newsletter dla właścicieli firm 5–30 osób. Bez lania wody. Bonus: checklista 7 automatyzacji w pierwszym mailu.</p>
-        <form action="https://assets.mailerlite.com/jsonp/953911/forms/185269506350777723/subscribe" method="post" target="_blank" class="newsletter-form">
-          <input type="email" name="fields[email]" placeholder="Twój adres email" autocomplete="email" required aria-label="email" />
-          <input type="hidden" name="ml-submit" value="1" />
-          <input type="hidden" name="anticsrf" value="true" />
-          <button type="submit" class="btn-primary">Zapisuję się →</button>
-        </form>
-      </aside>
+      {isPm ? (
+        <aside class="newsletter">
+          <h3 class="h3">Plan na pierwsze pięć dni w projekcie</h3>
+          <p class="muted small">Dzień po dniu, z pytaniami do zadania i pułapkami do ominięcia. Ten sam plan, który sam odpalam, wchodząc w trudny projekt. Za darmo, razem z zaproszeniem na Discord dla PM-ów.</p>
+          <form action="/api/subscribe" method="post" class="newsletter-form">
+            <input type="email" name="email" placeholder="Twój adres email" autocomplete="email" required aria-label="email" />
+            <input type="hidden" name="list" value="pm" />
+            <input type="hidden" name="lang" value="pl" />
+            <input type="hidden" name="utm_source" value="blog" />
+            <input type="hidden" name="utm_campaign" value="pm-first5" />
+            <input type="hidden" name="utm_content" value={post.slug} />
+            {/* honeypot: dokładnie ta sama nazwa pola co na landingu, inaczej filtr botów nie zadziała */}
+            <label class="hp" aria-hidden="true">Firma WWW<input type="text" name="firma_www" tabindex="-1" autocomplete="off" /></label>
+            <button type="submit" class="btn-primary">Wyślij mi plan →</button>
+          </form>
+        </aside>
+      ) : (
+        <aside class="newsletter">
+          <h3 class="h3">System zamiast Ciebie: jedna automatyzacja tygodniowo</h3>
+          <p class="muted small">Newsletter dla właścicieli firm 5–30 osób. Bez lania wody. Bonus: checklista 7 automatyzacji w pierwszym mailu.</p>
+          <form action="https://assets.mailerlite.com/jsonp/953911/forms/185269506350777723/subscribe" method="post" target="_blank" class="newsletter-form">
+            <input type="email" name="fields[email]" placeholder="Twój adres email" autocomplete="email" required aria-label="email" />
+            <input type="hidden" name="ml-submit" value="1" />
+            <input type="hidden" name="anticsrf" value="true" />
+            <button type="submit" class="btn-primary">Zapisuję się →</button>
+          </form>
+        </aside>
+      )}
     </div>
   </article>
 </Hub>
@@ -102,6 +126,7 @@ const jsonld = {
   .newsletter { margin-top: var(--space-3xl); padding: var(--space-xl); background: var(--navy-050); border: 1px solid var(--navy-200); border-radius: var(--radius-lg); }
   .newsletter h3 { margin: 0 0 var(--space-xs); }
   .newsletter-form { display: flex; flex-wrap: wrap; gap: var(--space-sm); margin-top: var(--space-md); }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
   .newsletter-form input[type=email] { flex: 1 1 14rem; min-width: 0; padding: .8rem 1rem; border: 1.5px solid var(--navy-200); border-radius: var(--radius-sm); font: inherit; background: var(--white); }
   .newsletter-form input:focus-visible { outline: 3px solid var(--focus-ring); outline-offset: 2px; }
 </style>
