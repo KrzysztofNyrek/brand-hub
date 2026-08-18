@@ -15,19 +15,28 @@ const { lang = 'en' } = Astro.props;
 const isPl = lang === 'pl';
 const meta = isPl
   ? {
-      title: 'Krzysztof Nyrek · automatyzacja procesów i AI w pracy',
-      description: 'Automatyzuję to, co w Twojej firmie robisz ręcznie co tydzień, i uczę, jak używać AI w pracy. Praktyk PM + AI, nie guru.',
+      title: 'Krzysztof Nyrek · project manager i gotowce dla PM',
+      description: 'Ponad dwie dekady prowadzenia projektów. Oddaję gotowce, których sam używam, kiedy projekt się pali, i pokazuję, gdzie AI naprawdę pomaga w pracy PM.',
     }
   : {
       title: 'Krzysztof Nyrek · a project manager who runs on AI',
       description: 'I build automation systems for businesses, and I teach project managers to use AI in their own work. A practitioner, not a guru.',
     };
 ---
+<!--
+  KOLEJNOŚĆ SEKCJI RÓŻNI SIĘ MIĘDZY JĘZYKAMI I TO JEST ŚWIADOME (D118 pkt 4).
+  PL: tożsamość project managera i produkt PM na górze, automatyzacja (Doors) na dole,
+  bo automatyzacja jest ostatnim etapem ścieżki klienta (D117 pkt 4), nie wejściem.
+  EN (.eu, archiwum wg D118 pkt 10): układ bez zmian.
+-->
 <Hub lang={lang} title={meta.title} description={meta.description}>
   <Hero lang={lang} />
-  <Doors lang={lang} />
-  <Authority lang={lang} />
   {isPl && <Toolkit lang={lang} />}
+  {isPl ? (
+    <Fragment><Authority lang={lang} /><Doors lang={lang} /></Fragment>
+  ) : (
+    <Fragment><Doors lang={lang} /><Authority lang={lang} /></Fragment>
+  )}
   <AboutTeaser lang={lang} />
   {!isPl && <BlogTeaser />}
   <Contact lang={lang} />

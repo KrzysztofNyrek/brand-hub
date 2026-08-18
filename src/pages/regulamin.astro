@@ -1,0 +1,180 @@
+---
+// Regulamin sprzedaży produktów cyfrowych (krzysztofnyrek.pl).
+// Treść zaakceptowana przez K 17.08.2026 („akceptuję treść regulaminu"), źródło:
+// materialy/2026-08-14_regulamin-sprzedazy-ZAAKCEPTOWANY.md w workspace Asystenci.
+// Adres sprzedawcy uzupełniony przez K 17.08 (wariant 1: adres domowy).
+//
+// 🔴 SAM REGULAMIN NIE WYŁĄCZA PRAWA ODSTĄPIENIA. Art. 38 pkt 13 ustawy o prawach
+// konsumenta wymaga wyraźnej i UPRZEDNIEJ zgody kupującego, złożonej przed płatnością.
+// Bez osobnego pola zgody w koszyku Stripe (plus mail potwierdzający zawarcie umowy)
+// klient ma 14 dni na zwrot mimo pobrania pliku. To zadanie żyje osobno, po stronie
+// konfiguracji Stripe, i ten plik go NIE zastępuje.
+import Hub from '../layouts/Hub.astro';
+import { HUB_PL } from '../config.mjs';
+
+// Cloudflare zaciemnia adresy e-mail i podmienia je na link odszyfrowywany JavaScriptem.
+// W dokumencie prawnym adres do reklamacji musi być czytelny także bez JS, stąd email_off.
+const mail = (a) => `<!--email_off--><a href="mailto:${a}">${a}</a><!--/email_off-->`;
+---
+<Hub
+  lang="pl"
+  title="Regulamin sprzedaży · Krzysztof Nyrek"
+  description="Zasady zakupu produktów cyfrowych na krzysztofnyrek.pl: zawarcie umowy, dostarczenie, odstąpienie, reklamacje i prawa autorskie."
+  canonical={HUB_PL + '/regulamin'}
+  noHreflang={true}
+>
+  <section class="section">
+    <div class="prose-narrow">
+      <h1>Regulamin sprzedaży produktów cyfrowych</h1>
+      <p class="small">krzysztofnyrek.pl · obowiązuje od 18 sierpnia 2026 r.</p>
+
+      <h2>§1. Kto sprzedaje</h2>
+      <p>
+        Sprzedawcą jest <strong>Krzysztof Nyrek</strong>, osoba fizyczna nieprowadząca działalności
+        gospodarczej, prowadząca sprzedaż w ramach działalności nierejestrowanej.
+      </p>
+      <p>
+        Adres: ul. Ratowników Górniczych 12/9, 32-590 Libiąż<br />
+        Kontakt: <Fragment set:html={mail('kontakt@krzysztofnyrek.pl')} />
+      </p>
+      <p>
+        Sprzedawca nie jest wpisany do CEIDG i nie posiada NIP ani REGON. Na żądanie Kupującego
+        wystawia rachunek.
+      </p>
+
+      <h2>§2. Co jest przedmiotem sprzedaży</h2>
+      <p>
+        Przedmiotem sprzedaży są <strong>produkty cyfrowe</strong>: zestawy dokumentów, szablonów
+        i materiałów do samodzielnego pobrania i wykorzystania w pracy.
+      </p>
+      <p>
+        Produkty dostarczane są <strong>wyłącznie w postaci elektronicznej</strong>, bez nośnika
+        materialnego. Aktualne warianty, ich zawartość i ceny są podane na stronie sprzedaży.
+        Ceny są cenami brutto w złotych i zawierają wszystkie należności.
+      </p>
+
+      <h2>§3. Wymagania techniczne</h2>
+      <p>
+        Do zakupu i korzystania z produktu potrzebne są: urządzenie z dostępem do internetu,
+        aktualna przeglądarka, czynny adres e-mail oraz oprogramowanie umożliwiające odczyt plików
+        w formatach wskazanych przy produkcie.
+      </p>
+
+      <h2>§4. Jak dochodzi do zawarcia umowy</h2>
+      <ol>
+        <li>Kupujący wybiera produkt i przechodzi do płatności obsługiwanej przez operatora płatności <strong>Stripe</strong>.</li>
+        <li>Przed płatnością Kupujący <strong>akceptuje niniejszy Regulamin</strong> oraz <strong>wyraża zgodę</strong>, o której mowa w §6.</li>
+        <li>Umowa zostaje zawarta z chwilą skutecznego dokonania płatności.</li>
+        <li>Po zawarciu umowy Kupujący otrzymuje na podany adres e-mail <strong>potwierdzenie zawarcia umowy</strong> wraz z dostępem do produktu.</li>
+      </ol>
+      <p>
+        Sprzedawca nie przechowuje danych karty płatniczej. Płatność obsługuje operator płatności
+        na własnych warunkach.
+      </p>
+
+      <h2>§5. Kiedy dostajesz produkt</h2>
+      <p>
+        Dostęp do produktu jest przekazywany <strong>niezwłocznie po zaksięgowaniu płatności</strong>,
+        nie później niż w ciągu 24 godzin.
+      </p>
+      <p>
+        Jeżeli dostęp nie dotrze w tym czasie, Kupujący powinien sprawdzić folder spam, a następnie
+        napisać na <Fragment set:html={mail('kontakt@krzysztofnyrek.pl')} />. Sprzedawca przekaże
+        dostęp inną drogą.
+      </p>
+
+      <h2>§6. Odstąpienie od umowy</h2>
+      <p>
+        Konsumentowi co do zasady przysługuje prawo odstąpienia od umowy zawartej na odległość
+        <strong> w terminie 14 dni</strong>, bez podania przyczyny.
+      </p>
+      <p>
+        <strong>Przy produktach cyfrowych to prawo wygasa</strong>, jeżeli spełnione są łącznie
+        warunki z <strong>art. 38 pkt 13 ustawy z 30 maja 2014 r. o prawach konsumenta</strong>,
+        to znaczy gdy:
+      </p>
+      <ol>
+        <li>Kupujący <strong>wyraźnie zgodził się</strong> na dostarczenie produktu <strong>przed upływem terminu do odstąpienia</strong>,</li>
+        <li>Kupujący <strong>został poinformowany i przyjął do wiadomości</strong>, że po dostarczeniu produktu <strong>utraci prawo odstąpienia</strong>,</li>
+        <li>Sprzedawca dostarczył <strong>potwierdzenie zawarcia umowy</strong>.</li>
+      </ol>
+      <p>
+        <strong>W praktyce oznacza to:</strong> zaznaczając w koszyku zgodę na natychmiastowy dostęp,
+        rezygnujesz z możliwości zwrotu. Jeżeli tej zgody nie wyrazisz, produkt zostanie udostępniony
+        dopiero po upływie 14 dni.
+      </p>
+      <p>
+        Oświadczenie o odstąpieniu, w przypadkach w których prawo to przysługuje, wystarczy wysłać na
+        <Fragment set:html={' ' + mail('kontakt@krzysztofnyrek.pl')} />. Zwrot płatności następuje
+        niezwłocznie, nie później niż w ciągu 14 dni, tą samą metodą płatności.
+      </p>
+
+      <h2>§7. Reklamacje</h2>
+      <p>
+        Sprzedawca ma obowiązek dostarczyć produkt <strong>zgodny z umową</strong>, czyli
+        odpowiadający opisowi ze strony sprzedaży.
+      </p>
+      <p>
+        Reklamację składa się na <Fragment set:html={mail('kontakt@krzysztofnyrek.pl')} />, podając:
+        adres e-mail użyty przy zakupie, nazwę produktu, opis niezgodności i oczekiwanie. Sprzedawca
+        rozpatruje reklamację <strong>w terminie 14 dni</strong> i informuje o wyniku na ten sam adres.
+      </p>
+      <p>
+        W razie nieuwzględnienia reklamacji Kupujący będący konsumentem może skorzystać
+        z pozasądowych sposobów rozpatrywania sporów, w tym z platformy ODR Komisji Europejskiej
+        oraz z pomocy powiatowego lub miejskiego rzecznika konsumentów.
+      </p>
+
+      <h2>§8. Kupujący prowadzący działalność gospodarczą</h2>
+      <p>
+        Osoba fizyczna zawierająca umowę bezpośrednio związaną z jej działalnością gospodarczą, gdy
+        z treści umowy wynika, że <strong>nie ma ona dla niej charakteru zawodowego</strong>, korzysta
+        z postanowień dotyczących konsumenta w zakresie przewidzianym przepisami.
+      </p>
+      <p>
+        Wobec pozostałych Kupujących prowadzących działalność gospodarczą postanowień o odstąpieniu
+        i o pozasądowym rozstrzyganiu sporów <strong>nie stosuje się</strong>.
+      </p>
+
+      <h2>§9. Prawa autorskie</h2>
+      <p>
+        Produkty są utworami chronionymi prawem autorskim. Kupujący nabywa prawo do korzystania
+        z nich <strong>na własny użytek, w tym w swojej pracy zawodowej</strong>.
+      </p>
+      <p>
+        Zakazane jest udostępnianie produktu osobom trzecim, publikowanie go, odsprzedaż oraz
+        udostępnianie w sieciach publicznych. Kupujący może natomiast swobodnie wykorzystywać
+        szablony i dokumenty wypełnione własną treścią w prowadzonych przez siebie projektach.
+      </p>
+
+      <h2>§10. Dane osobowe</h2>
+      <p>
+        Zasady przetwarzania danych opisuje <a href="/polityka-prywatnosci">Polityka prywatności</a>
+        dostępna na stronie. Administratorem danych jest Sprzedawca.
+      </p>
+
+      <h2>§11. Postanowienia końcowe</h2>
+      <p>
+        W sprawach nieuregulowanych stosuje się przepisy prawa polskiego, w szczególności Kodeksu
+        cywilnego, ustawy o prawach konsumenta oraz ustawy o świadczeniu usług drogą elektroniczną.
+      </p>
+      <p>
+        Sprzedawca może zmienić Regulamin z ważnych przyczyn. Do umów zawartych przed zmianą stosuje
+        się Regulamin w brzmieniu z dnia zawarcia umowy. O zmianie Sprzedawca informuje na stronie
+        z 14-dniowym wyprzedzeniem.
+      </p>
+
+      <p class="small">Ostatnia aktualizacja: 18 sierpnia 2026.</p>
+    </div>
+  </section>
+</Hub>
+
+<style>
+  .section { padding: var(--space-2xl) var(--gutter); }
+  .prose-narrow { max-width: 46rem; margin-inline: auto; }
+  .prose-narrow h1 { margin-bottom: var(--space-lg); }
+  .prose-narrow h2 { margin-top: var(--space-xl); margin-bottom: var(--space-xs); font-size: 1.25rem; }
+  .prose-narrow p, .prose-narrow li { color: var(--text-muted); }
+  .prose-narrow ul, .prose-narrow ol { margin: 0 0 var(--space-md) 1.25rem; }
+  .prose-narrow li { margin-bottom: var(--space-xs); }
+</style>

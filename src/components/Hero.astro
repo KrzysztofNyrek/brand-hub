@@ -5,10 +5,13 @@ const { lang = 'en' } = Astro.props;
 const isPl = lang === 'pl';
 const c = isPl
   ? {
-      ctaA: 'Zautomatyzuj mój biznes',
-      ctaB: 'Naucz mnie AI w pracy',
-      who: 'Od ponad dwóch dekad prowadzę projekty, na co dzień mapuję procesy i wdrażam automatyzacje. Nie jestem guru i nie sprzedaję marzeń.',
-      tag: 'Nie sprzedaję marzeń. Sprzedaję nudną, techniczną automatyzację, która działa.',
+      // D118 pkt 4: hub mówi najpierw, kim jestem w robocie (project manager), a dopiero
+      // na końcu strony o automatyzacji. Wcześniej było odwrotnie i produkt PM leżał poniżej
+      // połowy strony. CTA prowadzą po drabinie z D88: darmowy magnes, potem Toolkit.
+      ctaA: 'Zobacz PM Crisis Toolkit',
+      ctaB: 'Weź darmowy plan na pierwsze 5 dni',
+      who: 'Od ponad dwóch dekad prowadzę projekty, największy zespół liczył 23 osoby. Napisałem o tym książkę. Nie jestem guru i nie sprzedaję marzeń.',
+      tag: 'Gotowce, nie teoria. To samo, co sam odpalam w poniedziałek, kiedy przejmuję projekt, który się pali.',
     }
   : {
       ctaA: 'Get it built for you',
@@ -21,7 +24,7 @@ const c = isPl
   <div class="container hero-grid">
     <div class="hero-copy">
       {isPl ? (
-        <h1 class="h-hero">Automatyzuję to, co w Twojej firmie robi się ręcznie co tydzień i mówię wprost, gdzie AI pomaga, a gdzie <span class="accent-italic">tylko udaje</span>.</h1>
+        <h1 class="h-hero">Prowadzę projekty i oddaję Ci to, czego sam używam, kiedy projekt <span class="accent-italic">zaczyna się palić</span>.</h1>
       ) : (
         <h1 class="h-hero">I'm a project manager who <span class="accent-italic">runs on AI</span>, and I'll tell you straight where it works and where it falls flat.</h1>
       )}
@@ -30,8 +33,8 @@ const c = isPl
       </p>
       <p class="hero-tag">{c.tag}</p>
       <div class="hero-cta">
-        <a class="btn-primary" href="#automation">{c.ctaA}</a>
-        <a class="btn-secondary" href="#learn">{c.ctaB}</a>
+        <a class="btn-primary" href={isPl ? '#toolkit' : '#automation'}>{c.ctaA}</a>
+        <a class="btn-secondary" href={isPl ? '/first-5-pm-days' : '#learn'}>{c.ctaB}</a>
       </div>
     </div>
 
