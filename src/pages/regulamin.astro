@@ -9,6 +9,11 @@
 // Bez osobnego pola zgody w koszyku Stripe (plus mail potwierdzający zawarcie umowy)
 // klient ma 14 dni na zwrot mimo pobrania pliku. To zadanie żyje osobno, po stronie
 // konfiguracji Stripe, i ten plik go NIE zastępuje.
+//
+// 🔴 §6 POPRAWIONY 18.08 PO USTALENIU K: wysyłka pliku ze Stripe leci automatem i NIE DA SIĘ jej
+// wstrzymać na 14 dni. Pierwotna wersja obiecywała opóźnione udostępnienie przy braku zgody, czyli
+// obietnicę, której system nie dowozi. Teraz tekst opisuje stan faktyczny: dostarczamy natychmiast
+// zawsze, a brak zgody oznacza, że kupujący zachowuje prawo odstąpienia i to ryzyko bierzemy na siebie.
 import Hub from '../layouts/Hub.astro';
 import { HUB_PL } from '../config.mjs';
 
@@ -100,8 +105,9 @@ const mail = (a) => `<!--email_off--><a href="mailto:${a}">${a}</a><!--/email_of
       </ol>
       <p>
         <strong>W praktyce oznacza to:</strong> zaznaczając w koszyku zgodę na natychmiastowy dostęp,
-        rezygnujesz z możliwości zwrotu. Jeżeli tej zgody nie wyrazisz, produkt zostanie udostępniony
-        dopiero po upływie 14 dni.
+        rezygnujesz z możliwości zwrotu. <strong>Jeżeli tej zgody nie wyrazisz, dostęp do produktu
+        otrzymasz tak samo od razu, ale zachowujesz prawo odstąpienia przez 14 dni.</strong> Dostarczamy
+        produkt natychmiast w obu przypadkach i różnicę bierzemy na siebie.
       </p>
       <p>
         Oświadczenie o odstąpieniu, w przypadkach w których prawo to przysługuje, wystarczy wysłać na
