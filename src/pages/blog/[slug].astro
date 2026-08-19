@@ -18,7 +18,7 @@ const { post } = Astro.props as { post: any };
 // było do kogoś innego. Wykrył to K przy wklejaniu linku w pierwszym komentarzu.
 // Artykuły PM mają w JSON-ie `audience: "pm"` (ustawia je narzedzia/generate_blog_pm_json.py).
 const isPm = post.audience === 'pm';
-const url = `${HUB_PL}/blog/${post.slug}`;
+const url = `${HUB_PL}/blog/${post.slug}/`;  // ukosnik: bez niego canonical wskazuje adres, ktory zwraca 308
 const ogImage = post.image ? `${HUB_PL}/blog/img/${post.image}` : undefined;
 
 const MIES = ['stycznia','lutego','marca','kwietnia','maja','czerwca','lipca','sierpnia','września','października','listopada','grudnia'];

@@ -1,6 +1,7 @@
 ---
 // /blog — listing artykułów (D79 FAZA 3). Dane: src/data/blog/*.json (migracja z system.eu).
 import Hub from '../../layouts/Hub.astro';
+import { HUB_PL } from '../../config.mjs';
 
 const mods = import.meta.glob('../../data/blog/*.json', { eager: true });
 const posts = Object.values(mods)
@@ -17,7 +18,9 @@ function fmtDate(d: string) {
 const title = 'Blog · Krzysztof Nyrek';
 const description = 'Notatki o automatyzacji, AI i prowadzeniu projektów w agencjach. Gdzie AI realnie pomaga, a gdzie tylko udaje.';
 ---
-<Hub lang="pl" title={title} description={description}>
+<!-- 🔴 canonical dopisany 19.08.2026: bez niego Hub.astro podstawia domyslke, czyli STRONE GLOWNA,
+     wiec listing bloga mowil Google "tak naprawde jestem stroną główną". Artykuly maja swoje wlasne. -->
+<Hub lang="pl" title={title} description={description} canonical={HUB_PL + '/blog/'}>
   <section class="section-pad">
     <div class="container">
       <header class="section-head">
