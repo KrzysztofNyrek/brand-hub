@@ -5,3 +5,9 @@
 # domenie: link "EN" w nawigacji prowadzi na krzysztofnyrek.eu.
 /pl              /    301
 /pl/*            /    301
+
+# Zaproszenie na Discorda przez WLASNY adres, nie przez surowy kod zaproszenia (20.08.2026).
+# Powod: kod discord.gg byl zaszyty w czterech artykulach, na stronie po zapisie ORAZ w PDF-ie magnesu,
+# a zaproszenia Discorda wygasaja i nie da sie ich edytowac. Wygasniecie zabijalo szesc miejsc naraz,
+# w tym plik, ktory ludzie juz maja na dysku. Teraz zmiana zaproszenia to jedna linia ponizej.
+/discord         https://discord.gg/ZV5jxsPXT    302
