@@ -1,4 +1,8 @@
 ---
+// 20.08.2026: dolozony baner zgody i GA4. Ta strona ma wlasny <head> i nie uzywa Hub.astro,
+// wiec do dzis nie mial jej zadnej analityki. Sprawdzone przegladarka: na stronach z Hub.astro
+// trafienie do GA leci poprawnie (status 204), tutaj nie leciało nic, bo nie bylo czym.
+import Consent from '../components/Consent.astro';
 // Thank-you po zapisie na magnes PM (lejek D88). Cel redirectu z /api/subscribe gdy list=pm.
 ---
 <!DOCTYPE html>
@@ -38,5 +42,6 @@
     </div>
     <p class="foot"><a href="https://krzysztofnyrek.pl">krzysztofnyrek.pl</a></p>
   </main>
+  <Consent />
 </body>
 </html>

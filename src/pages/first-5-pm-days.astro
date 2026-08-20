@@ -1,4 +1,8 @@
 ---
+// 20.08.2026: dolozony baner zgody i GA4. Ta strona ma wlasny <head> i nie uzywa Hub.astro,
+// wiec do dzis nie mial jej zadnej analityki. Sprawdzone przegladarka: na stronach z Hub.astro
+// trafienie do GA leci poprawnie (status 204), tutaj nie leciało nic, bo nie bylo czym.
+import Consent from '../components/Consent.astro';
 // Landing magnesu „First 5 PM Days" (lejek PM, D88).
 // Natywny formularz -> /api/subscribe (list=pm -> grupa MAILERLITE_PM_GROUP_ID) -> 302 /zapisano.
 // Po zapisie MailerLite automation wysyla mail z linkiem do PDF + Discord.
@@ -74,5 +78,6 @@ const pdf = 'https://krzysztofnyrek.pl/First_5_PM_Days.pdf';
     </div>
     <p class="foot"><a href="https://krzysztofnyrek.pl">krzysztofnyrek.pl</a></p>
   </main>
+  <Consent />
 </body>
 </html>

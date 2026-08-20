@@ -1,4 +1,8 @@
 ---
+// 20.08.2026: dolozony baner zgody i GA4. Ta strona ma wlasny <head> i nie uzywa Hub.astro,
+// wiec do dzis nie mial jej zadnej analityki. Sprawdzone przegladarka: na stronach z Hub.astro
+// trafienie do GA leci poprawnie (status 204), tutaj nie leciało nic, bo nie bylo czym.
+import Consent from '../components/Consent.astro';
 // EN thank-you (waitlist „AI at work early access"). PRG target z /api/subscribe (lang=en).
 import '../styles/tokens.css';
 import { HUB_EN } from '../config.mjs';
@@ -27,5 +31,6 @@ const title = 'You’re on the list · Krzysztof Nyrek';
       <p class="body-lg">I’ll email you the moment “AI at work” opens. No spam in between.</p>
       <a class="btn-primary" href={HUB_EN + '/'}>← Back to home</a>
     </main>
+    <Consent />
   </body>
 </html>
