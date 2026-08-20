@@ -10,4 +10,6 @@
 # Powod: kod discord.gg byl zaszyty w czterech artykulach, na stronie po zapisie ORAZ w PDF-ie magnesu,
 # a zaproszenia Discorda wygasaja i nie da sie ich edytowac. Wygasniecie zabijalo szesc miejsc naraz,
 # w tym plik, ktory ludzie juz maja na dysku. Teraz zmiana zaproszenia to jedna linia ponizej.
-/discord         https://discord.gg/ZV5jxsPXT    302
+/discord         https://discord.gg/xdMnF2qvmK    302
+# 20.08.2026, druga zmiana tego dnia: K wygenerowal zaproszenie BEZ terminu waznosci
+# (sprawdzone przez API Discorda: expires_at = null). Poprzednie wygasalo 21.08 o 14:00.
