@@ -33,6 +33,7 @@ const STATIC_PATHS = [
   '/jak-powstaja-teksty/',
   '/polityka-prywatnosci/',
   '/regulamin/',
+  '/polityka-zwrotow/',
 ];
 
 export function GET() {

@@ -1,0 +1,161 @@
+---
+// Polityka zwrotów (krzysztofnyrek.pl). Strona zlecona przez K 20.08.2026 przy akceptacji
+// produktu o interesariuszach. Jego słowa: „przygotuj stronę www polityka zwrotów i trzeba to
+// opublikować i podpiąć pod stronę ofertową, żeby kupujący wiedział jak zrezygnować z zakupu.
+// Nie potrzebuję niezadowolonych klientów, którzy będą buczeć w internecie, że nie dostali tego
+// co chcieli, zamiast tego niech napiszą, że im się nie podoba i chcą zwrot kasy".
+//
+// 🔴 CZYM TA STRONA JEST, A CZYM NIE JEST. To NIE jest drugi regulamin i nie wolno jej pisać
+// językiem prawnym. Regulamin (§6 odstąpienie, §7 reklamacje) zostaje jedynym dokumentem
+// prawnym i ta strona nigdzie mu nie przeczy. Tutaj opisujemy DOBROWOLNĄ gwarancję handlową
+// „zwrot bez podawania powodu", przyznaną ponad to, co daje ustawa, oraz procedurę w trzech
+// krokach. Wzorzec obietnicy: PM Crisis Card (decyzja K 20.08).
+//
+// 🔴 SEKCJA O PRZEDSPRZEDAŻY ZOSTAJE POZA STRONĄ, i to już nie jest odroczenie, tylko skutek
+// zmiany modelu. Decyzja K z 21.08.2026: „w przedsprzedaży zapisujemy tylko na listę chętnych
+// na MailerLite. To załatwia problem pozyskiwania pieniędzy w przedsprzedaży. Jak na liście
+// chętnych zbierze się odpowiednia ilość osób, to puszczamy kampanię mailową".
+// W przedsprzedaży NIE POBIERAMY PIENIĘDZY, więc nie ma czego zwracać i strona o zwrotach
+// nie ma tu nic do powiedzenia. Znika przy okazji ryzyko, którego nie zdążyliśmy sprawdzić
+// w Stripe: okno zwrotu po ~25 dniach i link płatności wysyłający pusty plik.
+// Tekst sekcji zachowany niżej w komentarzu: wraca w całości, gdyby kiedyś przedsprzedaż
+// jednak pobierała płatność.
+import Hub from '../layouts/Hub.astro';
+import { HUB_PL } from '../config.mjs';
+
+// Cloudflare zaciemnia adresy e-mail i podmienia je na link odszyfrowywany JavaScriptem.
+// Na stronie, na której proszę człowieka o napisanie maila, adres musi być czytelny także bez JS.
+const mail = (a) => `<!--email_off--><a href="mailto:${a}">${a}</a><!--/email_off-->`;
+---
+<Hub
+  lang="pl"
+  title="Polityka zwrotów · Krzysztof Nyrek"
+  description="Jak odzyskać pieniądze za produkt cyfrowy kupiony na krzysztofnyrek.pl. Jeden mail, bez podawania powodu, bez formularzy."
+  canonical={HUB_PL + '/polityka-zwrotow/'}
+  noHreflang={true}
+>
+  <section class="section">
+    <div class="prose-narrow">
+      <h1>Polityka zwrotów</h1>
+      <p class="small">krzysztofnyrek.pl · obowiązuje od 21 sierpnia 2026 r.</p>
+
+      <p class="lead">
+        <strong>Kupiłeś, otworzyłeś, nie jest to, czego oczekiwałeś? Napisz jedno zdanie i oddaję
+        pieniądze.</strong> Nie pytam o powód, nie proponuję rozmowy ratunkowej, nie proszę
+        o wypełnienie formularza.
+      </p>
+
+      <h2>Dlaczego ta strona w ogóle istnieje</h2>
+      <p>
+        Sprzedaję pliki. Plik można ocenić dopiero po otwarciu, więc każdy zakup u mnie jest
+        w jakimś stopniu kupowaniem w ciemno. Uważam, że w takiej sytuacji ryzyko powinno leżeć
+        po mojej stronie, a nie po Twojej.
+      </p>
+      <p>
+        Wolę oddać pieniądze komuś, komu materiał nie pasuje, niż mieć klienta, który czuje się
+        oszukany i nie ma gdzie z tym pójść.
+      </p>
+
+      <h2>Gwarancja: 14 dni, bez podawania powodu</h2>
+      <p>
+        <strong>Masz 14 dni od zakupu na to, żeby napisać, że chcesz zwrot.</strong> To wystarczy.
+        Nie musisz uzasadniać, tłumaczyć się ani odsyłać plików. Dotyczy wszystkich produktów
+        cyfrowych sprzedawanych na tej stronie.
+      </p>
+      <p>
+        Jest to <strong>moja dobrowolna obietnica</strong>, dołożona ponad to, co gwarantuje prawo.
+        Twoich uprawnień ustawowych nie ogranicza i nie zastępuje: opisuje je
+        {' '}<a href="/regulamin">Regulamin sprzedaży</a>, §6 i §7. Jeżeli któryś zapis regulaminu
+        daje Ci więcej niż ta strona, obowiązuje ten korzystniejszy dla Ciebie.
+      </p>
+
+      <h2>Jak to zrobić, krok po kroku</h2>
+      <ol>
+        <li>
+          Napisz na <Fragment set:html={mail('kontakt@krzysztofnyrek.pl')} /> z adresu, którego
+          użyłeś przy zakupie.
+        </li>
+        <li>
+          Podaj <strong>nazwę produktu</strong> i wpisz słowo <strong>zwrot</strong>. Tyle wystarczy,
+          żeby ruszyło.
+        </li>
+        <li>
+          Odpisuję <strong>w ciągu jednego dnia roboczego</strong> i uruchamiam zwrot. Pieniądze
+          wracają <strong>tą samą metodą płatności</strong>, którą płaciłeś.
+        </li>
+      </ol>
+      <p>
+        Po mojej stronie zwrot idzie od razu. Czas dotarcia zależy od banku lub wystawcy karty
+        i zwykle wynosi <strong>od trzech do dziesięciu dni roboczych</strong>. Jeżeli po dziesięciu
+        dniach nic nie widzisz, napisz jeszcze raz w tym samym wątku, sprawdzę u operatora płatności.
+      </p>
+
+      <h2>Czego przy zwrocie nie robię</h2>
+      <ul>
+        <li>Nie pytam o powód i nie proszę o wypełnienie ankiety.</li>
+        <li>Nie proponuję zamiany na inny produkt zamiast pieniędzy.</li>
+        <li>Nie zapisuję Cię z tego powodu na żadną listę i nie piszę później z ofertą.</li>
+        <li>Nie wymagam usunięcia pobranych plików ani żadnego oświadczenia.</li>
+      </ul>
+      <p>
+        Jeżeli sam z siebie napiszesz, <strong>co było nie tak</strong>, przeczytam to uważnie
+        i poprawię materiał. Jest to jednak mile widziane, a nie wymagane.
+      </p>
+
+      {/*
+        🔴 SEKCJA O PRZEDSPRZEDAŻY POZA STRONĄ, bo od 21.08.2026 przedsprzedaż nie pobiera
+        pieniędzy, tylko zbiera zapisy na listę chętnych (decyzja K). Bez płatności nie ma
+        zwrotu, więc ta strona nie ma tu nic do powiedzenia. Tekst zostaje na wypadek powrotu
+        do przedsprzedaży płatnej i wtedy wraca jednym wklejeniem, razem ze sprawdzeniem
+        okna zwrotu i konfiguracji linku płatności.
+
+        <h2>Kupujesz w przedsprzedaży</h2>
+        <p>
+          Część produktów sprzedaję <strong>zanim powstaną</strong>, żeby budować tylko to, czego
+          ktoś naprawdę chce. Przy takim zakupie mówię wprost, czego jeszcze nie ma i kiedy ma być
+          gotowe. Obowiązują wtedy dwie dodatkowe zasady.
+        </p>
+        <ul>
+          <li>
+            <strong>Produkt nie powstaje, jeżeli nie zbierze się zapowiedziana liczba kupujących.</strong>
+            W takim wypadku <strong>oddaję całą kwotę</strong> i wysyłam wiadomość z wyjaśnieniem,
+            bez czekania na Twój mail i bez proszenia Cię o cokolwiek.
+          </li>
+          <li>
+            <strong>Termin wydania jest zobowiązaniem, nie hasłem.</strong> Jeżeli nie zdążę na dzień
+            podany przy sprzedaży, dostaniesz ode mnie wiadomość z nową datą i możliwością zwrotu
+            całej kwoty, także wtedy, gdy minęło już 14 dni od zakupu.
+          </li>
+        </ul>
+      */}
+
+      <h2>Produkty na zamówienie i usługi</h2>
+      <p>
+        Ta strona dotyczy <strong>produktów cyfrowych</strong> ze sklepu. Praca wykonywana na
+        zamówienie, czyli usługi doradcze i projektowe, rozliczana jest na warunkach z umowy
+        zawartej przed jej rozpoczęciem i nie jest objęta gwarancją opisaną wyżej.
+      </p>
+
+      <h2>Gdy zwrot to za mało</h2>
+      <p>
+        Jeżeli uważasz, że produkt jest niezgodny z opisem ze strony sprzedaży, to jest reklamacja,
+        a nie zwrot, i przysługują Ci przy niej szersze uprawnienia. Tryb opisuje
+        {' '}<a href="/regulamin">Regulamin sprzedaży</a>, §7. Piszesz na ten sam adres, a ja
+        odpowiadam w ciągu 14 dni.
+      </p>
+
+      <p class="small">Ostatnia aktualizacja: 21 sierpnia 2026.</p>
+    </div>
+  </section>
+</Hub>
+
+<style>
+  .section { padding: var(--space-2xl) var(--gutter); }
+  .prose-narrow { max-width: 46rem; margin-inline: auto; }
+  .prose-narrow h1 { margin-bottom: var(--space-lg); }
+  .prose-narrow h2 { margin-top: var(--space-xl); margin-bottom: var(--space-xs); font-size: 1.25rem; }
+  .prose-narrow p, .prose-narrow li { color: var(--text-muted); }
+  .prose-narrow ul, .prose-narrow ol { margin: 0 0 var(--space-md) 1.25rem; }
+  .prose-narrow li { margin-bottom: var(--space-xs); }
+  .lead { font-size: 1.0625rem; }
+</style>

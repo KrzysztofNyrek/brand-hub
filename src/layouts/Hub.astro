@@ -39,6 +39,9 @@ const footer = isPl
       home: 'Wróć na górę',
       privacy: 'Polityka prywatności',
       terms: 'Regulamin sprzedaży',
+      // Zwroty w stopce, a nie tylko przy przycisku zakupu: kupujący szuka ich zwykle
+      // POST factum, czyli wtedy, gdy nie ma już przed oczami strony sprzedaży (K, 20.08).
+      returns: 'Polityka zwrotów',
       ai: 'Jak powstają te teksty',
     }
   : {
@@ -144,6 +147,7 @@ const footer = isPl
           <span class="caption">© 2026 Krzysztof Nyrek</span>
           <a class="small" href="/polityka-prywatnosci">{footer.privacy}</a>
           <a class="small" href="/regulamin">{footer.terms}</a>
+          {footer.returns && <a class="small" href="/polityka-zwrotow">{footer.returns}</a>}
           <a class="small" href="/jak-powstaja-teksty">{footer.ai}</a>
           <a class="small" href={footer.altHref}>{footer.altLabel}</a>
           <a class="small" href="#hero">{footer.home}</a>
