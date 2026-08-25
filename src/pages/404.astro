@@ -1,0 +1,94 @@
+---
+// 🔴 STRONA 404. Powstała 25.08.2026 z powodu, który był mierzalny, a nie estetyczny.
+//
+// CO BYŁO ZEPSUTE: projekt nie miał żadnej strony 404, a Cloudflare Pages przy jej braku
+// serwuje `index.html` z kodem 200. Skutek: KAŻDY nieistniejący adres na tej domenie zwracał
+// stronę główną i status "OK". Sprawdzone 25.08 na żywej domenie: /wp-sitemap.xml, /feed,
+// /?p=1, /category/blog/ i /2012/11/ oddawały 200 razem z tytułem strony głównej.
+//
+// DLACZEGO TO KOSZTOWAŁO NAS REALNIE, DWA RAZY:
+//   1. SEO. W Search Console wiszą dwie martwe sitemapy po WordPressie, w tym jedna zgłoszona
+//      w 2012 roku ze 177 adresami. Każdy z nich zwraca dziś 200 ze stroną główną, więc Google
+//      widzi setki duplikatów jednej strony zamiast setek nieistniejących adresów. Stąd biorą się
+//      "nowe powody, dla których nie można zaindeksować". Sam plik /sitemap_index.xml oddaje HTML
+//      zamiast XML, co daje błąd sitemapy widoczny w panelu.
+//   2. NASZA WERYFIKACJA WDROŻEŃ. Soft-404 gryzł nas 29.07, 10.08 i 17.08: sprawdzaliśmy adres
+//      po kodzie odpowiedzi, dostawaliśmy 200 i uznawaliśmy artykuł za opublikowany, choć go nie było.
+//      Od dzisiaj kod odpowiedzi znowu znaczy to, co powinien.
+//
+// JAK TO DZIAŁA: Astro renderuje ten plik do `dist/404.html`, a Cloudflare Pages serwuje ten plik
+// z prawdziwym kodem 404 dla każdej ścieżki, która nie ma swojego pliku. Nic więcej nie trzeba
+// konfigurować, przekierowania z `_redirects` mają pierwszeństwo i działają bez zmian.
+//
+// noindex JEST TU CELOWY: strona błędu nie ma czego wnosić do wyników wyszukiwania.
+import Hub from '../layouts/Hub.astro';
+import { HUB_PL } from '../config.mjs';
+
+const wskazowki = [
+  ['Blog dla project managerów', '/blog', 'Teksty o prowadzeniu projektów, które da się użyć w środę o 14:00.'],
+  ['PM Crisis Toolkit', '/#toolkit', 'Dwanaście gotowców dla project managera w płonącym projekcie.'],
+  ['Przewodnik o interesariuszach', '/interesariusze', 'Trzynaście sytuacji z ludźmi, którzy decydują o projekcie i nie siedzą w Twoim zespole.'],
+  ['Interwencja Projektowa', '/interwencja', 'Kiedy projekt tonie i ktoś musi powiedzieć, czy warto go ratować.'],
+];
+---
+<Hub
+  lang="pl"
+  title="Nie ma takiej strony · Krzysztof Nyrek"
+  description="Ten adres nie istnieje albo już nie istnieje."
+  canonical={HUB_PL + '/404/'}
+  noHreflang={true}
+>
+  <meta slot="head" name="robots" content="noindex, follow" />
+
+  <section class="section" id="hero">
+    <div class="prose-narrow">
+      <p class="eyebrow">Błąd 404</p>
+      <h1>Nie ma takiej strony</h1>
+
+      <p class="lead">
+        Ten adres albo nigdy nie istniał, albo pochodzi ze starej wersji tej witryny i został
+        po drodze wygaszony. Zdarza się, zwłaszcza przy linkach sprzed kilku lat.
+      </p>
+
+      <p>Poniżej cztery miejsca, w których najczęściej ludzie tu szukają.</p>
+
+      <ul class="wskazowki">
+        {wskazowki.map(([tytul, href, opis]) => (
+          <li>
+            <a href={href}><strong>{tytul}</strong></a>
+            <span class="opis">{opis}</span>
+          </li>
+        ))}
+      </ul>
+
+      <p class="small">
+        Jeśli trafiłeś tu z linku, który podałem Ci osobiście, napisz na
+        <a href="mailto:kontakt@krzysztofnyrek.pl"> kontakt@krzysztofnyrek.pl</a>, a odeślę właściwy adres.
+      </p>
+    </div>
+  </section>
+</Hub>
+
+<style>
+  .section { padding: var(--space-2xl) var(--gutter); }
+  .prose-narrow { max-width: 46rem; margin-inline: auto; }
+  .prose-narrow h1 { margin-bottom: var(--space-lg); }
+  .prose-narrow p { color: var(--text-muted); margin-bottom: var(--space-md); }
+  .lead { font-size: 1.0625rem; }
+
+  .wskazowki { list-style: none; margin: var(--space-lg) 0; padding: 0; }
+  .wskazowki li {
+    position: relative;
+    padding: var(--space-sm) 0 var(--space-sm) 1.5rem;
+    border-bottom: var(--hairline-2);
+  }
+  .wskazowki li::before {
+    content: '';
+    position: absolute; left: 0; top: 1.15rem;
+    width: 0.5rem; height: 0.5rem; border-radius: 50%;
+    background: var(--brass-600);
+  }
+  .wskazowki a { color: var(--navy-600); text-decoration: none; }
+  .wskazowki a:hover { text-decoration: underline; }
+  .wskazowki .opis { display: block; margin-top: 0.15rem; font-size: 0.9375rem; color: var(--text-muted); }
+</style>
