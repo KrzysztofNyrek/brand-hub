@@ -1,0 +1,206 @@
+---
+// Strona produktowa „Interwencja Projektowa" (krzysztofnyrek.pl/interwencja).
+//
+// 🔴 DLA KOGO TO JEST NAPISANE, bo to rządzi każdym zdaniem na tej stronie.
+// Toolkit sprzedajemy project managerowi. TĘ USŁUGĘ KUPUJE JEGO SZEF: właściciel, dyrektor
+// pionu albo PMO. Ten sam ból, dwa różne portfele i dwa różne języki. Dlatego nie ma tu ani
+// jednego zdania w stylu „ratuję PM-ów", jest za to zdanie o pieniądzach, o terminie i o tym,
+// co powiedzieć zarządowi.
+//
+// ✅ CZTERY ROZSTRZYGNIĘCIA K z 24.08.2026, wpisane w tę stronę co do słowa:
+//   1. „ponad dwadzieścia lat jest prawdziwe i trzeba to poprawić wszędzie" — sekcja „kto to robi".
+//   2. „tak, dwa takie projekty rocznie wystarczą" — zdanie o limicie zostaje.
+//   3. adres kontaktowy kontakt@krzysztofnyrek.pl potwierdzony.
+//   4. „podlinkuj z menu" — TO JEST ODRZUCENIE mojej rekomendacji („na razie bez menu, bo
+//      pozycja Interwencja myli publiczność PM-ową"). Pozycja dodana do nawigacji w Hub.astro.
+//   Plus zdanie piąte, które odblokowało publikację: „tekst na stronie bez uwag, publikuj".
+//
+// ⚠️ CENA STOI NA STRONIE ŚWIADOMIE, nie za formularzem (D62: cena publiczna albo czytelny ask
+// pisemny, zero „zadzwoń po wycenę"). Powód wprost z copy: nie chcemy rozmawiać z nikim, komu
+// ta kwota nie pasuje.
+//
+// ⚠️ BEZ FORMULARZA, sam adres mailowy. Przy dwóch klientach rocznie formularz jest
+// niepotrzebnym rusztowaniem, a każde pole to jedna rzecz więcej do utrzymania i do RODO.
+//
+// Copy źródłowe: materialy/produkty/interwencja-projektowa/2026-08-24_copy-strony_ZAAKCEPTOWANE-25-08.md
+import Hub from '../layouts/Hub.astro';
+import { HUB_PL } from '../config.mjs';
+
+const KONTAKT = 'kontakt@krzysztofnyrek.pl';
+
+const kiedyNie = [
+  ['projekt nie ma sponsora z prawdziwą decyzyjnością', 'Bez kogoś, kto może uciąć zakres, to jest teatr.'],
+  ['zamawia sam project manager', 'Kupuje wtedy własną ocenę, a ja potrzebuję mandatu od osób podejmujących decyzje w projekcie.'],
+  ['szukacie człowieka do projektu na etat albo godzin, nie efektu', ''],
+  ['chodzi o wskazanie winnego, a nie o wyjście', 'Tego nie robię w żadnej cenie.'],
+  ['projekt jest już zamknięty i chodzi o raport pośmiertny', 'To inna usługa.'],
+];
+---
+<Hub
+  lang="pl"
+  title="Interwencja Projektowa · wyprowadzam projekt, który tonie · Krzysztof Nyrek"
+  description="Termin przesunął się raz, statusy są zielone, a dostawy czerwone. Wchodzę na dwa tygodnie i mówię, czy ten projekt warto ratować. Diagnoza 5000 zł, całość 18-25 tys. netto."
+  canonical={HUB_PL + '/interwencja/'}
+  noHreflang={true}
+>
+  <section class="section" id="hero">
+    <div class="prose-narrow">
+      <p class="eyebrow">Interwencja Projektowa · najwyżej dwa projekty w roku</p>
+      <h1>Projekt się nie ślizga. Projekt tonie, tylko po cichu</h1>
+
+      <p class="lead">
+        Termin przesunął się już raz. Statusy są zielone, a dostawy czerwone. Zespół pracuje,
+        nikt nie próżnuje, a mimo to nikt w firmie nie umie odpowiedzieć na jedno pytanie:
+        <strong> kiedy to będzie skończone i za ile.</strong>
+      </p>
+
+      <p>
+        Znasz ten moment. Za dwa tygodnie masz zarząd albo rozmowę z klientem i nie masz z czym
+        na nią pójść.
+      </p>
+
+      <p><a class="btn-primary" href={`mailto:${KONTAKT}`}>Napisz do mnie</a></p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="prose-narrow">
+      <h2>Wchodzę na dwa tygodnie i mówię Ci, czy to warto ratować</h2>
+      <p>
+        Nie zaczynam od planu naprawczego. Zaczynam od odpowiedzi na trzy pytania, bo bez nich
+        każdy plan jest zgadywaniem:
+      </p>
+      <ul class="pytania">
+        <li><strong>Gdzie ten projekt naprawdę jest.</strong> Nie gdzie jest w raporcie.</li>
+        <li><strong>Co go zabija.</strong> Zwykle jedna, dwie rzeczy, rzadko dziesięć.</li>
+        <li><strong>Czy w ogóle warto go ratować.</strong></li>
+      </ul>
+      <p>
+        Na koniec dostajesz jedną kartkę i <strong>rekomendację z trzech możliwych, podaną
+        wprost: ratować, przeciąć zakres i dowieźć okrojoną wersję, albo zamknąć i odzyskać
+        ludzi.</strong>
+      </p>
+      <p class="wyroznik">
+        <strong>Trzecia opcja jest realnie na stole i to jest cała różnica.</strong> Nikt inny
+        Ci tego nie powie, bo każdy chce sprzedać następny etap. Jeśli po dwóch tygodniach powiem
+        „zamknijcie to", zapłacisz za diagnozę i zaoszczędzisz kwartał pracy zespołu.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="prose-narrow">
+      <h2>Jeśli warto ratować, wyprowadzam projekt w sześć do ośmiu tygodni</h2>
+      <ul class="pytania">
+        <li>plan naprawczy z datami i nazwiskami, nie z życzeniami,</li>
+        <li>stały rytm: jedno spotkanie tygodniowo, jedna kartka statusu dla Ciebie, reszta asynchronicznie,</li>
+        <li>jestem na tych dwóch, trzech spotkaniach, które naprawdę ważą: zarząd, klient, przełom w zakresie,</li>
+        <li><strong>na koniec oddaję projekt z powrotem Waszemu człowiekowi</strong>, z opisanym sposobem prowadzenia, żeby za kwartał nie wrócił do tego samego stanu.</li>
+      </ul>
+      <p>
+        <strong>Czego w tym nie ma:</strong> nie przejmuję projektu na stałe, nie siedzę u Was
+        na etacie i nie jestem dostępny codziennie. Kupujecie wyjście z sytuacji, nie moją obecność.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="cena">
+    <div class="prose-narrow">
+      <h2>Ile to kosztuje</h2>
+      <p class="cena-glowna"><strong>18 000 do 25 000 zł netto za całość, w dwóch transzach.</strong></p>
+      <div class="cennik">
+        <p class="cennik-line"><strong>5 000 zł</strong> <span>za diagnozę, płatne na starcie. Po dwóch tygodniach masz kartkę i rekomendację.</span></p>
+        <p class="cennik-line"><strong>13 000 do 20 000 zł</strong> <span>za wyprowadzenie, płatne dopiero wtedy, gdy zdecydujecie, że idziemy dalej.</span></p>
+      </div>
+      <p>
+        <strong>Możecie wyjść po diagnozie.</strong> Wtedy koszt zamyka się na pięciu tysiącach,
+        a Wy macie odpowiedź, której dziś nie ma nikt w firmie.
+      </p>
+      <p>
+        Cena jest tutaj, a nie za formularzem, bo nie chcę rozmawiać z nikim, komu ta kwota nie
+        pasuje. <strong>Przy takim projekcie tygodnie zwłoki kosztują więcej niż cała ta usługa.</strong>
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="prose-narrow">
+      <h2>Kiedy się nie podejmuję</h2>
+      <p>Mówię to od razu, bo odmowa jest częścią tej roboty:</p>
+      <ul class="pytania">
+        {kiedyNie.map(([tytul, dopisek]) => (
+          <li><strong>{tytul}.</strong>{dopisek ? ' ' + dopisek : ''}</li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="kto">
+    <div class="prose-narrow">
+      <h2>Kto to robi</h2>
+      <p>
+        Krzysiek Nyrek. <strong>Ponad dwadzieścia lat prowadzenia projektów</strong>, w większości
+        takich, które zastawałem w stanie, w którym pierwszym zadaniem było ustalić, gdzie ten
+        projekt w ogóle jest. Nauczyłem się tego na własnych błędach i dlatego wiem, w którym
+        miejscu szukać.
+      </p>
+      <p>
+        <strong>Biorę najwyżej dwa takie projekty w roku.</strong> Nie dlatego, że robię z tego
+        sztuczny niedobór, tylko dlatego, że jeden zjada trzydzieści pięć do czterdziestu pięciu
+        godzin przez dwa miesiące, a ja mam ich tyle, ile mam.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="start">
+    <div class="prose-narrow">
+      <div class="start-box">
+        <h2>Jak zacząć</h2>
+        <p>
+          Napisz dwa zdania o tym, co się dzieje w projekcie. Odpiszę w ciągu doby i powiem
+          uczciwie, czy to jest sytuacja dla mnie, czy nie.
+        </p>
+        <p><a class="btn-primary" href={`mailto:${KONTAKT}`}>{KONTAKT}</a></p>
+      </div>
+    </div>
+  </section>
+</Hub>
+
+<style>
+  .section { padding: var(--space-2xl) var(--gutter); }
+  .prose-narrow { max-width: 46rem; margin-inline: auto; }
+  .prose-narrow h1 { margin-bottom: var(--space-lg); }
+  .prose-narrow h2 { margin-top: var(--space-xl); margin-bottom: var(--space-sm); font-size: 1.25rem; }
+  .prose-narrow p { color: var(--text-muted); margin-bottom: var(--space-md); }
+  .lead { font-size: 1.0625rem; }
+
+  .pytania { list-style: none; margin: 0 0 var(--space-lg); padding: 0; }
+  .pytania li {
+    position: relative;
+    padding: var(--space-sm) 0 var(--space-sm) 1.5rem;
+    border-bottom: var(--hairline-2);
+    color: var(--text-muted);
+  }
+  .pytania li::before {
+    content: '';
+    position: absolute; left: 0; top: 1.15rem;
+    width: 0.5rem; height: 0.5rem; border-radius: 50%;
+    background: var(--brass-600);
+  }
+  .pytania strong { color: var(--navy-600); }
+
+  .wyroznik {
+    border-left: 3px solid var(--brass-600);
+    padding-left: var(--space-md);
+  }
+
+  .cena-glowna { font-size: 1.125rem; color: var(--navy-600); }
+  .cennik { margin: 0 0 var(--space-lg); }
+  .cennik-line { display: flex; flex-wrap: wrap; gap: var(--space-sm); align-items: baseline; margin-bottom: var(--space-sm); }
+  .cennik-line strong { min-width: 9rem; color: var(--navy-600); font-size: 1.0625rem; }
+  .cennik-line span { flex: 1 1 16rem; color: var(--text-muted); font-size: 0.9375rem; }
+
+  .start-box { border: var(--hairline-2); border-radius: var(--radius-md, 0.75rem); padding: var(--space-xl); background: var(--navy-050); }
+  .start-box h2 { margin-top: 0; }
+  .start-box p:last-child { margin-bottom: 0; }
+</style>

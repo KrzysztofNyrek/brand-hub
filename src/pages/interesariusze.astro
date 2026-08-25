@@ -1,0 +1,277 @@
+---
+// Strona ofertowa zestawu „Interesariusze" (krzysztofnyrek.pl/interesariusze).
+// Copy zaakceptowane przez K 20.08.2026 (dokument v2, część 3). Zbudowane 24.08.2026.
+//
+// 🔴 CZTERY RZECZY, KTÓRE RÓŻNIĄ TĘ STRONĘ OD ZAAKCEPTOWANEGO COPY, i każda wynika z D126
+// (decyzja K z 21.08: „w przedsprzedaży zapisujemy tylko na listę chętnych na MailerLite"):
+//
+//   1. NIE MA PRZYCISKU ZAKUPU ani płatności. Copy z 19.08 miało „[ Kupuję w przedsprzedaży,
+//      89 zł ]". Zamiast tego jedno CTA: zapis na listę chętnych.
+//   2. NIE MA OBIETNICY ZWROTU PIENIĘDZY. Nie ma pieniędzy, więc nie ma czego zwracać.
+//      W jej miejsce weszło zobowiązanie, które faktycznie umiemy dotrzymać: jeśli zestaw
+//      nie powstanie, piszę do zapisanych i mówię wprost. Ma własny rekord bezpiecznika
+//      w Sprint DB z datą 30.09, więc to nie jest hasło.
+//   3. CENA STOI JAKO ZAPOWIEDŹ DLA ZAPISANYCH, nie jako „przedsprzedaż do 30.09". Przy braku
+//      możliwości zakupu zdanie „przedsprzedaż 89 zł do 30 września" byłoby mylące: kupić się
+//      nie da, więc nie ma czego ograniczać terminem.
+//   4. ZAPIS NA LISTĘ I DARMOWA KARTA TO JEDNO DZIAŁANIE, nie dwa formularze. Obie ścieżki
+//      i tak trafiały do tej samej grupy, a dwa pola e-mail na jednej stronie dzielą uwagę.
+//
+// 🔴 ZDANIE „każda z tych dwunastu sytuacji zdarzyła mi się osobiście" NIE WCHODZI NA STRONĘ.
+// W copy z 19.08 było oznaczone jako [POTWIERDŹ ALBO ZMIEŃ] i K nie potwierdził go co do sztuki.
+// D126 decyzja 1 daje formułę, która jest prawdziwa i wystarczająca: materiał jest oparty na
+// autentycznych zdarzeniach, bez nazw własnych. Akapit „kto to pisze" jest w całości słowami K
+// z jego własnego komentarza do dokumentu v2, nie moją parafrazą.
+//
+// ✅ LICZBA LAT DOŚWIADCZENIA rozstrzygnięta przez K 24.08: „ponad dwadzieścia lat jest
+// prawdziwe i trzeba to poprawić wszędzie". Landing /first-5-pm-days poprawiony w tym samym
+// commicie z „17 lat" na „ponad 20 lat". Trzeciej wersji nigdzie nie ma.
+//
+// ✅ WARUNEK „nic online przed 22.09" ZDJĘTY. Nie był poleceniem K, tylko resztką po modelu
+// z przyciskiem zakupu: data brała się z mechaniki cyklu, gdzie oferta z ceną idzie w trzecim
+// tygodniu. Po D126 strona nie sprzedaje, tylko zbiera zapisy, więc warunek stracił przedmiot.
+// Rozstrzygnięcie K z 24.08, dosłownie: „commit i push teraz, muszę mieć gdzie ludzi chętnych
+// zbierać" oraz „online 1.09" w odpowiedzi na pytanie o dwie sprzeczne daty.
+//
+// 🔴 TRZY ZMIANY W TREŚCI Z JEGO KOMENTARZY DO KOMPLETU KART (24.08 wieczorem):
+//   1. NAZWA PRODUKTU. Jego słowa: „popraw to na zestaw, czy przewodnik, skoro obiecujemy kartę,
+//      a dajemy więcej niż karta". Produkt nazywa się teraz PRZEWODNIK, a karta zostaje nazwą
+//      jednostronicowego streszczenia, które faktycznie mieści się na jednej stronie.
+//   2. TRZYNAŚCIE, NIE DWANAŚCIE. „zestaw rośnie do 13 kart" — trzynasta to człowiek, przy którym
+//      reszta sali milknie, luka znaleziona przy pisaniu karty 5.
+//   3. KOMPLETNOŚĆ JAKO ARGUMENT. „dopisz do strony ofertowej, że to jest kompletny zestaw" —
+//      karty odsyłają do siebie nawzajem, więc odpowiedź na „a co, jeśli to nie zadziała" jest
+//      w środku, a nie w kolejnym produkcie do dokupienia.
+import Hub from '../layouts/Hub.astro';
+import { HUB_PL } from '../config.mjs';
+
+const karty = [
+  ['Sponsor, który milczy, a potem pyta, czemu stoicie', 'Dwa maile bez odpowiedzi, a na statusie pytanie przy wszystkich, dlaczego projekt stoi.'],
+  ['Klient, który zmienia zdanie po każdym demie', 'Piąte demo, piąta lista zmian, a zakres z umowy nikt nie otwierał od kwietnia.'],
+  ['Dyrektor, który pyta wyłącznie o datę', 'Przygotowałeś status na trzy strony, a jedyne pytanie brzmi „to kiedy to będzie”.'],
+  ['Ktoś bez formalnej decyzyjności, kto blokuje wszystko', 'Nie ma go w RACI, nie ma go w umowie, a bez jego zgody nic nie idzie dalej.'],
+  ['Ten, kto zgadza się na spotkaniu, a zastrzeżenia zgłasza po nim na priv', 'Na sali kiwał głową, po godzinie przyszła wiadomość zaczynająca się od „tak tylko między nami”.'],
+  ['Sponsor, który mówi „róbcie, jak uważacie”, a potem kwestionuje efekt', 'Dostałeś wolną rękę, a przy odbiorze okazuje się, że wyobrażał to sobie inaczej.'],
+  ['Klient, który każdy problem eskaluje nad Twoją głowę', 'O awarii dowiadujesz się od swojego szefa, nie od klienta.'],
+  ['Dwóch decydentów, którzy chcą czegoś przeciwnego', 'Jeden chce szybciej, drugi taniej, obaj mają rację i obaj mają podpis.'],
+  ['Ktoś, kto wymaga raportów i nigdy ich nie czyta', 'Co tydzień godzina na raport, a na spotkaniu pytania, na które ten raport odpowiada.'],
+  ['Zleceniodawca bez czasu na kick-off, ale z czasem na pretensje', 'Nie przyszedł na start, a w połowie ma listę rzeczy, które „przecież były oczywiste”.'],
+  ['Ten, kto zgadza się na termin, którego jego zespół nie potwierdził', 'Data jest w harmonogramie, a ludzie, którzy mają ją dowieźć, słyszą o niej od Ciebie.'],
+  ['Nowy dyrektor w połowie projektu, który chce wszystko zmienić', 'Przyszedł trzy tygodnie temu i właśnie zapytał, czy w ogóle robimy to dobrze.'],
+  ['Ten, przy kim reszta sali milknie', 'Kiedy on się odzywa, dyskusja się kończy, a Ty nie wiesz, czy to była zgoda, czy tylko koniec rozmowy.'],
+];
+---
+<Hub
+  lang="pl"
+  title="Interesariusze · przewodnik dla project managera · Krzysztof Nyrek"
+  description="Sponsor nie odpisuje, klient zmienia zdanie po każdym demie, ktoś spoza dokumentów blokuje wszystko. Trzynaście sytuacji, każda z kartą na jedną stronę i gotowym tekstem do skopiowania."
+  canonical={HUB_PL + '/interesariusze/'}
+  noHreflang={true}
+>
+  <section class="section" id="hero">
+    <div class="prose-narrow">
+      <p class="eyebrow">Przewodnik po interesariuszach · wydanie 15 października 2026</p>
+      <h1>Zespół nauczyłeś się prowadzić. Problem masz z ludźmi, którzy decydują o projekcie i nie siedzą w Twoim zespole</h1>
+
+      <p class="lead">
+        Sponsor nie odpisuje dwa tygodnie, a potem pyta na statusie, czemu stoicie. Klient zmienia
+        zdanie po każdym demie. Ktoś, kogo nie ma w żadnym dokumencie, blokuje wszystko. Dwóch
+        decydentów chce czegoś przeciwnego i obaj mają podpis.
+      </p>
+
+      <p>
+        <strong>Żadnej z tych sytuacji nie rozwiązuje harmonogram.</strong> Nie ma ich w PMBOK-u
+        w formie, którą da się użyć w środę o 14:00. Nie uczy ich żaden kurs, bo to nie jest
+        wiedza, tylko rozgrywanie ludzi.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="prose-narrow">
+      <h2>Co dostajesz</h2>
+      <p><strong>Trzynaście sytuacji, a każda w dwóch warstwach.</strong></p>
+      <p>
+        <strong>Karta na jedną stronę:</strong> problem i rozwiązanie, do wyjęcia w środę o 14:00,
+        kiedy nie masz czasu czytać. <strong>Pod nią pełne rozwinięcie</strong> na wtedy, kiedy
+        chcesz zrozumieć, dlaczego to działa.
+      </p>
+      <p>
+        Rozwinięcie zaczyna się od sceny, którą rozpoznasz, bo była u Ciebie w zeszłym miesiącu.
+        Potem mówię, <strong> co się naprawdę dzieje po jego stronie</strong> i czego ten człowiek
+        się boi, bo bez tego każdy ruch jest zgadywaniem. Potem trzy rzeczy do zrobienia.
+        <strong> Na koniec gotowy tekst do skopiowania</strong>, mail albo wiadomość, i sposób
+        sprawdzenia, że zadziałało.
+      </p>
+      <p>
+        Plus jedna rzecz, której nie znajdziesz w poradnikach:
+        <strong> kiedy dana karta NIE zadziała i co wtedy</strong>.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="prose-narrow">
+      <h2>Trzynaście sytuacji</h2>
+      <ol class="karty">
+        {karty.map(([tytul, scena]) => (
+          <li>
+            <strong>{tytul}</strong>
+            <span class="scena">{scena}</span>
+          </li>
+        ))}
+      </ol>
+      <p class="small">
+        Każda ma tę samą budowę: karta na jedną stronę z problemem i rozwiązaniem, a pod nią
+        rozwinięcie ze sceną, tym co się naprawdę dzieje po jego stronie, przypadkami opisanymi
+        publicznie razem ze źródłem, trzema ruchami, gotowym tekstem do skopiowania, sposobem
+        sprawdzenia, że zadziałało, i tym, kiedy ta karta nie zadziała.
+      </p>
+
+      <p>
+        <strong>To jest komplet, a nie zbiór osobnych tekstów.</strong> Sytuacje przechodzą jedna
+        w drugą, więc karty odsyłają do siebie nawzajem: milczący sponsor z pierwszej wraca
+        w szóstej i dziesiątej, spór dwóch decydentów z ósmej wraca w dwunastej jako zmiana
+        zakresu. Odpowiedź na pytanie „a co, jeśli to nie zadziała" jest w środku,
+        <strong> a nie w kolejnym produkcie do dokupienia</strong>.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="prose-narrow">
+      <h2>Czego tu nie ma</h2>
+      <p>
+        <strong>Nie ma typologii osobowości.</strong> Nie dzielę ludzi na kolory ani na cztery typy,
+        bo w projekcie nie masz jak sprawdzić, który to typ, a i tak zachowa się inaczej pod presją.
+      </p>
+      <p>
+        <strong>Nie ma teorii zarządzania interesariuszami.</strong> Macierz wpływu i zainteresowania
+        narysujesz sobie sam w dziesięć minut. To nie ona jest problemem o 14:00 w środę.
+      </p>
+      <p>
+        <strong>Nie ma nagrań ani kursu do obejrzenia.</strong> Trzynaście kart do wyjęcia
+        i użycia tego samego dnia, z rozwinięciem dla tych, którzy chcą wejść głębiej.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="prose-narrow">
+      <h2>Kto to pisze</h2>
+      <p>
+        Krzysiek, PM z ponad dwudziestoletnim doświadczeniem. Codziennie spotykam się z różnymi
+        sytuacjami projektowymi i nauczyłem się radzić sobie z każdym rodzajem projektowego
+        problemu. Nauczyłem się na własnych błędach, dlatego postanowiłem opisać typowe wyzwania
+        projektowe i pokazać Ci, jak można sobie z nimi radzić, żebyś Ty nie musiał wymyślać
+        rozwiązania od zera.
+      </p>
+      <p>
+        Sceny w kartach są oparte na autentycznych zdarzeniach. Nie ma w nich nazw firm, nazwisk
+        ani technologii, bo nie o to w nich chodzi, a ludzie, których dotyczą, nie zgadzali się
+        na bycie przykładem.
+      </p>
+      <p>Nie jestem trenerem i nie sprzedaję certyfikatów. Oddaję gotowce, których sam używam.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="prose-narrow">
+      <h2>Cena, kiedy przewodnik powstanie</h2>
+      <div class="cennik">
+        <p class="cennik-line"><strong>89 zł</strong> <span>dla osób z listy poniżej</span></p>
+        <p class="cennik-line"><strong>119 zł</strong> <span>później, dla wszystkich pozostałych</span></p>
+        <p class="cennik-line"><strong>49 zł</strong> <span>jeśli masz PM Crisis Toolkit, bo to domknięcie tej samej roboty, a nie osobny produkt</span></p>
+      </div>
+
+      <h2>Przewodnika jeszcze nie ma i nie udaję, że jest</h2>
+      <p>
+        Karty powstają teraz, wydanie planuję na <strong>15 października 2026</strong>. Dlatego na
+        tej stronie nie ma przycisku zakupu: <strong>nie chcę brać pieniędzy za rzecz, której nie
+        mogę Ci dziś wysłać</strong>. Zamiast tego zbieram listę osób, które chcą go dostać.
+      </p>
+      <p>
+        <strong>Co się stanie, jeśli chętnych będzie za mało.</strong> Napiszę do Ciebie przed
+        końcem września i powiem wprost, że przewodnika nie robię. Bez wykręcania się i bez ciszy.
+        Nic nie tracisz, bo nic nie płacisz, ale nie chcę, żebyś czekał w październiku na coś,
+        co nie przyjdzie.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="zapis">
+    <div class="prose-narrow">
+      <div class="zapis-box">
+        <h2>Zanim zdecydujesz, weź jedną kartę za darmo</h2>
+        <p>
+          <strong>Kartę „Sponsor, który milczy" wysyłam w całości, bez skrótów.</strong> Zobaczysz
+          dokładnie, czym jest ten przewodnik: ta sama karta na jedną stronę, to samo rozwinięcie,
+          ten sam gotowy mail. Jeśli nie trafi, po prostu nie kupuj, kiedy wyjdzie.
+        </p>
+        <p>
+          <strong>W mailu z kartą zapytam Cię o trzy rzeczy:</strong> co się w niej podobało, czego
+          jest za dużo i czego zabrakło. Odpowiedź jednym zdaniem realnie zmienia kolejne karty,
+          bo piszę je teraz.
+        </p>
+        <form action="/api/subscribe" method="POST">
+          <input type="hidden" name="list" value="inter" />
+          <input type="hidden" name="lang" value="pl" />
+          <input type="hidden" name="utm_source" value="linkedin" />
+          <input type="hidden" name="utm_campaign" value="interesariusze" />
+          <input type="hidden" name="utm_content" value="strona-ofertowa" />
+          <label class="hp" aria-hidden="true">Firma WWW<input type="text" name="firma_www" tabindex="-1" autocomplete="off" /></label>
+          <input type="email" name="email" required placeholder="twoj@email.pl" aria-label="Twój adres e-mail" />
+          <button class="btn-primary" type="submit">Wyślij mi pierwszą kartę</button>
+        </form>
+        <p class="small micro">
+          Zapisując się, trafiasz na listę chętnych na przewodnik. Kartę wysyłam osobiście, zwykle
+          tego samego dnia, więc nie zdziw się, że nie przychodzi w tej samej sekundzie.
+          Zero spamu, wypisujesz się jednym kliknięciem.
+        </p>
+      </div>
+    </div>
+  </section>
+</Hub>
+
+<style>
+  .section { padding: var(--space-2xl) var(--gutter); }
+  .prose-narrow { max-width: 46rem; margin-inline: auto; }
+  .prose-narrow h1 { margin-bottom: var(--space-lg); }
+  .prose-narrow h2 { margin-top: var(--space-xl); margin-bottom: var(--space-sm); font-size: 1.25rem; }
+  .prose-narrow p { color: var(--text-muted); margin-bottom: var(--space-md); }
+  .lead { font-size: 1.0625rem; }
+
+  .karty { list-style: none; counter-reset: karta; margin: 0 0 var(--space-lg); padding: 0; }
+  .karty li {
+    counter-increment: karta;
+    position: relative;
+    padding: var(--space-sm) 0 var(--space-sm) 2.5rem;
+    border-bottom: var(--hairline-2);
+  }
+  .karty li::before {
+    content: counter(karta);
+    position: absolute; left: 0; top: var(--space-sm);
+    width: 1.75rem; text-align: right;
+    font-variant-numeric: tabular-nums;
+    color: var(--brass-600); font-weight: 700;
+  }
+  .karty strong { display: block; color: var(--navy-600); }
+  .karty .scena { display: block; margin-top: 0.15rem; font-size: 0.9375rem; color: var(--text-muted); }
+
+  .cennik { margin: 0 0 var(--space-lg); }
+  .cennik-line { display: flex; flex-wrap: wrap; gap: var(--space-sm); align-items: baseline; margin-bottom: var(--space-xs); }
+  .cennik-line strong { min-width: 4.5rem; color: var(--navy-600); font-size: 1.125rem; }
+  .cennik-line span { color: var(--text-muted); font-size: 0.9375rem; }
+
+  .zapis-box { border: var(--hairline-2); border-radius: var(--radius-md, 0.75rem); padding: var(--space-xl); background: var(--navy-050); }
+  .zapis-box h2 { margin-top: 0; }
+  .zapis-box form { display: flex; flex-direction: column; gap: var(--space-sm); margin-top: var(--space-md); }
+  .zapis-box input[type=email] {
+    width: 100%; padding: 0.875rem 1rem; font: inherit; font-size: 1rem;
+    border: 1.5px solid var(--navy-200); border-radius: 0.625rem; color: var(--navy-900); background: #fff;
+  }
+  .zapis-box input[type=email]:focus { outline: none; border-color: var(--navy-600); }
+  .zapis-box button { width: 100%; cursor: pointer; border: none; }
+  .micro { margin-top: var(--space-sm); margin-bottom: 0; }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+</style>

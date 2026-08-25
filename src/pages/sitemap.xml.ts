@@ -34,6 +34,13 @@ const STATIC_PATHS = [
   '/polityka-prywatnosci/',
   '/regulamin/',
   '/polityka-zwrotow/',
+  // Strona ofertowa zestawu o interesariuszach (24.08.2026). Publiczna i indeksowalna
+  // ŚWIADOMIE, inaczej niż landingi z formularzem: ta strona ma sprzedawać i ma być
+  // znajdowana. Nie ma na niej `noindex`, więc wpis w sitemapie nie jest sprzecznym sygnałem.
+  '/interesariusze/',
+  // Strona produktowa Interwencji Projektowej (25.08.2026). Indeksowalna, choc uslugi nie
+  // sprzedajemy z ruchu: ma byc adresem, ktory da sie podac w rozmowie i znalezc po nazwisku.
+  '/interwencja/',
 ];
 
 export function GET() {
