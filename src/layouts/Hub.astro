@@ -106,12 +106,21 @@ const footer = isPl
       .skip-link:focus { left: var(--space-md); top: var(--space-md); }
       .nav-links { display: flex; gap: var(--space-lg); flex-wrap: wrap; }
       .nav-cta { font-size: var(--fs-small); }
-      /* Mobile nav: sekcje osiągalne scrollem/CTA — chowamy listę kotwic, zostaje logo + flaga + CTA */
+      /* Mobile nav: chowamy KOTWICE, bo te sekcje da sie osiagnac scrollem.
+         🔴 POPRAWKA 25.08.2026: wczesniej znikala CALA lista, razem z linkami do OSOBNYCH STRON,
+         a osobnej strony scrollem sie nie osiagnie. Regula z komentarza wyzej byla dobra, jej
+         wykonanie za szerokie. Wyszlo przy poleceniu K "podlinkuj z menu" dla /interwencja:
+         pozycja byla w kodzie, a na telefonie nie istniala. */
       @media (max-width: 760px) {
         .nav { gap: var(--space-sm); padding-inline: var(--space-md); }
-        .nav-links { display: none; }
+        .nav-link-anchor { display: none; }
+        .nav-links { gap: var(--space-md); }
         .nav-cta { padding: 0.65rem 1rem; }
         .nav-logo img { height: 3.5rem; }
+      }
+      @media (max-width: 420px) {
+        /* Na najwezszych ekranach zostaje logo, jedna pozycja strony, flaga i CTA. */
+        .nav-links { gap: var(--space-sm); font-size: var(--fs-small); }
       }
       .footer { padding-inline: var(--gutter); }
       .footer-inner { max-width: var(--maxw-content); margin-inline: auto; display: flex; flex-wrap: wrap; gap: var(--space-lg); align-items: center; justify-content: space-between; }
@@ -126,7 +135,7 @@ const footer = isPl
       </a>
       <span class="nav-spacer"></span>
       <div class="nav-links">
-        {nav.links.map((l) => <a class="nav-link" href={l.href}>{l.label}</a>)}
+        {nav.links.map((l) => <a class={l.href.startsWith("#") || l.href.startsWith("/#") ? "nav-link nav-link-anchor" : "nav-link nav-link-page"} href={l.href}>{l.label}</a>)}
       </div>
       <a class="nav-flag" href={nav.flagHref} aria-label={isPl ? 'English version' : 'Wersja polska'}>
         {nav.flagLabel}
