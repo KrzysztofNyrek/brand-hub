@@ -1,0 +1,94 @@
+---
+// Dedykowana strona z kartą 1 („Sponsor, który milczy"), do której prowadzi mail po zapisie
+// na listę chętnych na przewodnik o interesariuszach.
+//
+// 🔴 DLACZEGO OSOBNA STRONA, A NIE GOŁY LINK DO PDF-a — decyzja K z 27.08.2026, jego słowami:
+// „daj na dedykowanej stronie krzysztofnyrek.pl i tam zapnij analitykę". Goły plik w `public/`
+// jest niemierzalny: serwer odda go i tyle, a my nie wiemy, ilu ludzi w ogóle po niego sięgnęło.
+// Strona daje trzy rzeczy naraz: trafienie w GA4, drugie miejsce na prośbę o informację zwrotną
+// (mail bywa przeglądany po łebkach) i miejsce, w które można wrócić po dwóch tygodniach.
+//
+// noindex jest CELOWY: to jest treść dla ludzi z listy, nie dla wyszukiwarki. Karta ma krążyć
+// przez podanie adresu dalej, nie przez wyniki Google, bo inaczej zapis na listę traci sens.
+//
+// GA4 wchodzi przez <Consent />, tak samo jak na /zapisano (baner zgody, tag startuje po kliknięciu).
+import Consent from '../components/Consent.astro';
+import '../styles/tokens.css';
+import { HUB_PL } from '../config.mjs';
+const title = 'Karta 1: sponsor, który milczy · Krzysztof Nyrek';
+const pdf = '/Karta-01_Sponsor-ktory-milczy.pdf';
+---
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>{title}</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <style>
+      body { overflow-x: hidden; padding: var(--space-lg); }
+      .karta { max-width: 40rem; margin: 0 auto; }
+      .karta-logo { display: block; height: 3rem; width: auto; margin-bottom: var(--space-lg); }
+      .karta h1 { margin-bottom: var(--space-md); }
+      .karta p { color: var(--text-muted); margin: 0 0 var(--space-md); }
+      .pobierz { margin: var(--space-xl) 0; padding: var(--space-lg); background: var(--sky-50, #EBF3F9);
+                 border-left: 4px solid var(--brass-600, #A67A38); border-radius: var(--radius-md); }
+      .pobierz p { margin-bottom: var(--space-md); color: var(--text); }
+      .pytania { margin: var(--space-xl) 0; }
+      .pytania ol { margin: var(--space-md) 0 var(--space-md) 1.25rem; padding: 0; }
+      .pytania li { margin-bottom: 0.4rem; color: var(--text); font-weight: 600; }
+      .powrot { margin-top: var(--space-xl); padding-top: var(--space-lg);
+                border-top: 1px solid var(--sky-200, #DCE5EC); font-size: 0.9375rem; }
+    </style>
+  </head>
+  <body>
+    <main class="karta">
+      <img class="karta-logo" src="/logo-kn.svg" alt="Krzysztof Nyrek" height="32" />
+
+      <h1 class="h1">Karta 1: sponsor, który milczy, a potem pyta, czemu stoicie</h1>
+
+      <p class="body-lg">
+        To jest karta z przewodnika po trudnych interesariuszach, w całości i bez skrótów.
+        Na wierzchu masz jedną stronę do wyjęcia w środę o 14:00, pod nią pełne rozwinięcie
+        na kiedyś, gdy będziesz miał chwilę.
+      </p>
+
+      <div class="pobierz">
+        <p><strong>Sześć stron, PDF, nic do zakładania i nic do klikania dalej.</strong></p>
+        <a class="btn-primary" href={pdf} download>Pobierz kartę 1 (PDF)</a>
+      </div>
+
+      <p>
+        Cały przewodnik to trzynaście takich sytuacji. Wydaję go 15 października. Karty odsyłają
+        do siebie nawzajem, bo sytuacje przechodzą jedna w drugą, więc dostajesz też odpowiedź
+        na pytanie „a co, jeśli to nie zadziała", zamiast kolejnego produktu do dokupienia.
+      </p>
+
+      <div class="pytania">
+        <h2 class="h3">Mam do Ciebie prośbę i nie jest grzecznościowa</h2>
+        <p>
+          Pozostałe karty piszę w tej chwili, więc to, co mi teraz odpiszesz, realnie zmieni ich treść.
+          Trzy pytania:
+        </p>
+        <ol>
+          <li>Co Ci się w tej karcie podobało?</li>
+          <li>Czego jest za dużo?</li>
+          <li>Czego zabrakło?</li>
+        </ol>
+        <p>
+          Wystarczy jedno zdanie na każde. Odpisz po prostu na maila, którym dostałeś ten link,
+          albo napisz na <a href="mailto:kontakt@krzysztofnyrek.pl">kontakt@krzysztofnyrek.pl</a>.
+          Czyta go człowiek.
+        </p>
+      </div>
+
+      <p class="powrot">
+        <a href="/interesariusze">← Wróć do opisu przewodnika</a>
+        &nbsp;·&nbsp;
+        <a href={HUB_PL + '/'}>Strona główna</a>
+      </p>
+    </main>
+    <Consent />
+  </body>
+</html>
