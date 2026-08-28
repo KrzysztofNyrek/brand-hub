@@ -13,12 +13,15 @@ export function getStaticPaths() {
 }
 
 const { post } = Astro.props as { post: any };
-// 🔴 PUBLICZNOŚĆ ARTYKUŁU (18.08.2026). Do 18.08 pod KAŻDYM tekstem stał ten sam box z zapisem
-// na newsletter „dla właścicieli firm 5-30 osób", także pod tekstami dla project managerów, czyli
-// pod tymi, na które kierujemy ruch z LinkedIna. Czytelnik dostawał dwa wezwania naraz i drugie
-// było do kogoś innego. Wykrył to K przy wklejaniu linku w pierwszym komentarzu.
-// Artykuły PM mają w JSON-ie `audience: "pm"` (ustawia je narzedzia/generate_blog_pm_json.py).
-const isPm = post.audience === 'pm';
+// 🔴 PUBLICZNOŚĆ ARTYKUŁU. Historia w dwóch krokach, bo drugi znosi pierwszy:
+// 18.08.2026 — do tego dnia pod KAŻDYM tekstem stał ten sam box „dla właścicieli firm 5-30 osób",
+//   także pod tekstami dla project managerów, na które kierujemy ruch z LinkedIna. Czytelnik dostawał
+//   dwa wezwania naraz i drugie było do kogoś innego. Wykrył to K przy wklejaniu linku w komentarzu.
+//   Rozwiązaniem był wtedy podział: `audience: "pm"` w JSON-ie decydował, który z dwóch boksów pokazać.
+// 28.08.2026 — podział zniesiony decyzją K („wybieram opcję B"). Drugi box obiecywał bonus
+//   z wyłączonej automatyzacji i zapraszał personę wygaszoną przez D124, więc został usunięty,
+//   a box PM stoi teraz pod wszystkimi artykułami. Pole `audience` zostaje w danych, bo używa go
+//   `narzedzia/generate_blog_pm_json.py` i przyda się, gdyby kiedyś wróciła druga publiczność.
 const url = `${HUB_PL}/blog/${post.slug}/`;  // ukosnik: bez niego canonical wskazuje adres, ktory zwraca 308
 const ogImage = post.image ? `${HUB_PL}/blog/img/${post.image}` : undefined;
 
@@ -76,7 +79,17 @@ const jsonld = {
 
       <div class="article-body" set:html={post.bodyHtml} />
 
-      {isPm ? (
+      {/*
+        🔴 JEDEN BOX NA CAŁYM BLOGU (28.08.2026, decyzja K: „wybieram opcję B").
+        Do 28.08 pod 31 z 36 artykułów stał drugi box: „System zamiast Ciebie", zapisujący
+        do grupy „Agencja na autopilocie", której automatyzacja jest WYŁĄCZONA (`enabled=false`).
+        Obiecywał „checklistę 7 automatyzacji w pierwszym mailu", a zapisany nie dostawał nic.
+        Do tego zapraszał właścicieli firm, czyli personę linii wygaszonej przez D124.
+        Ta sama zasada, przez którą zdjęliśmy sesję 1:1 z maila sprzedażowego: nie zbieramy
+        adresów pod obietnicę, której nie realizujemy.
+        Efekt uboczny, ale realny: tamten formularz szedł wprost na `assets.mailerlite.com/jsonp`,
+        czyli omijał naszą funkcję, więc był jedynym poza zasięgiem Turnstile. Teraz nie ma go wcale.
+      */}
         <aside class="newsletter">
           <h3 class="h3">Plan na pierwsze pięć dni w projekcie</h3>
           <p class="muted small">Dzień po dniu, z pytaniami do zadania i pułapkami do ominięcia. Ten sam plan, który sam odpalam, wchodząc w trudny projekt. Za darmo, razem z zaproszeniem na Discord dla PM-ów.</p>
@@ -93,18 +106,6 @@ const jsonld = {
             <button type="submit" class="btn-primary">Wyślij mi plan →</button>
           </form>
         </aside>
-      ) : (
-        <aside class="newsletter">
-          <h3 class="h3">System zamiast Ciebie: jedna automatyzacja tygodniowo</h3>
-          <p class="muted small">Newsletter dla właścicieli firm 5–30 osób. Bez lania wody. Bonus: checklista 7 automatyzacji w pierwszym mailu.</p>
-          <form action="https://assets.mailerlite.com/jsonp/953911/forms/185269506350777723/subscribe" method="post" target="_blank" class="newsletter-form">
-            <input type="email" name="fields[email]" placeholder="Twój adres email" autocomplete="email" required aria-label="email" />
-            <input type="hidden" name="ml-submit" value="1" />
-            <input type="hidden" name="anticsrf" value="true" />
-            <button type="submit" class="btn-primary">Zapisuję się →</button>
-          </form>
-        </aside>
-      )}
     </div>
   </article>
 </Hub>
