@@ -25,6 +25,42 @@ export async function onRequestPost({ request, env }) {
   const v = validateSubscription(data);
   if (!v.ok) return bad(v.status, v.status === 403 ? 'Forbidden.' : 'Invalid email.');
 
+  // 🔴 TURNSTILE (28.08.2026). Honeypot `firma_www` przepuścił boty: odczyt z API MailerLite pokazał,
+  // że 4 z 5 wpisów na liście „AI-w-pracy early access" to zapisy maszynowe (identyczna trójka UTM,
+  // zero otwarć, dwa IP z tego samego bloku /24, dwa adresy na mail.ru). Sama baza to najmniejszy kłopot:
+  // D125 pkt 6 i D126 stawiają PROGI LICZONE W ZAPISACH i to one decydują, czy budujemy produkt.
+  //
+  // POLITYKA BŁĘDU, świadomie niesymetryczna:
+  //   - token obecny i ODRZUCONY przez siteverify  -> 403, zapis nie powstaje,
+  //   - brak TURNSTILE_SECRET_KEY w CF Pages       -> przepuszczamy + głośny log (błąd konfiguracji
+  //     nie może wyciąć wszystkich zapisów; ten sam wzorzec co przy braku GROUP_ID niżej),
+  //   - siteverify niedostępny albo timeout        -> przepuszczamy + głośny log (awaria sieci
+  //     po naszej stronie nie może kosztować realnego człowieka).
+  // Czyli: blokujemy tylko wtedy, gdy Cloudflare AKTYWNIE powie „to nie człowiek".
+  const tsSecret = env.TURNSTILE_SECRET_KEY || '';
+  const tsToken = String(data['cf-turnstile-response'] || '');
+  if (!tsSecret) {
+    console.error('Brak TURNSTILE_SECRET_KEY — zapis przepuszczony BEZ weryfikacji bota!');
+  } else {
+    const form = new FormData();
+    form.append('secret', tsSecret);
+    form.append('response', tsToken);
+    const cfIp = request.headers.get('CF-Connecting-IP');
+    if (cfIp) form.append('remoteip', cfIp);
+    try {
+      const tr = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify',
+        { method: 'POST', body: form, signal: AbortSignal.timeout(10_000) });
+      const tj = await tr.json();
+      if (!tj.success) {
+        // Bez adresu e-mail w logu (log Cloudflare to nie miejsce na dane osobowe).
+        console.error('Turnstile odrzucil zapis:', JSON.stringify(tj['error-codes'] || []));
+        return bad(403, 'Forbidden.');
+      }
+    } catch (e) {
+      console.error('Turnstile siteverify niedostepny, przepuszczam:', e?.message);
+    }
+  }
+
   const apiKey = env.MAILERLITE_API_KEY || '';
   // Wybor grupy wg pola `list` (server-side mapping, brak otwartego wstrzykiwania ID przez usera):
   //   list=pm    -> grupa PM (MAILERLITE_PM_GROUP_ID)

@@ -2,6 +2,7 @@
 // DWOJE DRZWI. A = automatyzacja (link out + UTM), B = learn (waitlist).
 // Re-skin DS (D79): A = panel navy brand, B = biała karta. Copy VERBATIM.
 import { LINKS, utm } from '../config.mjs';
+import Turnstile from './Turnstile.astro';
 const { lang = 'en' } = Astro.props;
 const isPl = lang === 'pl';
 
@@ -88,6 +89,7 @@ const t = isPl
           <div class="waitlist-row">
             <input id={`wl-email-${lang}`} class="waitlist-email" type="email" name="email" required
                    inputmode="email" autocomplete="email" placeholder={t.emailPh} />
+            <Turnstile />
             <button class="btn-secondary" type="submit">{t.submit}</button>
           </div>
           <p class="caption waitlist-micro">{t.micro}</p>

@@ -3,6 +3,7 @@
 // wiec do dzis nie mial jej zadnej analityki. Sprawdzone przegladarka: na stronach z Hub.astro
 // trafienie do GA leci poprawnie (status 204), tutaj nie leciało nic, bo nie bylo czym.
 import Consent from '../components/Consent.astro';
+import Turnstile from '../components/Turnstile.astro';
 // Landing magnesu „First 5 PM Days" (lejek PM, D88).
 // Natywny formularz -> /api/subscribe (list=pm -> grupa MAILERLITE_PM_GROUP_ID) -> 302 /zapisano.
 // Po zapisie MailerLite automation wysyla mail z linkiem do PDF + Discord.
@@ -68,6 +69,7 @@ const pdf = 'https://krzysztofnyrek.pl/First_5_PM_Days.pdf';
         <input type="hidden" name="utm_content" value="landing" />
         <label class="hp" aria-hidden="true">Firma WWW<input type="text" name="firma_www" tabindex="-1" autocomplete="off" /></label>
         <input type="email" name="email" required placeholder="twoj@email.pl" aria-label="Twój email" />
+        <Turnstile />
         <button type="submit">Wyślij mi plan</button>
         <p class="micro">Zero spamu. Plan i wejście na darmowego Discorda dla PM lecą od razu na maila.</p>
       </form>

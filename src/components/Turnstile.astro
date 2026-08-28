@@ -1,0 +1,24 @@
+---
+// Turnstile.astro — widget Cloudflare Turnstile dla formularzy zapisu (28.08.2026).
+//
+// PO CO: 28.08 odczyt z API MailerLite pokazał, że 4 z 5 wpisów na liście „AI-w-pracy early access"
+// to boty (wszystkie source=api, identyczna trójka UTM, zero otwarć, dwa IP z tego samego bloku /24,
+// dwa adresy na mail.ru). Honeypot `firma_www` ich nie zatrzymał. Problemem nie jest sam śmieć w bazie:
+// D125 pkt 6 i D126 stawiają PROGI LICZONE W ZAPISACH, a kampania wrześniowa rusza 01.09 i to ten próg
+// decyduje, czy budujemy produkt. Formularz bez ochrony pozwala zapełnić próg czymś, co nie jest człowiekiem.
+//
+// UWAGA PRZY UŻYCIU: komponent renderuje RAZEM skrypt api.js i kontener widgetu, więc
+// **wstawiaj go najwyżej raz na stronę**. Przy dwóch formularzach na jednej stronie trzeba wyciągnąć
+// <script> do layoutu, a tutaj zostawić sam <div>.
+//
+// Sitekey jest publiczny i ma prawo stać w HTML. Sekret żyje wyłącznie jako zmienna środowiskowa
+// TURNSTILE_SECRET_KEY w CF Pages (production + preview) i weryfikuje go serwer w functions/api/subscribe.js.
+const SITEKEY = '0x4AAAAAAEfEy_LZ7JnePYRl';
+---
+
+<script is:inline async defer src="https://challenges.cloudflare.com/turnstile/v0/api.js"></script>
+<div class="cf-turnstile" data-sitekey={SITEKEY} data-action="turnstile-spin-v1" data-size="flexible"></div>
+
+<style>
+  .cf-turnstile { margin-block: 0.25rem; min-height: 65px; }
+</style>

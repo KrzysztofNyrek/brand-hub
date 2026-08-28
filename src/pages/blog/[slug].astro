@@ -1,6 +1,7 @@
 ---
 // /blog/[slug] — artykuł (D79 FAZA 3). Dane migrowane z system.eu/blog. DS + SEO na .pl.
 import Hub from '../../layouts/Hub.astro';
+import Turnstile from '../../components/Turnstile.astro';
 import { HUB_PL } from '../../config.mjs';
 
 export function getStaticPaths() {
@@ -88,6 +89,7 @@ const jsonld = {
             <input type="hidden" name="utm_content" value={post.slug} />
             {/* honeypot: dokładnie ta sama nazwa pola co na landingu, inaczej filtr botów nie zadziała */}
             <label class="hp" aria-hidden="true">Firma WWW<input type="text" name="firma_www" tabindex="-1" autocomplete="off" /></label>
+            <Turnstile />
             <button type="submit" class="btn-primary">Wyślij mi plan →</button>
           </form>
         </aside>

@@ -43,6 +43,7 @@
 //      karty odsyłają do siebie nawzajem, więc odpowiedź na „a co, jeśli to nie zadziała" jest
 //      w środku, a nie w kolejnym produkcie do dokupienia.
 import Hub from '../layouts/Hub.astro';
+import Turnstile from '../components/Turnstile.astro';
 import { HUB_PL } from '../config.mjs';
 
 const karty = [
@@ -221,6 +222,7 @@ const karty = [
           <input type="hidden" name="utm_content" value="strona-ofertowa" />
           <label class="hp" aria-hidden="true">Firma WWW<input type="text" name="firma_www" tabindex="-1" autocomplete="off" /></label>
           <input type="email" name="email" required placeholder="twoj@email.pl" aria-label="Twój adres e-mail" />
+          <Turnstile />
           <button class="btn-primary" type="submit">Wyślij mi pierwszą kartę</button>
         </form>
         <p class="small micro">
