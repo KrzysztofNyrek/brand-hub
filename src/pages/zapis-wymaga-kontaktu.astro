@@ -1,0 +1,55 @@
+---
+// 🔴 01.09.2026. Strona dla JEDNEGO konkretnego przypadku, wykrytego na zapisie testowym K:
+// osoba, która kiedyś wypisała się z naszej listy, wypełnia formularz ponownie.
+//
+// MailerLite odrzuca wtedy zapis kodem 422 („This subscriber is unsubscribed and cannot be
+// imported") i to jest zachowanie celowe po ich stronie: ponowne zapisanie kogoś, kto się
+// wypisał, ma być aktem świadomym, a nie skutkiem ubocznym importu.
+//
+// DO 01.09 KOŃCZYŁO SIĘ TO GORZEJ NIŻ BŁĘDEM: funkcja przekierowywała na /zapisano mimo
+// odrzucenia, więc człowiek widział podziękowanie, nie dostawał nic i nie miał jak się
+// dowiedzieć dlaczego. Ta strona zastępuje tamto podziękowanie prawdą.
+//
+// ŚWIADOMIE NIE MA TU przycisku „zapisz mnie mimo wszystko": odwrócenie cudzej rezygnacji
+// bez wyraźnej zgody to nie jest drobiazg techniczny. Ścieżka prowadzi przez mail do człowieka.
+import Consent from '../components/Consent.astro';
+import '../styles/tokens.css';
+import { HUB_PL } from '../config.mjs';
+const title = 'Nie mogę Cię zapisać automatycznie · Krzysztof Nyrek';
+---
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>{title}</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <style>
+      body { overflow-x: hidden; min-height: 100dvh; display: grid; place-items: center; padding: var(--space-lg); }
+      .ty { max-width: 36rem; text-align: center; }
+      .ty-logo { display: block; height: 8.5rem; width: auto; margin: 0 auto var(--space-lg); border-radius: var(--radius-md); }
+      .ty h1 { margin-bottom: var(--space-md); }
+      .ty p { color: var(--text-muted); margin: 0 auto var(--space-md); max-width: 44ch; }
+      .ty p.last { margin-bottom: var(--space-xl); }
+      .ty a.mail { font-weight: 600; }
+    </style>
+  </head>
+  <body>
+    <main class="ty">
+      <img class="ty-logo" src="/logo-kn.svg" alt="Krzysztof Nyrek" height="32" />
+      <h1 class="h1">Nie mogę Cię zapisać automatycznie.</h1>
+      <p class="body-lg">
+        Ten adres był kiedyś na mojej liście i został z niej wypisany. Nie odwracam takiej decyzji
+        za kogoś, więc system celowo mnie tu zatrzymuje.
+      </p>
+      <p class="last">
+        Jeśli chcesz wrócić, napisz jedno zdanie na
+        <a class="mail" href="mailto:kontakt@krzysztofnyrek.pl?subject=Chc%C4%99%20wr%C3%B3ci%C4%87%20na%20list%C4%99">kontakt@krzysztofnyrek.pl</a>,
+        a dopiszę Cię ręcznie i wyślę pierwszą kartę tego samego dnia. Przepraszam za dodatkowy krok.
+      </p>
+      <a class="btn-primary" href={HUB_PL + '/'}>← Wróć na stronę główną</a>
+    </main>
+    <Consent />
+  </body>
+</html>

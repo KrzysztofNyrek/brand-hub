@@ -83,6 +83,19 @@ export async function onRequestPost({ request, env }) {
   }
   const groupId = GROUP_BY_LIST[listKey] || env.MAILERLITE_WAITLIST_GROUP_ID || '';
   const ip = request.headers.get('CF-Connecting-IP') || '';
+
+  // 🔴 WYPISANY WCZESNIEJ (01.09.2026). Wykryte na zapisie testowym, nie w teorii.
+  // MailerLite odrzuca POST /subscribers dla adresu ze statusem `unsubscribed` kodem 422
+  // i komunikatem „This subscriber is unsubscribed and cannot be imported”. Do 01.09 konczylo sie
+  // to CICHO: log lecial w prozni, a czlowiek dostawal /zapisano i nie dostawal nic wiecej.
+  // Tak wlasnie przepadl zapis testowy z 01.09 i dowiedzielismy sie o tym tylko dlatego,
+  // ze robil go wlasciciel i powiedzial, ze nie przyszedl mail.
+  //
+  // Ta flaga zmienia wylacznie to, CO WIDZI CZLOWIEK. Nie zapisujemy go na sile: odwrocenie
+  // cudzej rezygnacji bez wyraznej zgody nie jest drobiazgiem technicznym, wiec kierujemy
+  // go na strone z prawda i z adresem mailowym.
+  let wypisanyWczesniej = false;
+
   if (apiKey && groupId) {
     const body = { email: v.email, fields: v.fields, groups: [groupId] };
     if (ip) { body.ip_address = ip; body.optin_ip = ip; }
@@ -91,7 +104,18 @@ export async function onRequestPost({ request, env }) {
       const r = await fetch(ML_URL, { method: 'POST',
         headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify(body), signal: AbortSignal.timeout(10_000) });
-      if (!r.ok) console.error('MailerLite non-2xx', r.status, v.email);
+      if (!r.ok) {
+        // Bez adresu e-mail w logu. Log Cloudflare to nie jest miejsce na dane osobowe,
+        // a do diagnozy wystarczy kod i nazwa listy (poprawione 01.09: wczesniej lecial tu e-mail).
+        console.error(`MailerLite non-2xx ${r.status} (lista: ${listKey || 'domyslna'})`);
+        if (r.status === 422) {
+          const tekst = await r.text().catch(() => '');
+          if (/unsubscribed/i.test(tekst)) {
+            wypisanyWczesniej = true;
+            console.error(`Zapis odrzucony: adres ma status unsubscribed (lista: ${listKey || 'domyslna'})`);
+          }
+        }
+      }
     } catch (e) { console.error('MailerLite failed', e?.message); }
   } else { console.error('Brak MAILERLITE_API_KEY / WAITLIST_GROUP_ID — pomijam zapis.'); }
 
@@ -100,7 +124,11 @@ export async function onRequestPost({ request, env }) {
   // od 27.08.2026 karta 1 NIE jest wysylana recznie, tylko automatem MailerLite
   // („Interesariusze - karta 1", wlaczony przez K, sprawdzony po tresci 28.08). Ekran /zapisano
   // zostaje, bo mowi prawde: karta idzie od razu, mailem, w kilka minut od zapisu.
-  const dest = listKey === 'pm' ? '/pm-gotowe' : (v.lang === 'en' ? '/subscribed' : '/zapisano');
+  // Podziekowanie NALEZY SIE tylko wtedy, gdy zapis naprawde powstal. Przypadek wypisanego
+  // wczesniej adresu ma wlasna strone, bo inaczej klamiemy czlowiekowi w twarz.
+  const dest = wypisanyWczesniej
+    ? '/zapis-wymaga-kontaktu'
+    : (listKey === 'pm' ? '/pm-gotowe' : (v.lang === 'en' ? '/subscribed' : '/zapisano'));
   const to = new URL(dest, request.url);
   return Response.redirect(to.toString(), 302);
 }
