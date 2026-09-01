@@ -222,6 +222,7 @@ const karty = [
           <input type="hidden" name="utm_content" value="strona-ofertowa" />
           <label class="hp" aria-hidden="true">Firma WWW<input type="text" name="firma_www" tabindex="-1" autocomplete="off" /></label>
           <input type="email" name="email" required placeholder="twoj@email.pl" aria-label="Twój adres e-mail" />
+          <input type="text" name="stanowisko" maxlength="100" placeholder="Twoje stanowisko (opcjonalnie)" aria-label="Twoje stanowisko, pole opcjonalne" autocomplete="organization-title" />
           <Turnstile />
           <button class="btn-primary" type="submit">Wyślij mi pierwszą kartę</button>
         </form>
@@ -229,6 +230,7 @@ const karty = [
           Zapisując się, trafiasz na listę chętnych na przewodnik. Kartę dostajesz od razu,
           mailem, w ciągu kilku minut od zapisu.
           Zero spamu, wypisujesz się jednym kliknięciem.
+          Stanowisko jest opcjonalne i służy mi tylko do tego, żeby wiedzieć, dla kogo piszę kolejne karty.
         </p>
       </div>
     </div>
@@ -268,11 +270,13 @@ const karty = [
   .zapis-box { border: var(--hairline-2); border-radius: var(--radius-md, 0.75rem); padding: var(--space-xl); background: var(--navy-050); }
   .zapis-box h2 { margin-top: 0; }
   .zapis-box form { display: flex; flex-direction: column; gap: var(--space-sm); margin-top: var(--space-md); }
-  .zapis-box input[type=email] {
+  .zapis-box input[type=email],
+  .zapis-box input[name=stanowisko] {
     width: 100%; padding: 0.875rem 1rem; font: inherit; font-size: 1rem;
     border: 1.5px solid var(--navy-200); border-radius: 0.625rem; color: var(--navy-900); background: #fff;
   }
-  .zapis-box input[type=email]:focus { outline: none; border-color: var(--navy-600); }
+  .zapis-box input[type=email]:focus,
+  .zapis-box input[name=stanowisko]:focus { outline: none; border-color: var(--navy-600); }
   .zapis-box button { width: 100%; cursor: pointer; border: none; }
   .micro { margin-top: var(--space-sm); margin-bottom: 0; }
   .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }

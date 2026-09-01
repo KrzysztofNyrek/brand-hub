@@ -96,9 +96,10 @@ export async function onRequestPost({ request, env }) {
   } else { console.error('Brak MAILERLITE_API_KEY / WAITLIST_GROUP_ID — pomijam zapis.'); }
 
   // PM: dedykowany thank-you (nie waitlista „AI w pracy"). Inaczej: /subscribed (EN) / /zapisano (PL).
-  // `inter` celowo idzie na /zapisano: karta 1 i tak jest wysylana RECZNIE (plan MailerLite
-  // dopuszcza trzy automatyzacje i wszystkie sa zajete), wiec dedykowany ekran obiecywalby
-  // natychmiastowa wysylke, ktorej nie ma czym wykonac. Strona ofertowa mowi to wprost.
+  // `inter` celowo idzie na /zapisano, ale POWOD sie zmienil i komentarz byl nieaktualny:
+  // od 27.08.2026 karta 1 NIE jest wysylana recznie, tylko automatem MailerLite
+  // („Interesariusze - karta 1", wlaczony przez K, sprawdzony po tresci 28.08). Ekran /zapisano
+  // zostaje, bo mowi prawde: karta idzie od razu, mailem, w kilka minut od zapisu.
   const dest = listKey === 'pm' ? '/pm-gotowe' : (v.lang === 'en' ? '/subscribed' : '/zapisano');
   const to = new URL(dest, request.url);
   return Response.redirect(to.toString(), 302);
