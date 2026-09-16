@@ -1,0 +1,127 @@
+---
+// Dodatkowy punkt wejścia dla kampanii „Interesariusze" (D125), wejście z LinkedIna i Discorda.
+// Copy: część 4 dokumentu materialy/produkty/interesariusze/2026-08-19_AKCEPTACJA_interesariusze-v2-po-uwagach.md
+// (linie 256-284), zaakceptowane przez K 20.08.2026. Strona ofertowa pełna jest osobna i publiczna:
+// /interesariusze. Ta strona to krótszy, ostrzejszy hak pod ruch, który już zna kontekst
+// (komentarz/DM na LinkedInie, kanał na Discordzie) — nie duplikuje pełnego opisu 13 kart.
+//
+// 🔴 ZGODNIE Z D126 (21.08.2026): zapis na listę, NIE zakup. Formularz = ta sama mechanika co
+// /interesariusze (list=inter -> ta sama grupa MailerLite "Interesariusze - lista chetnych",
+// D126), więc oba wejścia karmią jeden licznik zapisów.
+//
+// noindex: to jest strona pod konkretny link z posta/komentarza/Discorda, nie pod wyszukiwarkę —
+// zero potrzeby indeksowania duplikatu hooka głównej strony ofertowej.
+//
+// Discord: WYŁĄCZNIE przez własny redirect `/discord` (lekcja 20.08 — surowy kod zaproszenia
+// wygasał i siedział w sześciu miejscach naraz; ten sam błąd się tu nie powtarza).
+//
+// STAN 16.09.2026 (D127 Decyzja 8, K "tak" na dołączenie do najbliższego deployu brand-hub):
+// zbudowane lokalnie, npm run build zielony, NIC NIE ZDEPLOYOWANE — czeka na osobne TAK.
+import Hub from '../layouts/Hub.astro';
+import Turnstile from '../components/Turnstile.astro';
+import { HUB_PL } from '../config.mjs';
+---
+<Hub
+  lang="pl"
+  title="Interesariusze · przewodnik dla project managera · Krzysztof Nyrek"
+  description="Napisałeś do sponsora dwa tygodnie temu. Cisza. Karta, która pokazuje, jak nie dopuścić do rozmowy o tym, czy dobrze prowadzisz projekt."
+  canonical={HUB_PL + '/trudni-interesariusze/'}
+  noHreflang={true}
+>
+  <Fragment slot="head">
+    <meta name="robots" content="noindex" />
+  </Fragment>
+
+  <section class="section" id="hero">
+    <div class="prose-narrow">
+      <p class="eyebrow">Przewodnik po interesariuszach · wydanie 15 października 2026</p>
+      <h1>Napisałeś do sponsora dwa tygodnie temu. Cisza. Dziś zapytał na statusie, czemu projekt stoi</h1>
+
+      <p class="lead">
+        Znasz to. I wiesz, że najgorsze przyjdzie tydzień później, kiedy ktoś wyżej zapyta jego,
+        czemu się ślizga, <strong>a on odpowie, że zespół nie dowozi.</strong>
+      </p>
+
+      <p>
+        Od tego momentu nie rozmawiacie już o zakresie. Rozmawiacie o tym, czy dobrze prowadzisz
+        projekt. To jest inna rozmowa i tej się nie wygrywa.
+      </p>
+
+      <p>
+        <strong>Wysyłam Ci kartę, która pokazuje, jak nie dopuścić do tej drugiej rozmowy.</strong>
+        W całości, za darmo, od razu po zapisaniu.
+      </p>
+
+      <p>
+        W środku: co dokładnie dzieje się po stronie sponsora, kiedy milczy · trzy ruchy, które
+        sprawiają, że milczenie przestaje być darmowe · <strong>gotowy mail do skopiowania</strong> ·
+        i uczciwie, kiedy to nie zadziała.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="prose-narrow">
+      <p>
+        To pierwsza z trzynastu kart o ludziach, którzy decydują o Twoim projekcie i nie siedzą
+        w Twoim zespole — sponsor, klient, ktoś bez formalnej decyzyjności, kto i tak blokuje
+        wszystko. <strong>Pełny opis całego przewodnika i wszystkich sytuacji</strong> jest na
+        stronie ofertowej: <a href={HUB_PL + '/interesariusze/'}>krzysztofnyrek.pl/interesariusze</a>.
+      </p>
+      <p>
+        Przewodnika jeszcze nie ma i nie udaję, że jest — powstaje teraz, wydanie 15 października
+        2026. Zapis na listę nic nie kosztuje i do niczego nie zobowiązuje.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="zapis">
+    <div class="prose-narrow">
+      <div class="zapis-box">
+        <h2>Zero spamu, jedna karta od razu</h2>
+        <p>
+          To pierwsza z trzynastu kart. Zapisani dostaną cały przewodnik pierwsi i taniej.
+          Plus wejście na <a href="/discord">darmowego Discorda dla PM-ów</a>.
+        </p>
+        <form action="/api/subscribe" method="POST">
+          <input type="hidden" name="list" value="inter" />
+          <input type="hidden" name="lang" value="pl" />
+          <input type="hidden" name="utm_source" value="linkedin" />
+          <input type="hidden" name="utm_campaign" value="interesariusze" />
+          <input type="hidden" name="utm_content" value="trudni-interesariusze" />
+          <label class="hp" aria-hidden="true">Firma WWW<input type="text" name="firma_www" tabindex="-1" autocomplete="off" /></label>
+          <input type="email" name="email" required placeholder="twoj@email.pl" aria-label="Twój adres e-mail" />
+          <input type="text" name="stanowisko" maxlength="100" placeholder="Twoje stanowisko (opcjonalnie)" aria-label="Twoje stanowisko, pole opcjonalne" autocomplete="organization-title" />
+          <Turnstile />
+          <button class="btn-primary" type="submit">Wyślij mi kartę</button>
+        </form>
+        <p class="small micro">
+          Kartę dostajesz od razu, mailem, w ciągu kilku minut od zapisu.
+          Zero spamu, wypisujesz się jednym kliknięciem.
+        </p>
+      </div>
+    </div>
+  </section>
+</Hub>
+
+<style>
+  .section { padding: var(--space-2xl) var(--gutter); }
+  .prose-narrow { max-width: 46rem; margin-inline: auto; }
+  .prose-narrow h1 { margin-bottom: var(--space-lg); }
+  .prose-narrow p { color: var(--text-muted); margin-bottom: var(--space-md); }
+  .lead { font-size: 1.0625rem; }
+
+  .zapis-box { border: var(--hairline-2); border-radius: var(--radius-md, 0.75rem); padding: var(--space-xl); background: var(--navy-050); }
+  .zapis-box h2 { margin-top: 0; }
+  .zapis-box form { display: flex; flex-direction: column; gap: var(--space-sm); margin-top: var(--space-md); }
+  .zapis-box input[type=email],
+  .zapis-box input[name=stanowisko] {
+    width: 100%; padding: 0.875rem 1rem; font: inherit; font-size: 1rem;
+    border: 1.5px solid var(--navy-200); border-radius: 0.625rem; color: var(--navy-900); background: #fff;
+  }
+  .zapis-box input[type=email]:focus,
+  .zapis-box input[name=stanowisko]:focus { outline: none; border-color: var(--navy-600); }
+  .zapis-box button { width: 100%; cursor: pointer; border: none; }
+  .micro { margin-top: var(--space-sm); margin-bottom: 0; }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+</style>
