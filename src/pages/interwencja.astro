@@ -30,6 +30,7 @@ const KONTAKT = 'kontakt@krzysztofnyrek.pl';
 
 const kiedyNie = [
   ['projekt nie ma sponsora z prawdziwą decyzyjnością', 'Bez kogoś, kto może uciąć zakres, to jest teatr.'],
+  ['nie macie kogo wskazać na tę jedną osobę odpowiedzialną za rytm po moim wyjściu', 'Bez niej plan zostaje na papierze, gdy się wycofuję.'],
   ['zamawia sam project manager', 'Kupuje wtedy własną ocenę, a ja potrzebuję mandatu od osób podejmujących decyzje w projekcie.'],
   ['szukacie człowieka do projektu na etat albo godzin, nie efektu', ''],
   ['chodzi o wskazanie winnego, a nie o wyjście', 'Tego nie robię w żadnej cenie.'],
@@ -38,13 +39,14 @@ const kiedyNie = [
 ---
 <Hub
   lang="pl"
-  title="Interwencja Projektowa · wyprowadzam projekt, który tonie · Krzysztof Nyrek"
-  description="Termin przesunął się raz, statusy są zielone, a dostawy czerwone. Wchodzę na dwa tygodnie i mówię, czy ten projekt warto ratować. Diagnoza 5000 zł, całość 18-25 tys. netto."
+  title="Ratuję projekty, które się nie domykają · Interwencja Projektowa · Krzysztof Nyrek"
+  description="Ratuję projekty, które się nie domykają. Termin przesunął się raz, statusy są zielone, a dostawy czerwone. Wchodzę na dwa tygodnie i mówię, czy ten projekt warto ratować. Diagnoza 5000 zł, całość 18-25 tys. netto."
   canonical={HUB_PL + '/interwencja/'}
   noHreflang={true}
 >
   <section class="section" id="hero">
     <div class="prose-narrow">
+      <p class="category-line">Ratuję projekty, które się nie domykają.</p>
       <p class="eyebrow">Interwencja Projektowa · najwyżej dwa projekty w roku</p>
       <h1>Projekt się nie ślizga. Projekt tonie, tylko po cichu</h1>
 
@@ -76,6 +78,14 @@ const kiedyNie = [
         <li><strong>Czy w ogóle warto go ratować.</strong></li>
       </ul>
       <p>
+        Zakres diagnozy jest zamknięty, nie płynny:
+      </p>
+      <ul class="pytania">
+        <li><strong>Jeden projekt</strong> — ten, który dziś boli najbardziej.</li>
+        <li><strong>Pięć rozmów</strong> — z ludźmi, którzy w nim realnie pracują.</li>
+        <li><strong>Czternaście dni</strong> — od pierwszej rozmowy do kartki z rekomendacją.</li>
+      </ul>
+      <p>
         Na koniec dostajesz jedną kartkę i <strong>rekomendację z trzech możliwych, podaną
         wprost: ratować, przeciąć zakres i dowieźć okrojoną wersję, albo zamknąć i odzyskać
         ludzi.</strong>
@@ -98,8 +108,51 @@ const kiedyNie = [
         <li><strong>na koniec oddaję projekt z powrotem Waszemu człowiekowi</strong>, z opisanym sposobem prowadzenia, żeby za kwartał nie wrócił do tego samego stanu.</li>
       </ul>
       <p>
+        <strong>Tego człowieka wskazujecie na starcie, nie na końcu.</strong> Sponsor daje mi
+        mandat do cięcia zakresu w trakcie. Wasz człowiek to ktoś inny: jedna osoba, którą
+        nazywacie od pierwszego dnia, odpowiedzialna za kontakt ze mną i za to, żeby mówić mi,
+        co z ustalonego sposobu prowadzenia się sprawdza, a co trzeba zmienić. Musi mieć realny
+        wpływ na projekty — inaczej ustalenia zostają na papierze, gdy ja wychodzę. Ja odpowiadam
+        za to, żeby ten sposób prowadzenia dało się utrzymać. Rytm po moim wyjściu pilnuje już on.
+      </p>
+      <p>
         <strong>Czego w tym nie ma:</strong> nie przejmuję projektu na stałe, nie siedzę u Was
         na etacie i nie jestem dostępny codziennie. Kupujecie wyjście z sytuacji, nie moją obecność.
+      </p>
+      <p>
+        <strong>Dashboard i liczenie kosztów projektu zostają Waszym narzędziem.</strong> Nie
+        buduję Wam panelu ani nie liczę rentowności — macie do tego własne dane i własną wiedzę.
+        Jeśli chcecie, mogę wesprzeć Was w ustaleniu progów decyzyjnych i w tym, jak raportować
+        wyniki, ale sama budowa dashboardu zostaje po Waszej stronie, na Waszych arkuszach,
+        żebyście wiedzieli, skąd biorą się liczby i jak je czytać.
+      </p>
+      <p>
+        <strong>Skąd wiadomo, że etap się skończył — przykładowo, bo każdy kontrakt ma własne
+        kryteria.</strong> Rytm tygodniowy działa samodzielnie przez ostatnie dwa tygodnie przed
+        moim wyjściem, bez mojego udziału. Wasz człowiek prowadzi go i potrafi opisać własnymi
+        słowami, co się sprawdza, a co trzeba zmienić. Lista spraw otwartych na starcie etapu jest
+        zamknięta albo ma właściciela i datę. Sponsor odpowiada na pytanie „kiedy to będzie
+        skończone i za ile" bez mnie w pokoju. Dokładne brzmienie tych punktów ustalamy razem na
+        starcie etapu — to część kontraktu, nie gotowiec z tej strony.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="prose-narrow">
+      <h2>Co kosztuje to, że projekt się ślizga po cichu</h2>
+      <p>
+        Zanim doliczycie cenę tej usługi, doliczcie to, co już płacicie:
+      </p>
+      <ul class="pytania">
+        <li><strong>Termin, który przesuwa się nie raz, tylko w ratach.</strong> Trzy miesiące doklejone do harmonogramu nie są jednym wydarzeniem — to seria mniejszych poślizgów, których nikt osobno nie nazwał problemem.</li>
+        <li><strong>Praca zrobiona dwa razy.</strong> Poprawki, które nie byłyby potrzebne, gdyby decyzja zapadła przed startem zadania, a nie w jego trakcie.</li>
+        <li><strong>Spotkania, które nic nie zmieniają.</strong> Status, na którym ktoś referuje to, co i tak już wiadomo, zamiast coś ustalić.</li>
+        <li><strong>Decyzja, która zapadła i nigdy nie dotarła do zespołu.</strong> Ktoś na górze zdecydował. Zespół dowiaduje się o tym, kiedy jest już za późno, żeby to uwzględnić.</li>
+      </ul>
+      <p>
+        To wszystko jest czasem ludzi, których i tak płacicie — od dewelopera po sponsora, który
+        po raz kolejny tłumaczy zarządowi, dlaczego jeszcze nie.
       </p>
     </div>
   </section>
@@ -132,6 +185,27 @@ const kiedyNie = [
           <li><strong>{tytul}.</strong>{dopisek ? ' ' + dopisek : ''}</li>
         ))}
       </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="prose-narrow">
+      <h2>Zanim zmienicie wykonawcę</h2>
+      <p>
+        Najczęstszy pierwszy odruch, kiedy projekt się sypie, to zmiana firmy, która go
+        prowadzi. Nowy zespół, nowy kontrakt, czysta karta.
+      </p>
+      <p>
+        Tylko że przyczyna rzadko mieszka po stronie wykonawcy. Mieszka w zakresie, którego
+        nikt nie przyciął, w decyzjach, które nie zapadły albo zapadły i nie zostały przekazane
+        dalej, i w rytmie spotkań, który nie wymusza żadnego z tych dwóch. Nowy wykonawca
+        dziedziczy dokładnie ten sam zakres, te same nieprzekazane decyzje i ten sam rytm —
+        zaczyna tylko bez kontekstu, który poprzedni zespół zdążył zbudować.
+      </p>
+      <p>
+        Diagnoza sprawdza to przed tą decyzją: czy problem faktycznie leży w wykonawcy, czy
+        w zakresie, decyzjach i rytmie, które przetrwają każdą zmianę firmy na fakturze.
+      </p>
     </div>
   </section>
 
@@ -169,6 +243,13 @@ const kiedyNie = [
 <style>
   .section { padding: var(--space-2xl) var(--gutter); }
   .prose-narrow { max-width: 46rem; margin-inline: auto; }
+  .category-line {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.375rem;
+    color: var(--navy-600);
+    margin-bottom: var(--space-sm);
+  }
   .prose-narrow h1 { margin-bottom: var(--space-lg); }
   .prose-narrow h2 { margin-top: var(--space-xl); margin-bottom: var(--space-sm); font-size: 1.25rem; }
   .prose-narrow p { color: var(--text-muted); margin-bottom: var(--space-md); }
